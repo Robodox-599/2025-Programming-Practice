@@ -1,4 +1,4 @@
-package frc.robot.subsystems.intake.intakerollers;
+package frc.robot.subsystems.shooter.shooterrollers;
 
 import static frc.robot.subsystems.indexer.IndexerConstants.*;
 
@@ -15,11 +15,11 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.robot.subsystems.intake.intakerollers.RollersConstants.RollersStates;
+import frc.robot.subsystems.shooter.shooterrollers.ShooterRollersConstants.ShooterRollersStates;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
 
-public class RollersIOTalonFX extends RollersIO {
+public class ShooterRollersIOTalonFX extends ShooterRollersIO {
   private final TalonFX indexerMotor;
   TalonFXConfiguration indexerConfig;
   Debouncer algaeStallDebouncer = new Debouncer(algaeDebounce);
@@ -35,9 +35,9 @@ public class RollersIOTalonFX extends RollersIO {
 
   private double desiredVelocity;
 
-  public RollersIOTalonFX() {
+  public ShooterRollersIOTalonFX() {
     indexerMotor = new TalonFX(rollersMotorID, rollersMotorCANBus);
-    m_BeamBreak2 = new DigitalInput(RollersConstants.beakBreakPort);
+    m_BeamBreak2 = new DigitalInput(ShooterRollersConstants.beakBreakPort);
 
     indexerConfig = new TalonFXConfiguration();
 
@@ -94,12 +94,12 @@ public class RollersIOTalonFX extends RollersIO {
 
   @Override
   public void stop() {
-    setVelocity(RollersStates.STOPPED);
+    setVelocity(ShooterRollersStates.STOPPED);
   }
 
   @Override
-  public void setVelocity(RollersStates state) {
-    double velocity = SubsystemUtil.rollersStateToVelocity(state);
+  public void setVelocity(ShooterRollersStates state) {
+    double velocity = SubsystemUtil.shooterRollersStateToVelocity(state);
     indexerMotor.set(velocity);
   }
 }

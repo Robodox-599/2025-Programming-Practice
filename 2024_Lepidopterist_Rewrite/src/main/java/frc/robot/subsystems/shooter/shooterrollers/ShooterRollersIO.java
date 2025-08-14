@@ -1,6 +1,6 @@
-package frc.robot.subsystems.intake.intakerollers;
+package frc.robot.subsystems.shooter.shooterrollers;
 
-public abstract class RollersIO {
+public abstract class ShooterRollersIO {
   protected double tempCelsius = 0.0;
   protected double statorCurrentAmps = 0.0;
   protected double supplyCurrentAmps = 0.0;
@@ -16,7 +16,7 @@ public abstract class RollersIO {
 
   public void stop() {}
 
-  public void setVelocity(RollersConstants.RollersStates state) {}
+  public void setVelocity(ShooterRollersConstants.ShooterRollersStates state) {}
 
   public double getVelocity() {
     return velocity;

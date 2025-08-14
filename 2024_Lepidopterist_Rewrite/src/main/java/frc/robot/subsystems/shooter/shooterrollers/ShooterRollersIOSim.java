@@ -1,4 +1,4 @@
-package frc.robot.subsystems.intake.intakerollers;
+package frc.robot.subsystems.shooter.shooterrollers;
 
 import static frc.robot.subsystems.indexer.IndexerConstants.gearRatio;
 import static frc.robot.subsystems.indexer.IndexerConstants.indexerMOI;
@@ -11,16 +11,15 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-
-import frc.robot.subsystems.intake.intakerollers.RollersConstants.RollersStates;
+import frc.robot.subsystems.shooter.shooterrollers.ShooterRollersConstants.ShooterRollersStates;
 import frc.robot.util.SubsystemUtil;
 
-public class RollersIOSim extends RollersIO {
+public class ShooterRollersIOSim extends ShooterRollersIO {
   private final DCMotorSim IndexerSim;
   private PIDController indexerController = new PIDController(simkP, simkI, simkD);
   private static final DCMotor INDEXER_GEARBOX = DCMotor.getKrakenX60Foc(1);
 
-  public RollersIOSim() {
+  public ShooterRollersIOSim() {
     IndexerSim =
         new DCMotorSim(
             LinearSystemId.createDCMotorSystem(INDEXER_GEARBOX, indexerMOI, gearRatio),
@@ -51,8 +50,8 @@ public class RollersIOSim extends RollersIO {
   }
 
   @Override
-  public void setVelocity(RollersStates state) {
-    double velocity = SubsystemUtil.rollersStateToVelocity(state);
+  public void setVelocity(ShooterRollersStates state) {
+    double velocity = SubsystemUtil.shooterRollersStateToVelocity(state);
     IndexerSim.setAngularVelocity(velocity);
   }
 }

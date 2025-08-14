@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.intakerollers;
 
-public class RollersConstants {
+public class IntakeRollersConstants {
   public static enum RollersStates {
     INTAKING(0),
     SCORING(1),

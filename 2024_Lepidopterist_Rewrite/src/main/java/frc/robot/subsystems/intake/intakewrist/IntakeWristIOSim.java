@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.intakewrist;
 
-import static frc.robot.subsystems.intake.intakewrist.WristConstants.*;
+import static frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.*;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.math.MathUtil;
@@ -8,22 +8,22 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import frc.robot.subsystems.intake.intakewrist.WristConstants.WristStates;
+import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.WristStates;
 
-public class WristIOSim extends WristIO {
+public class IntakeWristIOSim extends IntakeWristIO {
 
   private static final DCMotor WRIST_GEARBOX = DCMotor.getKrakenX60Foc(1);
   private final DCMotorSim wristSim;
 
   private PIDController wristPID = new PIDController(simkP, simkI, simkD);
 
-  public WristIOSim() {
+  public IntakeWristIOSim() {
     wristSim =
         new DCMotorSim(
             LinearSystemId.createDCMotorSystem(WRIST_GEARBOX, wristMOI, gearRatio), WRIST_GEARBOX);
 
-    wristPID = new PIDController(WristConstants.simkP, WristConstants.simkI, WristConstants.simkD);
-    wristPID.setTolerance(WristConstants.wristPositionTolerance);
+    wristPID = new PIDController(IntakeWristConstants.simkP, IntakeWristConstants.simkI, IntakeWristConstants.simkD);
+    wristPID.setTolerance(IntakeWristConstants.wristPositionTolerance);
   }
 
   @Override
@@ -61,7 +61,7 @@ public class WristIOSim extends WristIO {
   @Override
   public void setAngle(WristStates state) {
     targetPosition =
-        MathUtil.clamp(WristConstants.setpoints[state.getIndex()], wristMinAngle, wristMaxAngle);
+        MathUtil.clamp(IntakeWristConstants.setpoints[state.getIndex()], wristMinAngle, wristMaxAngle);
     wristSim.setInputVoltage(wristPID.calculate(targetPosition));
   }
 }

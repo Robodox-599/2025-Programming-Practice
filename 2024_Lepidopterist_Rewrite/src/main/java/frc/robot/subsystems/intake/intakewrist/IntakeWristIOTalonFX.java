@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.intakewrist;
 
-import static frc.robot.subsystems.intake.intakewrist.WristConstants.*;
+import static frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -21,11 +21,11 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
-import frc.robot.subsystems.intake.intakewrist.WristConstants.WristStates;
+import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.WristStates;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
 
-public class WristIOTalonFX extends WristIO {
+public class IntakeWristIOTalonFX extends IntakeWristIO {
 
   private final TalonFX wristMotor;
   TalonFXConfiguration wristConfig;
@@ -41,7 +41,7 @@ public class WristIOTalonFX extends WristIO {
   private final StatusSignal<Current> current;
   private final StatusSignal<Temperature> temperature;
 
-  public WristIOTalonFX() {
+  public IntakeWristIOTalonFX() {
 
     wristMotor = new TalonFX(wristMotorID, wristMotorCANBus);
     wristConfig = new TalonFXConfiguration();

@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.intakewrist;
 
-public class WristConstants {
+public class IntakeWristConstants {
   // motor info
   public static final int wristMotorID = 15;
   public static final int cancoderID = 17;
