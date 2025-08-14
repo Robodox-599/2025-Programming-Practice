@@ -33,8 +33,8 @@ public class ShooterWrist {
 
   public void updateInputs() {
     Tracer.traceFunc("UpdateIO", io::updateInputs);
-    safetyChecker.setCurrentWristDegrees(io.currentPositionDegrees);
-    safetyChecker.updateIsAtSetpointWrist(isAtSetpoint());
+    safetyChecker.setShooterRunning(currentState != CurrentState.STOPPED);
+    safetyChecker.updateIsAtSetpointShooter(isAtSetpoint());
     Tracer.traceFunc("HandleStateTransitions", this::handleStateTransitions);
     Tracer.traceFunc("ApplyStates", this::applyStates);
     DogLog.log("Wrist/CurrentState", currentState);
@@ -45,7 +45,7 @@ public class ShooterWrist {
     previousState = currentState;
     switch (wantedState) {
       case INTAKING:
-        if (safetyChecker.isSafeWrist()) {
+        if (safetyChecker.isSafeShooter()) {
           currentState = CurrentState.INTAKING;
         }
         break;

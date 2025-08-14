@@ -33,8 +33,8 @@ public class IntakeWrist {
 
   public void updateInputs() {
     Tracer.traceFunc("UpdateIO", io::updateInputs);
-    safetyChecker.setCurrentWristDegrees(io.currentPositionDegrees);
-    safetyChecker.updateIsAtSetpointWrist(isAtSetpoint());
+    safetyChecker.setIntakeRunning(currentState != CurrentState.STOPPED);
+    safetyChecker.updateIsAtSetpointIntake(isAtSetpoint());
     Tracer.traceFunc("HandleStateTransitions", this::handleStateTransitions);
     Tracer.traceFunc("ApplyStates", this::applyStates);
     DogLog.log("Wrist/CurrentState", currentState);
@@ -45,7 +45,7 @@ public class IntakeWrist {
     previousState = currentState;
     switch (wantedState) {
       case INTAKING:
-        if (safetyChecker.isSafeWrist()) {
+        if (safetyChecker.isSafeIntake()) {
           currentState = CurrentState.INTAKING;
         }
         break;
