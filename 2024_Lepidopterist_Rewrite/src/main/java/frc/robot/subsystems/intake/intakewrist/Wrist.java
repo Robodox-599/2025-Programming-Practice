@@ -1,56 +1,59 @@
-package frc.robot.subsystems.indexer;
+package frc.robot.subsystems.intake.intakewrist;
 
 import dev.doglog.DogLog;
 import frc.robot.SafetyChecker;
-//import frc.robot.SafetyChecker;
-import frc.robot.subsystems.indexer.IndexerConstants.IndexerStates;
+import frc.robot.subsystems.intake.intakewrist.WristConstants.WristStates;
 import frc.robot.util.Tracer;
 
-public class Indexer {
-  private final IndexerIO io;
+public class Wrist {
+  private final WristIO io;
   private final SafetyChecker safetyChecker;
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
   private CurrentState previousState = CurrentState.STOPPED;
 
-  public Indexer(IndexerIO io) {
+  public Wrist(WristIO io, SafetyChecker safetyChecker) {
     this.io = io;
-    this.safetyChecker = new SafetyChecker();
+    this.safetyChecker = safetyChecker;
   }
 
   public enum WantedState {
     INTAKING,
     SCORING,
-    HOLDING,
+    POSITION_PREPARED,
     STOPPED,
   }
 
   public enum CurrentState {
     INTAKING,
     SCORING,
-    HOLDING,
+    POSITION_PREPARED,
     STOPPED,
   }
 
   public void updateInputs() {
     Tracer.traceFunc("UpdateIO", io::updateInputs);
+    safetyChecker.setCurrentWristDegrees(io.currentPositionDegrees);
+    safetyChecker.updateIsAtSetpointWrist(isAtSetpoint());
     Tracer.traceFunc("HandleStateTransitions", this::handleStateTransitions);
     Tracer.traceFunc("ApplyStates", this::applyStates);
-    DogLog.log("Indexer/CurrentState", currentState);
-    DogLog.log("Indexer/WantedState", wantedState);
+    DogLog.log("Wrist/CurrentState", currentState);
+    DogLog.log("Wrist/WantedState", wantedState);
   }
 
   private void handleStateTransitions() {
     previousState = currentState;
     switch (wantedState) {
       case INTAKING:
-        currentState = CurrentState.INTAKING;
+        if (safetyChecker.isSafeWrist()) {
+          currentState = CurrentState.INTAKING;
+        }
+        break;
+      case POSITION_PREPARED:
+        currentState = CurrentState.POSITION_PREPARED;
         break;
       case SCORING:
         currentState = CurrentState.SCORING;
-        break;
-      case HOLDING:
-        currentState = CurrentState.HOLDING;
         break;
       case STOPPED:
         currentState = CurrentState.STOPPED;
@@ -65,13 +68,13 @@ public class Indexer {
     if (previousState != currentState) {
       switch (currentState) {
         case INTAKING:
-          setVelocity(IndexerStates.INTAKING);
+          setAngle(WristStates.INTAKING);
+          break;
+        case POSITION_PREPARED:
+          setAngle(WristStates.POSITION_PREPARED);
           break;
         case SCORING:
-          setVelocity(IndexerStates.SCORING);
-          break;
-        case HOLDING:
-          stop();
+          setAngle(WristStates.SCORING);
           break;
         case STOPPED:
           stop();
@@ -83,19 +86,23 @@ public class Indexer {
     }
   }
 
-  public void setVelocity(IndexerStates state) {
-    io.setVelocity(state);
-  }
-
-  public void stop() {
-    io.stop();
+  public void setAngle(WristStates state) {
+    io.setAngle(state);
   }
 
   public void setWantedState(WantedState wantedState) {
     this.wantedState = wantedState;
   }
 
-  public boolean isNoteDetected() {
-    return io.isNoteDetected;
+  public boolean isAtSetpoint() {
+    return io.atSetpoint;
+  }
+
+  public void stop() {
+    io.stop();
+  }
+
+  public WristIO getIO() {
+    return io;
   }
 }

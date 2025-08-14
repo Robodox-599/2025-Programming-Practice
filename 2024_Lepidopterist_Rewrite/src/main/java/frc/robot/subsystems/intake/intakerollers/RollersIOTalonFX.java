@@ -1,4 +1,4 @@
-package frc.robot.subsystems.indexer;
+package frc.robot.subsystems.intake.intakerollers;
 
 import static frc.robot.subsystems.indexer.IndexerConstants.*;
 
@@ -15,11 +15,11 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.robot.subsystems.indexer.IndexerConstants.IndexerStates;
+import frc.robot.subsystems.intake.intakerollers.RollersConstants.RollersStates;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
 
-public class IndexerIOTalonFX extends IndexerIO {
+public class RollersIOTalonFX extends RollersIO {
   private final TalonFX indexerMotor;
   TalonFXConfiguration indexerConfig;
   Debouncer algaeStallDebouncer = new Debouncer(algaeDebounce);
@@ -35,9 +35,9 @@ public class IndexerIOTalonFX extends IndexerIO {
 
   private double desiredVelocity;
 
-  public IndexerIOTalonFX() {
+  public RollersIOTalonFX() {
     indexerMotor = new TalonFX(rollersMotorID, rollersMotorCANBus);
-    m_BeamBreak2 = new DigitalInput(IndexerConstants.beakBreakPort);
+    m_BeamBreak2 = new DigitalInput(RollersConstants.beakBreakPort);
 
     indexerConfig = new TalonFXConfiguration();
 
@@ -79,6 +79,7 @@ public class IndexerIOTalonFX extends IndexerIO {
     super.tempCelsius = temperature.getValueAsDouble();
     super.desiredVelocity = desiredVelocity;
     super.isNoteDetected = noteBeamBreakDebouncer.calculate(!m_BeamBreak2.get());
+    super.isNoteEnsured = ensureNoteBeamBreakDebouncer.calculate(!m_BeamBreak2.get());
 
     DogLog.log("Indexer/Velocity", super.velocity);
     DogLog.log("Indexer/AppliedVoltage", super.appliedVolts);
@@ -87,17 +88,18 @@ public class IndexerIOTalonFX extends IndexerIO {
     DogLog.log("Indexer/SupplyCurrentAmps", super.supplyCurrentAmps);
 
     DogLog.log("Indexer/NoteDetected", super.isNoteDetected);
+    DogLog.log("Rollers/NoteEnsured", super.isNoteEnsured);
     DogLog.log("Indexer/BeamBreak", m_BeamBreak2.get());
   }
 
   @Override
   public void stop() {
-    setVelocity(IndexerStates.STOPPED);
+    setVelocity(RollersStates.STOPPED);
   }
 
   @Override
-  public void setVelocity(IndexerStates state) {
-    double velocity = SubsystemUtil.indexerStateToVelocity(state);
+  public void setVelocity(RollersStates state) {
+    double velocity = SubsystemUtil.rollersStateToVelocity(state);
     indexerMotor.set(velocity);
   }
 }
