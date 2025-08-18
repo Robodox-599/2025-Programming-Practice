@@ -8,8 +8,9 @@ public abstract class IndexerIO {
   protected double appliedVolts = 0.0;
   protected double velocity = 0.0;
   protected double desiredVelocity = 0.0;
-  protected boolean atSetpoint = false;
+  protected boolean atSetSpeed = false;
   protected boolean isNoteDetected = false;
+  protected IndexerConstants.IndexerStates state = IndexerConstants.IndexerStates.STOW;
 
   public void updateInputs() {}
 

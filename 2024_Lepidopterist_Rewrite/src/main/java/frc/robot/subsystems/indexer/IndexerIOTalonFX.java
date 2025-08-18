@@ -22,10 +22,9 @@ import frc.robot.util.SubsystemUtil;
 public class IndexerIOTalonFX extends IndexerIO {
   private final TalonFX indexerMotor;
   TalonFXConfiguration indexerConfig;
-  Debouncer algaeStallDebouncer = new Debouncer(algaeDebounce);
-  Debouncer noteBeamBreakDebouncer = new Debouncer(beamBreakDebounce);
-  Debouncer ensureNoteBeamBreakDebouncer = new Debouncer(ensureCoralDebounce);
-  private DigitalInput m_BeamBreak2;
+  Debouncer beamBreakDebouncer = new Debouncer(beamBreakDebounce);
+  private DigitalInput beamBreak;
+  private IndexerConstants.IndexerStates currentState = IndexerStates.STOW;
 
   private final StatusSignal<AngularVelocity> velocity;
   private final StatusSignal<Voltage> appliedVolts;
@@ -37,7 +36,7 @@ public class IndexerIOTalonFX extends IndexerIO {
 
   public IndexerIOTalonFX() {
     indexerMotor = new TalonFX(rollersMotorID, rollersMotorCANBus);
-    m_BeamBreak2 = new DigitalInput(IndexerConstants.beakBreakPort);
+    beamBreak = new DigitalInput(IndexerConstants.beamBreakPort);
 
     indexerConfig = new TalonFXConfiguration();
 
@@ -54,11 +53,11 @@ public class IndexerIOTalonFX extends IndexerIO {
     indexerConfig.CurrentLimits.SupplyCurrentLowerLimit = PeakCurrentLimit;
     indexerConfig.CurrentLimits.SupplyCurrentLowerTime = PeakCurrentDuration;
 
-    noteBeamBreakDebouncer.setDebounceType(DebounceType.kFalling);
-    ensureNoteBeamBreakDebouncer.setDebounceType(DebounceType.kFalling);
+    beamBreakDebouncer.setDebounceType(DebounceType.kFalling);
 
     PhoenixUtil.tryUntilOk(10, () -> indexerMotor.getConfigurator().apply(indexerConfig, 1));
     indexerMotor.optimizeBusUtilization();
+
     velocity = indexerMotor.getVelocity();
     appliedVolts = indexerMotor.getMotorVoltage();
     statorCurrent = indexerMotor.getStatorCurrent();
@@ -78,21 +77,23 @@ public class IndexerIOTalonFX extends IndexerIO {
     super.velocity = velocity.getValueAsDouble();
     super.tempCelsius = temperature.getValueAsDouble();
     super.desiredVelocity = desiredVelocity;
-    super.isNoteDetected = noteBeamBreakDebouncer.calculate(!m_BeamBreak2.get());
+    super.isNoteDetected = beamBreakDebouncer.calculate(!beamBreak.get());
+    super.state = currentState; 
 
     DogLog.log("Indexer/Velocity", super.velocity);
     DogLog.log("Indexer/AppliedVoltage", super.appliedVolts);
     DogLog.log("Indexer/TempCelcius", super.tempCelsius);
     DogLog.log("Indexer/StatorCurrentAmps", super.statorCurrentAmps);
     DogLog.log("Indexer/SupplyCurrentAmps", super.supplyCurrentAmps);
+    DogLog.log("Indexer/State", super.state.toString());
 
     DogLog.log("Indexer/NoteDetected", super.isNoteDetected);
-    DogLog.log("Indexer/BeamBreak", m_BeamBreak2.get());
+    DogLog.log("Indexer/BeamBreak", beamBreak.get());
   }
 
   @Override
   public void stop() {
-    setVelocity(IndexerStates.STOPPED);
+    indexerMotor.stopMotor();
   }
 
   @Override

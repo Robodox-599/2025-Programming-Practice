@@ -1,86 +1,29 @@
 package frc.robot.subsystems.indexer;
 
-import dev.doglog.DogLog;
-import frc.robot.SafetyChecker;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 //import frc.robot.SafetyChecker;
 import frc.robot.subsystems.indexer.IndexerConstants.IndexerStates;
-import frc.robot.util.Tracer;
 
 public class Indexer {
   private final IndexerIO io;
-  private final SafetyChecker safetyChecker;
-  private WantedState wantedState = WantedState.STOPPED;
-  private CurrentState currentState = CurrentState.STOPPED;
-  private CurrentState previousState = CurrentState.STOPPED;
+  private Timer beamBreakTimer = new Timer(); 
+  private DigitalInput beamBreak;
+
 
   public Indexer(IndexerIO io) {
     this.io = io;
-    this.safetyChecker = new SafetyChecker();
+    beamBreakTimer.start();
+    beamBreak = new DigitalInput(IndexerConstants.beamBreakPort);
   }
 
-  public enum WantedState {
-    INTAKING,
-    SCORING,
-    HOLDING,
-    STOPPED,
-  }
+  public void periodic() {
+      io.updateInputs();
 
-  public enum CurrentState {
-    INTAKING,
-    SCORING,
-    HOLDING,
-    STOPPED,
-  }
-
-  public void updateInputs() {
-    Tracer.traceFunc("UpdateIO", io::updateInputs);
-    Tracer.traceFunc("HandleStateTransitions", this::handleStateTransitions);
-    Tracer.traceFunc("ApplyStates", this::applyStates);
-    DogLog.log("Indexer/CurrentState", currentState);
-    DogLog.log("Indexer/WantedState", wantedState);
-  }
-
-  private void handleStateTransitions() {
-    previousState = currentState;
-    switch (wantedState) {
-      case INTAKING:
-        currentState = CurrentState.INTAKING;
-        break;
-      case SCORING:
-        currentState = CurrentState.SCORING;
-        break;
-      case HOLDING:
-        currentState = CurrentState.HOLDING;
-        break;
-      case STOPPED:
-        currentState = CurrentState.STOPPED;
-        break;
-      default:
-        currentState = CurrentState.STOPPED;
-        break;
-    }
-  }
-
-  private void applyStates() {
-    if (previousState != currentState) {
-      switch (currentState) {
-        case INTAKING:
-          setVelocity(IndexerStates.INTAKING);
-          break;
-        case SCORING:
-          setVelocity(IndexerStates.SCORING);
-          break;
-        case HOLDING:
-          stop();
-          break;
-        case STOPPED:
-          stop();
-          break;
-        default:
-          stop();
-          break;
+      if(beamBreak.get())
+      {
+        beamBreakTimer.reset();
       }
-    }
   }
 
   public void setVelocity(IndexerStates state) {
@@ -89,10 +32,6 @@ public class Indexer {
 
   public void stop() {
     io.stop();
-  }
-
-  public void setWantedState(WantedState wantedState) {
-    this.wantedState = wantedState;
   }
 
   public boolean isNoteDetected() {
