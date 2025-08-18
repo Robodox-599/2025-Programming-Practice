@@ -26,8 +26,6 @@ public class IndexerConstants {
   public static final double realV = 0.0;
 
   public static final int beakBreakPort = 0;
-  public static final double beamBreakDebounce = 0.0;
-  public static final double ensureNoteDebounce = 0.0;
   public static final double noteDebounce = 0.0;
   public static final double indexerHoldNote = 0.0;
 

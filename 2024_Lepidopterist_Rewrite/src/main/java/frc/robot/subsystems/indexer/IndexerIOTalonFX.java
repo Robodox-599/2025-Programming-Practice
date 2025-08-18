@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
@@ -21,8 +22,7 @@ public class IndexerIOTalonFX extends IndexerIO{
   TalonFXConfiguration rollersConfig;
   private DigitalInput m_beamBreak;
   private double wantedVelocity;
-  Debouncer noteDebouncer = new Debouncer(beamBreakDebounce);
-  Debouncer ensureNoteDebouncer = new Debouncer(ensureNoteDebounce);
+  Debouncer noteDebouncer = new Debouncer(noteDebounce);
 
   private final StatusSignal<AngularVelocity> velocity;
   private final StatusSignal<Voltage> appliedVolts;
@@ -36,9 +36,7 @@ public class IndexerIOTalonFX extends IndexerIO{
     indexerConfig = new TalonFXConfiguration();
    
     m_beamBreak = new DigitalInput(0);
-    Debouncer noteDebouncer = new Debouncer(beamBreakDebounce);
-    Debouncer ensureNoteDebouncer = new Debouncer(ensureNoteDebounce);
-
+    
     rollersConfig.Slot0.kP = realP;
     rollersConfig.Slot0.kI = realI;
     rollersConfig.Slot0.kD = realD;
@@ -73,7 +71,6 @@ public class IndexerIOTalonFX extends IndexerIO{
     super.supplyCurrentAmps = supplyCurrent.getValueAsDouble();
     super.tempCelsius = temperature.getValueAsDouble();
     super.noteDetected = noteDebouncer.calculate(!m_beamBreak.get());
-    super.noteEnsured = ensureNoteDebouncer.calculate(!m_beamBreak.get());
    
     super.wantedVelocity = wantedVelocity;
 

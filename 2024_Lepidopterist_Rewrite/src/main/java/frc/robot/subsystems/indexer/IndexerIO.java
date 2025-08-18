@@ -21,5 +21,11 @@ public class IndexerIO {
   }
   public void stop() {}
 
-  public void noteDetected() {}
+  public boolean isNoteDetected() {
+    return false;
+  }
+
+  public boolean isNoteEnsured() {
+    return false;
+  }
 }
