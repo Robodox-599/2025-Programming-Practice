@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.IntakeWristStates;
 
 public class IntakeWristIOSim extends IntakeWristIO {
-
-  // wrist sim motor + simPID setup
   private static final DCMotor WRIST_GEARBOX = DCMotor.getKrakenX60Foc(1);
   private final DCMotorSim wristSim;
 
@@ -33,7 +31,6 @@ public class IntakeWristIOSim extends IntakeWristIO {
 
   @Override
   public void updateInputs() {
-    // constantly updating the actual loggging variables for DogLog
     wristSim.update(0.02);
 
     super.atSetpoint = wristPID.atSetpoint();
@@ -44,7 +41,6 @@ public class IntakeWristIOSim extends IntakeWristIO {
     super.currentPositionDegrees = wristSim.getAngularPositionRotations();
     super.tempCelsius = 25.0;
 
-    // basic logging for the sim motor
     DogLog.log("IntakeWrist/CurrentAmps", super.currentAmps);
     DogLog.log("IntakeWrist/AppliedVoltage", super.appliedVolts);
     DogLog.log("IntakeWrist/TargetPosition", super.targetPosition);
@@ -56,19 +52,16 @@ public class IntakeWristIOSim extends IntakeWristIO {
         wristPID.calculate(super.currentPositionDegrees, super.targetPosition));
   }
 
-  // allows us to make the wrist motor use whatever custom voltage we want
   @Override
   public void setVoltage(double voltage) {
     wristSim.setInputVoltage(voltage);
   }
 
-  // stop function to stop the motor when we want
   @Override
   public void stop() {
     wristSim.setAngularVelocity(0);
   }
 
-  // Updates the angle of the wrist depending on the state we are moving to
   @Override
   public void setAngle(IntakeWristStates state) {
     targetPosition =

@@ -36,7 +36,6 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
   private final StatusSignal<Temperature> temperature;
 
   public IntakeWristIOTalonFX() {
-    // motor and mm initialization
     wristMotor = new TalonFX(wristMotorID, wristMotorCANBus);
     wristConfig = new TalonFXConfiguration();
     mmRequest =
@@ -44,7 +43,6 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
             .withSlot(0)
             .withEnableFOC(true);
    
-    // Basic wrist motor config setup
     wristConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     wristConfig.CurrentLimits.SupplyCurrentLimit = 40;
     wristConfig.CurrentLimits.StatorCurrentLimit = 60;
@@ -54,7 +52,6 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     wristConfig.MotionMagic.MotionMagicCruiseVelocity = maxWristVelocity;
     wristConfig.MotionMagic.MotionMagicAcceleration = maxWristAccel;
 
-    // PID
     wristConfig.Slot0.kP = realkP;
     wristConfig.Slot0.kI = realkI;
     wristConfig.Slot0.kD = realkD;
@@ -62,7 +59,6 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     wristConfig.Slot0.kS = realkS;
     wristConfig.Slot0.kG = realkG;
 
-    // setting the actual loggging variables for DogLog & tryna make sure the wrist motor actually uses our custom config
     PhoenixUtil.tryUntilOk(10, () -> wristMotor.getConfigurator().apply(wristConfig, 1));
     wristMotor.optimizeBusUtilization();
     position = wristMotor.getPosition();
@@ -76,7 +72,6 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
 
   @Override
   public void updateInputs() {
-    // constanly updating the actual loggging variables for DogLog
     BaseStatusSignal.refreshAll(
         temperature, velocity, position, current, appliedVolts);
     super.appliedVolts = appliedVolts.getValueAsDouble();
@@ -87,7 +82,6 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     super.atSetpoint =
         Math.abs(super.currentPositionDegrees - super.targetPosition) < wristPositionTolerance;
 
-    // Basic logging for the motor
     DogLog.log("IntakeWrist/AppliedVoltage", super.appliedVolts);
     DogLog.log("IntakeWrist/CurrentAmps", super.currentAmps);
     DogLog.log("IntakeWrist/Velocity", super.velocity);
@@ -97,26 +91,21 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     DogLog.log("IntakeWrist/TargetPosition", targetPosition);
   }
 
-
-  // allows us to make the wrist motor use whatever custom voltage we want
   @Override
   public void setVoltage(double voltage) {
     wristMotor.setVoltage(voltage);
   }
 
-  // stop function to stop the motor when we want
   @Override
   public void stop() {
     wristMotor.stopMotor();
   }
 
-  // sets the wrist motor's mode of operation when output is neutral or disabled
   @Override
   public void setBrake(boolean brake) {
     wristMotor.setNeutralMode(brake ? NeutralModeValue.Brake : NeutralModeValue.Coast);
   }
 
-  // Updates the angle of the wrist depending on the state we are moving to
   @Override
   public void setAngle(IntakeWristStates state) { 
     double position =

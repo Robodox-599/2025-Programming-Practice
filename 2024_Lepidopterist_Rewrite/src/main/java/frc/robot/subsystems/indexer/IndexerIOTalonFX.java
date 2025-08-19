@@ -40,24 +40,20 @@ public class IndexerIOTalonFX extends IndexerIO {
 
     indexerConfig = new TalonFXConfiguration();
 
-    // Basic wrist motor config setup
     indexerMotor.setNeutralMode(NeutralModeValue.Brake);
     indexerConfig.CurrentLimits.SupplyCurrentLimitEnable = EnableCurrentLimit;
     indexerConfig.CurrentLimits.SupplyCurrentLimit = ContinousCurrentLimit;
     indexerConfig.CurrentLimits.SupplyCurrentLowerLimit = PeakCurrentLimit;
     indexerConfig.CurrentLimits.SupplyCurrentLowerTime = PeakCurrentDuration;
 
-    // PID
     indexerConfig.Slot0.kP = realP;
     indexerConfig.Slot0.kI = realI;
     indexerConfig.Slot0.kD = realD;
     indexerConfig.Slot0.kS = realS;
     indexerConfig.Slot0.kV = realV;
 
-    // debouncer for beambreak
     beamBreakDebouncer.setDebounceType(DebounceType.kFalling);
 
-    // setting the actual loggging variables for DogLog & tryna make sure the motor actually uses our custom config
     PhoenixUtil.tryUntilOk(10, () -> indexerMotor.getConfigurator().apply(indexerConfig, 1));
     indexerMotor.optimizeBusUtilization();
     velocity = indexerMotor.getVelocity();
@@ -71,7 +67,6 @@ public class IndexerIOTalonFX extends IndexerIO {
 
   @Override
   public void updateInputs() {
-    // constanly updating the actual loggging variables for DogLog
     BaseStatusSignal.refreshAll(velocity, temperature, statorCurrent, supplyCurrent, appliedVolts);
     super.appliedVolts = appliedVolts.getValueAsDouble();
     super.statorCurrentAmps = statorCurrent.getValueAsDouble();
@@ -83,7 +78,6 @@ public class IndexerIOTalonFX extends IndexerIO {
     super.isNoteDetected = beamBreakDebouncer.calculate(!beamBreak.get());
     super.state = currentState; 
 
-    // basic logging for the motor
     DogLog.log("Indexer/Velocity", super.velocity);
     DogLog.log("Indexer/AppliedVoltage", super.appliedVolts);
     DogLog.log("Indexer/TempCelcius", super.tempCelsius);
@@ -91,18 +85,15 @@ public class IndexerIOTalonFX extends IndexerIO {
     DogLog.log("Indexer/SupplyCurrentAmps", super.supplyCurrentAmps);
     DogLog.log("Indexer/State", super.state.toString());
 
-    // basic loggign for the beambreak
     DogLog.log("Indexer/NoteDetected", super.isNoteDetected);
     DogLog.log("Indexer/BeamBreak", beamBreak.get());
   }
 
-  // stop function to stop the motor when we want
   @Override
   public void stop() {
     indexerMotor.stopMotor();
   }
 
-  // Updates the velocity of the motor depending on the state we are moving to
   @Override
   public void setVelocity(IndexerStates state) {
     double velocity = SubsystemUtil.indexerStateToVelocity(state);

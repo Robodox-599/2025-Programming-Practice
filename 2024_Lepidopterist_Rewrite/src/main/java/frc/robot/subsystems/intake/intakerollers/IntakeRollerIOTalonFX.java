@@ -40,24 +40,20 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
 
     indexerConfig = new TalonFXConfiguration();
 
-    // Basic wrist motor config setup
     intakeRollerMotor.setNeutralMode(NeutralModeValue.Brake);
     indexerConfig.CurrentLimits.SupplyCurrentLimitEnable = EnableCurrentLimit;
     indexerConfig.CurrentLimits.SupplyCurrentLimit = ContinousCurrentLimit;
     indexerConfig.CurrentLimits.SupplyCurrentLowerLimit = PeakCurrentLimit;
     indexerConfig.CurrentLimits.SupplyCurrentLowerTime = PeakCurrentDuration;
 
-    // PID
     indexerConfig.Slot0.kP = realP;
     indexerConfig.Slot0.kI = realI;
     indexerConfig.Slot0.kD = realD;
     indexerConfig.Slot0.kS = realS;
     indexerConfig.Slot0.kV = realV;
 
-    // Debouncer for beambreak
     beamBreakDebouncer.setDebounceType(DebounceType.kFalling);
 
-    // setting the actual loggging variables for DogLog & tryna make sure the motor actually uses our custom config
     PhoenixUtil.tryUntilOk(10, () -> intakeRollerMotor.getConfigurator().apply(indexerConfig, 1));
     intakeRollerMotor.optimizeBusUtilization();
 
@@ -72,7 +68,6 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
 
   @Override
   public void updateInputs() {
-    // constanly updating the actual loggging variables for DogLog
     BaseStatusSignal.refreshAll(velocity, temperature, statorCurrent, supplyCurrent, appliedVolts);
     super.appliedVolts = appliedVolts.getValueAsDouble();
     super.statorCurrentAmps = statorCurrent.getValueAsDouble();
@@ -84,7 +79,6 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
     super.isNoteDetected = beamBreakDebouncer.calculate(!beamBreak.get());
     super.state = currentState; 
 
-    // basic logging for the motor
     DogLog.log("IntakeRollers/Velocity", super.velocity);
     DogLog.log("IntakeRollers/AppliedVoltage", super.appliedVolts);
     DogLog.log("IntakeRollers/TempCelcius", super.tempCelsius);
@@ -92,18 +86,15 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
     DogLog.log("IntakeRollers/SupplyCurrentAmps", super.supplyCurrentAmps);
     DogLog.log("IntakeRollers/State", super.state.toString());
 
-    // basic logging for the beambreak
     DogLog.log("IntakeRollers/NoteDetected", super.isNoteDetected);
     DogLog.log("IntakeRollers/BeamBreak", beamBreak.get());
   }
 
-  // stop function to stop the motor when we want
   @Override
   public void stop() {
     intakeRollerMotor.stopMotor();
   }
-
-  // Updates the velocity of the motor depending on the state we are moving to
+  
   @Override
   public void setVelocity(IntakeRollerStates state) {
     double velocity = SubsystemUtil.intakeRollerStateToVelocity(state);
