@@ -9,7 +9,6 @@ public class IntakeRoller {
   private Timer beamBreakTimer = new Timer(); 
   private DigitalInput beamBreak;
 
-
   public IntakeRoller(IntakeRollerIO io) {
     this.io = io;
     beamBreakTimer.start();
@@ -19,20 +18,24 @@ public class IntakeRoller {
   public void periodic() {
       io.updateInputs();
 
+      // if the beambreak detects the note, reset the checking timer
       if(beamBreak.get())
       {
         beamBreakTimer.reset();
       }
   }
 
+  // changes the velocity depending on the state we're switching to
   public void setVelocity(IntakeRollerStates state) {
     io.setVelocity(state);
   }
 
+  // stops the motor and logging
   public void stop() {
     io.stop();
   }
 
+  // checks whether the note is still being detected by the beambreak
   public boolean isNoteDetected() {
     return io.isNoteDetected;
   }

@@ -31,15 +31,16 @@ public class IndexerIOSim extends IndexerIO {
 
   @Override
   public void updateInputs() {
+    // constantly updating the actual loggging variables for DogLog
     IndexerSim.update(0.02);
 
     super.atSetSpeed = indexerController.atSetpoint();
-
     super.appliedVolts = IndexerSim.getInputVoltage();
     super.statorCurrentAmps = IndexerSim.getCurrentDrawAmps();
     super.velocity = IndexerSim.getAngularVelocityRPM() / 60.0;
     super.tempCelsius = 25.0;
 
+    // basic logging for the sim motor
     DogLog.log("Indexer/VelocitySetpoint", desiredVelocity);
     DogLog.log("Indexer/Velocity", super.velocity);
     DogLog.log("Indexer/Voltage", super.appliedVolts);
@@ -49,11 +50,13 @@ public class IndexerIOSim extends IndexerIO {
     DogLog.log("Indexer/Temp", 60);
   }
 
+  // stop function to stop the motor when we want
   @Override
   public void stop() {
     IndexerSim.setAngularVelocity(0);
   }
 
+  // Updates the velocity of the motor depending on the state we are moving to
   @Override
   public void setVelocity(IndexerStates state) {
     double velocity = SubsystemUtil.indexerStateToVelocity(state);

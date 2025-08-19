@@ -1,6 +1,7 @@
 package frc.robot.subsystems.indexer;
 
 public abstract class IndexerIO {
+  // inputs we wanna log from the motor & beambreak
   protected double tempCelsius = 0.0;
   protected double statorCurrentAmps = 0.0;
   protected double supplyCurrentAmps = 0.0;
@@ -12,6 +13,7 @@ public abstract class IndexerIO {
   protected boolean isNoteDetected = false;
   protected IndexerConstants.IndexerStates state = IndexerConstants.IndexerStates.STOW;
 
+  // default functions for all layers
   public void updateInputs() {}
 
   public void stop() {}

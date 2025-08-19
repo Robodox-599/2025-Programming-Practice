@@ -30,6 +30,7 @@ public class IntakeRollerIOSim extends IntakeRollerIO {
 
   @Override
   public void updateInputs() {
+    // constantly updating the actual loggging variables for DogLog
     IndexerSim.update(0.02);
 
     super.atSetSpeed = indexerController.atSetpoint();
@@ -39,6 +40,7 @@ public class IntakeRollerIOSim extends IntakeRollerIO {
     super.velocity = IndexerSim.getAngularVelocityRPM() / 60.0;
     super.tempCelsius = 25.0;
 
+    // basic logging for the sim motor
     DogLog.log("IntakeRollers/VelocitySetpoint", desiredVelocity);
     DogLog.log("IntakeRollers/Velocity", super.velocity);
     DogLog.log("IntakeRollers/Voltage", super.appliedVolts);
@@ -48,11 +50,13 @@ public class IntakeRollerIOSim extends IntakeRollerIO {
     DogLog.log("IntakeRollers/Temp", 60);
   }
 
+  // stop function to stop the motor when we want
   @Override
   public void stop() {
     IndexerSim.setAngularVelocity(0);
   }
 
+  // Updates the velocity of the motor depending on the state we are moving to
   @Override
   public void setVelocity(IntakeRollerStates state) {
     double velocity = SubsystemUtil.intakeRollerStateToVelocity(state);

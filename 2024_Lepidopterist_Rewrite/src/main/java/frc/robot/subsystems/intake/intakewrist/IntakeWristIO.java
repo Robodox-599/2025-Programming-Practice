@@ -7,6 +7,7 @@ package frc.robot.subsystems.intake.intakewrist;
 import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.IntakeWristStates;
 
 public abstract class IntakeWristIO {
+  // inputs we wanna log from the motor
   protected double tempCelsius = 0.0;
   protected double currentAmps = 0.0;
   protected double appliedVolts = 0.0;
@@ -15,6 +16,8 @@ public abstract class IntakeWristIO {
   protected double currentPositionDegrees = 0.0;
   protected boolean atSetpoint = false;
   protected IntakeWristConstants.IntakeWristStates state = IntakeWristStates.STOW;
+
+  // default functions for all layers
 
   public void updateInputs() {}
 

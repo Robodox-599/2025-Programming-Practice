@@ -20,7 +20,7 @@ import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
 
 public class IntakeRollerIOTalonFX extends IntakeRollerIO {
-  private final TalonFX indexerMotor;
+  private final TalonFX intakeRollerMotor;
   TalonFXConfiguration indexerConfig;
   Debouncer beamBreakDebouncer = new Debouncer(beamBreakDebounce);
   private DigitalInput beamBreak;
@@ -35,40 +35,44 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
   private double desiredVelocity;
 
   public IntakeRollerIOTalonFX() {
-    indexerMotor = new TalonFX(rollersMotorID, rollersMotorCANBus);
+    intakeRollerMotor = new TalonFX(rollersMotorID, rollersMotorCANBus);
     beamBreak = new DigitalInput(IntakeRollerConstants.beamBreakPort);
 
     indexerConfig = new TalonFXConfiguration();
 
-    indexerMotor.setNeutralMode(NeutralModeValue.Brake);
+    // Basic wrist motor config setup
+    intakeRollerMotor.setNeutralMode(NeutralModeValue.Brake);
+    indexerConfig.CurrentLimits.SupplyCurrentLimitEnable = EnableCurrentLimit;
+    indexerConfig.CurrentLimits.SupplyCurrentLimit = ContinousCurrentLimit;
+    indexerConfig.CurrentLimits.SupplyCurrentLowerLimit = PeakCurrentLimit;
+    indexerConfig.CurrentLimits.SupplyCurrentLowerTime = PeakCurrentDuration;
 
+    // PID
     indexerConfig.Slot0.kP = realP;
     indexerConfig.Slot0.kI = realI;
     indexerConfig.Slot0.kD = realD;
     indexerConfig.Slot0.kS = realS;
     indexerConfig.Slot0.kV = realV;
 
-    indexerConfig.CurrentLimits.SupplyCurrentLimitEnable = EnableCurrentLimit;
-    indexerConfig.CurrentLimits.SupplyCurrentLimit = ContinousCurrentLimit;
-    indexerConfig.CurrentLimits.SupplyCurrentLowerLimit = PeakCurrentLimit;
-    indexerConfig.CurrentLimits.SupplyCurrentLowerTime = PeakCurrentDuration;
-
+    // Debouncer for beambreak
     beamBreakDebouncer.setDebounceType(DebounceType.kFalling);
 
-    PhoenixUtil.tryUntilOk(10, () -> indexerMotor.getConfigurator().apply(indexerConfig, 1));
-    indexerMotor.optimizeBusUtilization();
+    // setting the actual loggging variables for DogLog & tryna make sure the motor actually uses our custom config
+    PhoenixUtil.tryUntilOk(10, () -> intakeRollerMotor.getConfigurator().apply(indexerConfig, 1));
+    intakeRollerMotor.optimizeBusUtilization();
 
-    velocity = indexerMotor.getVelocity();
-    appliedVolts = indexerMotor.getMotorVoltage();
-    statorCurrent = indexerMotor.getStatorCurrent();
-    temperature = indexerMotor.getDeviceTemp();
-    supplyCurrent = indexerMotor.getSupplyCurrent();
+    velocity = intakeRollerMotor.getVelocity();
+    appliedVolts = intakeRollerMotor.getMotorVoltage();
+    statorCurrent = intakeRollerMotor.getStatorCurrent();
+    temperature = intakeRollerMotor.getDeviceTemp();
+    supplyCurrent = intakeRollerMotor.getSupplyCurrent();
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, velocity, temperature, supplyCurrent, statorCurrent, appliedVolts);
   }
 
   @Override
   public void updateInputs() {
+    // constanly updating the actual loggging variables for DogLog
     BaseStatusSignal.refreshAll(velocity, temperature, statorCurrent, supplyCurrent, appliedVolts);
     super.appliedVolts = appliedVolts.getValueAsDouble();
     super.statorCurrentAmps = statorCurrent.getValueAsDouble();
@@ -80,6 +84,7 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
     super.isNoteDetected = beamBreakDebouncer.calculate(!beamBreak.get());
     super.state = currentState; 
 
+    // basic logging for the motor
     DogLog.log("IntakeRollers/Velocity", super.velocity);
     DogLog.log("IntakeRollers/AppliedVoltage", super.appliedVolts);
     DogLog.log("IntakeRollers/TempCelcius", super.tempCelsius);
@@ -87,18 +92,21 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
     DogLog.log("IntakeRollers/SupplyCurrentAmps", super.supplyCurrentAmps);
     DogLog.log("IntakeRollers/State", super.state.toString());
 
+    // basic logging for the beambreak
     DogLog.log("IntakeRollers/NoteDetected", super.isNoteDetected);
     DogLog.log("IntakeRollers/BeamBreak", beamBreak.get());
   }
 
+  // stop function to stop the motor when we want
   @Override
   public void stop() {
-    indexerMotor.stopMotor();
+    intakeRollerMotor.stopMotor();
   }
 
+  // Updates the velocity of the motor depending on the state we are moving to
   @Override
   public void setVelocity(IntakeRollerStates state) {
     double velocity = SubsystemUtil.intakeRollerStateToVelocity(state);
-    indexerMotor.set(velocity);
+    intakeRollerMotor.set(velocity);
   }
 }
