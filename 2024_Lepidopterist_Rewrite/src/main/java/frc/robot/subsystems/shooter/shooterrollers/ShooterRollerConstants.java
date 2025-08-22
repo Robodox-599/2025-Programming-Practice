@@ -4,8 +4,8 @@ public class ShooterRollerConstants {
   public static enum ShooterRollerStates {
     INTAKING(0),
     SCORING(1),      
-    HOLDING(2),
-    STOW(3);
+    HOLDNOTE(2),
+    STOP(3);
 
     private final int index;
 

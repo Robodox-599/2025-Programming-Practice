@@ -18,7 +18,6 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
-import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.IntakeWristStates;
 import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants.ShooterWristStates;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
@@ -40,7 +39,7 @@ public class ShooterWristIOTalonFX extends ShooterWristIO {
     wristMotor = new TalonFX(wristMotorID, wristMotorCANBus);
     wristConfig = new TalonFXConfiguration();
     mmRequest =
-        new MotionMagicVoltage(SubsystemUtil.intakeWristStateToSetpoint(IntakeWristStates.STOW))
+        new MotionMagicVoltage(SubsystemUtil.shooterWristStateToSetpoint(ShooterWristStates.STOP))
             .withSlot(0)
             .withEnableFOC(true);
    

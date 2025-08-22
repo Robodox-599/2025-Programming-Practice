@@ -10,11 +10,13 @@ public abstract class IndexerIO {
   protected double desiredVelocity = 0.0;
   protected boolean atSetSpeed = false;
   protected boolean isNoteDetected = false;
-  protected IndexerConstants.IndexerStates state = IndexerConstants.IndexerStates.STOW;
+  protected IndexerConstants.IndexerStates state = IndexerConstants.IndexerStates.STOP;
 
   public void updateInputs() {}
 
   public void stop() {}
+
+  public void setState(IndexerConstants.IndexerStates state){}
 
   public void setVelocity(IndexerConstants.IndexerStates state) {}
 

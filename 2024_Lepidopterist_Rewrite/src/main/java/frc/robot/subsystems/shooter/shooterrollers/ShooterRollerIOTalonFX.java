@@ -24,7 +24,7 @@ public class ShooterRollerIOTalonFX extends ShooterRollerIO {
   TalonFXConfiguration indexerConfig;
   Debouncer beamBreakDebouncer = new Debouncer(beamBreakDebounce);
   private DigitalInput beamBreak;
-  private ShooterRollerConstants.ShooterRollerStates currentState = ShooterRollerStates.STOW;
+  private ShooterRollerConstants.ShooterRollerStates currentState = ShooterRollerStates.STOP;
 
   private final StatusSignal<AngularVelocity> velocity;
   private final StatusSignal<Voltage> appliedVolts;

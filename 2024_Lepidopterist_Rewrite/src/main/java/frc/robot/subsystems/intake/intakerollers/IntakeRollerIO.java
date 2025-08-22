@@ -12,7 +12,7 @@ public abstract class IntakeRollerIO {
   protected double desiredVelocity = 0.0;
   protected boolean atSetSpeed = false;
   protected boolean isNoteDetected = false;
-  protected IntakeRollerConstants.IntakeRollerStates state = IntakeRollerStates.STOW;
+  protected IntakeRollerConstants.IntakeRollerStates state = IntakeRollerStates.STOP;
 
   public void updateInputs() {}
 

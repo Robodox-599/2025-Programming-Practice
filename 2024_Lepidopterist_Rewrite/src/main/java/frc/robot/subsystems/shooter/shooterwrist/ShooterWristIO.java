@@ -14,7 +14,7 @@ public abstract class ShooterWristIO {
   protected double targetPosition = 0.0;
   protected double currentPositionDegrees = 0.0;
   protected boolean atSetpoint = false;
-  protected ShooterWristConstants.ShooterWristStates state = ShooterWristStates.STOW;
+  protected ShooterWristConstants.ShooterWristStates state = ShooterWristStates.STOP;
 
 
   public void updateInputs() {}

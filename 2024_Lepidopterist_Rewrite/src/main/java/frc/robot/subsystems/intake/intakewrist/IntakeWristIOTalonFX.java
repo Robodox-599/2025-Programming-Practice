@@ -39,7 +39,7 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     wristMotor = new TalonFX(wristMotorID, wristMotorCANBus);
     wristConfig = new TalonFXConfiguration();
     mmRequest =
-        new MotionMagicVoltage(SubsystemUtil.intakeWristStateToSetpoint(IntakeWristStates.STOW))
+        new MotionMagicVoltage(SubsystemUtil.intakeWristStateToSetpoint(IntakeWristStates.STOP))
             .withSlot(0)
             .withEnableFOC(true);
    

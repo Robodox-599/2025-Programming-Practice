@@ -14,7 +14,7 @@ public abstract class IntakeWristIO {
   protected double targetPosition = 0.0;
   protected double currentPositionDegrees = 0.0;
   protected boolean atSetpoint = false;
-  protected IntakeWristConstants.IntakeWristStates state = IntakeWristStates.STOW;
+  protected IntakeWristConstants.IntakeWristStates state = IntakeWristStates.STOP;
 
 
   public void updateInputs() {}

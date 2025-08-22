@@ -12,7 +12,7 @@ public abstract class ShooterRollerIO {
   protected double desiredVelocity = 0.0;
   protected boolean atSetSpeed = false;
   protected boolean isNoteDetected = false;
-  protected ShooterRollerConstants.ShooterRollerStates state = ShooterRollerStates.STOW;
+  protected ShooterRollerConstants.ShooterRollerStates state = ShooterRollerStates.STOP;
 
   public void updateInputs() {}
 

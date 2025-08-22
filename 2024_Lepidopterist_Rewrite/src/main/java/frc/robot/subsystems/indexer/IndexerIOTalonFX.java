@@ -24,7 +24,7 @@ public class IndexerIOTalonFX extends IndexerIO {
   TalonFXConfiguration indexerConfig;
   Debouncer beamBreakDebouncer = new Debouncer(beamBreakDebounce);
   private DigitalInput beamBreak;
-  private IndexerConstants.IndexerStates currentState = IndexerStates.STOW;
+  private IndexerConstants.IndexerStates currentState = IndexerStates.STOP;
 
   private final StatusSignal<AngularVelocity> velocity;
   private final StatusSignal<Voltage> appliedVolts;

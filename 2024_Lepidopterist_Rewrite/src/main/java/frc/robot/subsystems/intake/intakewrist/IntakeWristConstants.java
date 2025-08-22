@@ -9,9 +9,9 @@ public class IntakeWristConstants {
   // wrist states (not 100% sure these are all of the needed states)
   public static enum IntakeWristStates {
     INTAKING(0),
-    HOLDING(1),
+    HOLDNOTE(1),
     SCORING(2),
-    STOW(3);
+    STOP(3);
 
     private final int index;
 
