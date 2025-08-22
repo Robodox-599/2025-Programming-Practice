@@ -29,5 +29,12 @@ public class IndexerConstants {
   public static final double noteDebounce = 0.0;
   public static final double indexerHoldNote = 0.0;
 
-//   public static final double rotationsAfterNoteDetected = 0.0;
-}
+  public static enum indexerState {
+    NOTEDETECTED(0),
+    STOPPED(1);
+    
+    private final int index;
+    indexerState(int index) {
+      this.index = index;
+    }
+}}
