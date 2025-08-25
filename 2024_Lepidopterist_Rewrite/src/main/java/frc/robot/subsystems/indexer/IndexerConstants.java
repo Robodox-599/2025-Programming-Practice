@@ -4,8 +4,9 @@ public class IndexerConstants {
   public static enum IndexerStates {
     INTAKING(0),
     SCORING(1),      
-    HOLDNOTE(2),
-    STOP(3);
+    HOLD_NOTE(2),
+    STOP(3),
+    NO_NOTE(4);
 
     private final int index;
 
@@ -23,6 +24,7 @@ public class IndexerConstants {
     -0.4, // scoring note
     0.0, // holding note
     0.0, // stowed
+    0.0,
   };
 
   // Real Motor config constants 

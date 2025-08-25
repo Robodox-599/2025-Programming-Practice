@@ -21,15 +21,17 @@ public class Indexer {
   public enum WantedState{
     INTAKING,
     SCORING,
-    HOLDNOTE,
+    HOLD_NOTE,
     STOP,
+    NO_NOTE,
   }
 
   public enum CurrentState{
     INTAKING,
     SCORING,
-    HOLDNOTE,
+    HOLD_NOTE,
     STOP,
+    NO_NOTE,
   }
 
   public void periodic() {
@@ -45,16 +47,39 @@ public class Indexer {
     previousState = currentState;
     switch (wantedState) {
       case INTAKING:
-        currentState = CurrentState.INTAKING;
+        if(isNoteDetected()){
+          currentState = CurrentState.HOLD_NOTE;
+        }
+        else{
+          currentState = CurrentState.INTAKING;
+        }
         break;
       case SCORING:
-        currentState = CurrentState.SCORING;
+        if(isNoteDetected()){
+          currentState = CurrentState.SCORING;
+        }
+        else{
+          currentState = CurrentState.NO_NOTE;
+        }
         break;
-      case HOLDNOTE:
-        currentState = CurrentState.HOLDNOTE;
+      case HOLD_NOTE:
+        if(isNoteDetected()){
+          currentState = CurrentState.HOLD_NOTE;
+        }
+        else {
+          currentState = CurrentState.NO_NOTE;
+        }
         break;
       case STOP:
         currentState = CurrentState.STOP;
+        break;
+      case NO_NOTE:
+        if(!isNoteDetected()){
+          currentState = CurrentState.NO_NOTE;
+        }
+        else{
+          currentState = CurrentState.HOLD_NOTE;
+        }
         break;
       default:
         currentState = CurrentState.STOP;
@@ -71,8 +96,11 @@ public class Indexer {
         case SCORING:
           setVelocity(IndexerStates.SCORING);
           break;
-        case HOLDNOTE:
-          setVelocity(IndexerStates.HOLDNOTE);
+        case HOLD_NOTE:
+          setVelocity(IndexerStates.HOLD_NOTE);
+          break;
+        case NO_NOTE:
+          setVelocity(IndexerStates.NO_NOTE);
           break;
         case STOP:
           setVelocity(IndexerStates.STOP);
