@@ -14,11 +14,17 @@ public class Indexer {
 
   public enum TargetState{
     NOTEDETECTED,
+    INDEXING,
+    NOTEINPOSTION,
+    NOTENOTDETECTED,
     STOPPED
   }
 
   public enum CurrentState{
     NOTEDETECTED,
+    INDEXING,
+    NOTEINPOSTION,
+    NOTENOTDETECTED,
     STOPPED
   }
 
@@ -26,15 +32,29 @@ public class Indexer {
     io.updateInputs();
   }
 
-  private void handleStateTransitions() {
+  private void stateTransitions() {
     previousState = currentState;
     switch (targetState) {
       case NOTEDETECTED:
         if(noteDetected()){
           currentState = CurrentState.NOTEDETECTED;
         } else {
-          currentState = CurrentState.STOPPED;
+          currentState = CurrentState.NOTENOTDETECTED;
         }
+        break;
+      case INDEXING:
+        currentState = CurrentState.INDEXING;
+        if(noteInPosition()){
+          currentState = CurrentState.NOTEINPOSITION;
+        } else {
+          currentState = CurrentState.INDEXING;
+        }
+        break;
+      case NOTEINPOSITION: 
+        currentState = CurrentState.NOTEINPOSITION;
+        break;
+      case NOTENOTDETECTED:
+        currentState = CurrentState.NOTENOTDETECTED;
         break;
       case STOPPED:
         currentState = CurrentState.STOPPED;
@@ -44,12 +64,19 @@ public class Indexer {
     }
   }
 
-  private void applyStates() {
+  private void setStates() {
     if (previousState != currentState) {
       switch (currentState) {
         case NOTEDETECTED:
+          break;
+        case INDEXING:
           setVelocity(0);
           break;
+        case NOTEINPOSITION:
+          stop();
+          break;
+        case NOTENOTDETECTED:
+          stop();
         case STOPPED:
           stop();
           break;
@@ -72,7 +99,7 @@ public class Indexer {
     return io.noteDetected;
   }
 
-  public boolean noteEnsured() {
-    return io.noteEnsured;
+  public boolean noteInPosition() {
+    return io.noteInPosition;
   }
 }

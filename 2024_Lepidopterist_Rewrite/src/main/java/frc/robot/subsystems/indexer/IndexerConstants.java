@@ -31,7 +31,10 @@ public class IndexerConstants {
 
   public static enum indexerState {
     NOTEDETECTED(0),
-    STOPPED(1);
+    INDEXING(1),
+    NOTEINPOSITION(2),
+    NOTENOTDETECTED(3),
+    STOPPED(4);
     
     private final int index;
     indexerState(int index) {

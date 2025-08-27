@@ -10,7 +10,7 @@ public class IndexerIO {
 
   protected double wantedVelocity = 0.0; 
   protected boolean noteDetected = false;
-  protected boolean noteEnsured = false;
+  protected boolean noteInPosition = false;
 
   public void updateInputs() {}
 
@@ -25,7 +25,7 @@ public class IndexerIO {
     return false;
   }
 
-  public boolean isNoteEnsured() {
+  public boolean noteInPosition() {
     return false;
   }
 }

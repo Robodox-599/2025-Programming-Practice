@@ -8,7 +8,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
@@ -19,7 +18,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class IndexerIOTalonFX extends IndexerIO{
   
   private final TalonFX indexerMotor;
-  TalonFXConfiguration rollersConfig;
+  TalonFXConfiguration indexerConfig;
   private DigitalInput m_beamBreak;
   private double wantedVelocity;
   Debouncer noteDebouncer = new Debouncer(noteDebounce);
@@ -32,21 +31,19 @@ public class IndexerIOTalonFX extends IndexerIO{
   
   public IndexerIOTalonFX() {
     indexerMotor = new TalonFX(indexerMotorID, indexerMotorCANBus);
-    TalonFXConfiguration indexerConfig;
-    indexerConfig = new TalonFXConfiguration();
    
     m_beamBreak = new DigitalInput(0);
     
-    rollersConfig.Slot0.kP = realP;
-    rollersConfig.Slot0.kI = realI;
-    rollersConfig.Slot0.kD = realD;
-    rollersConfig.Slot0.kS = realS;
-    rollersConfig.Slot0.kV = realV;
+    indexerConfig.Slot0.kP = realP;
+    indexerConfig.Slot0.kI = realI;
+    indexerConfig.Slot0.kD = realD;
+    indexerConfig.Slot0.kS = realS;
+    indexerConfig.Slot0.kV = realV;
 
-    rollersConfig.CurrentLimits.SupplyCurrentLimitEnable = EnableCurrentLimit;
-    rollersConfig.CurrentLimits.SupplyCurrentLimit = ContinousCurrentLimit;
-    rollersConfig.CurrentLimits.SupplyCurrentLowerLimit = PeakCurrentLimit;
-    rollersConfig.CurrentLimits.SupplyCurrentLowerTime = PeakCurrentDuration;
+    indexerConfig.CurrentLimits.SupplyCurrentLimitEnable = EnableCurrentLimit;
+    indexerConfig.CurrentLimits.SupplyCurrentLimit = ContinousCurrentLimit;
+    indexerConfig.CurrentLimits.SupplyCurrentLowerLimit = PeakCurrentLimit;
+    indexerConfig.CurrentLimits.SupplyCurrentLowerTime = PeakCurrentDuration;
 
     indexerMotor.setNeutralMode(NeutralModeValue.Brake);
     indexerMotor.optimizeBusUtilization();
@@ -80,8 +77,8 @@ public class IndexerIOTalonFX extends IndexerIO{
     DogLog.log("Rollers/StatorCurrentAmps", super.statorCurrentAmps);
     DogLog.log("Rollers/SupplyCurrentAmps", super.supplyCurrentAmps);
     DogLog.log("Rollers/noteDetected", super.noteDetected);
-    DogLog.log("Rollers/noteEnsured", super.noteEnsured);
     DogLog.log("Rollers/BeamBreak", m_beamBreak.get());
+    DogLog.log("Rollers/noteInPosition", super.noteInPosition);
   }
 
   @Override
