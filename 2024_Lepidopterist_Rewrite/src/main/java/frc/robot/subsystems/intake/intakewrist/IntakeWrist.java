@@ -18,15 +18,13 @@ public class IntakeWrist {
 
   public enum WantedState{
     INTAKING,
-    SCORING,
-    HOLDNOTE,
+    STOW,
     STOP,
   }
 
   public enum CurrentState{
     INTAKING,
-    SCORING,
-    HOLDNOTE,
+    STOW,
     STOP,
   }
 
@@ -36,11 +34,8 @@ public class IntakeWrist {
       case INTAKING:
         currentState = CurrentState.INTAKING;
         break;
-      case SCORING:
-        currentState = CurrentState.SCORING;
-        break;
-      case HOLDNOTE:
-        currentState = CurrentState.HOLDNOTE;
+      case STOW:
+        currentState = CurrentState.STOW;
         break;
       case STOP:
         currentState = CurrentState.STOP;
@@ -57,11 +52,8 @@ public class IntakeWrist {
         case INTAKING:
           setAngle(IntakeWristStates.INTAKING);
           break;
-        case SCORING:
-          setAngle(IntakeWristStates.SCORING);
-          break;
-        case HOLDNOTE:
-          setAngle(IntakeWristStates.HOLDNOTE);
+        case STOW:
+          setAngle(IntakeWristStates.STOW);
           break;
         case STOP:
           setAngle(IntakeWristStates.STOP);

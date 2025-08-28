@@ -15,6 +15,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants.IntakeRollerStates;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
@@ -23,6 +24,7 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
   private final TalonFX intakeRollerMotor;
   TalonFXConfiguration indexerConfig;
   Debouncer beamBreakDebouncer = new Debouncer(beamBreakDebounce);
+  private Timer beamBreakTimer = new Timer(); 
   private DigitalInput beamBreak;
   private IntakeRollerConstants.IntakeRollerStates currentState = IntakeRollerStates.STOP;
 
@@ -37,6 +39,7 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
   public IntakeRollerIOTalonFX() {
     intakeRollerMotor = new TalonFX(rollersMotorID, rollersMotorCANBus);
     beamBreak = new DigitalInput(IntakeRollerConstants.beamBreakPort);
+    beamBreakTimer.start();
 
     indexerConfig = new TalonFXConfiguration();
 
@@ -69,6 +72,12 @@ public class IntakeRollerIOTalonFX extends IntakeRollerIO {
   @Override
   public void updateInputs() {
     BaseStatusSignal.refreshAll(velocity, temperature, statorCurrent, supplyCurrent, appliedVolts);
+
+    if(beamBreak.get())
+    {
+      beamBreakTimer.reset();
+    }
+
     super.appliedVolts = appliedVolts.getValueAsDouble();
     super.statorCurrentAmps = statorCurrent.getValueAsDouble();
     super.supplyCurrentAmps = supplyCurrent.getValueAsDouble();

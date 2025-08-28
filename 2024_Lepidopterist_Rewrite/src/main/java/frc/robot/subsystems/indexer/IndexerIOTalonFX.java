@@ -15,6 +15,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.indexer.IndexerConstants.IndexerStates;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
@@ -24,6 +25,7 @@ public class IndexerIOTalonFX extends IndexerIO {
   TalonFXConfiguration indexerConfig;
   Debouncer beamBreakDebouncer = new Debouncer(beamBreakDebounce);
   private DigitalInput beamBreak;
+  private Timer beamBreakTimer = new Timer(); 
   private IndexerConstants.IndexerStates currentState = IndexerStates.STOP;
 
   private final StatusSignal<AngularVelocity> velocity;
@@ -52,7 +54,7 @@ public class IndexerIOTalonFX extends IndexerIO {
     indexerConfig.Slot0.kS = realS;
     indexerConfig.Slot0.kV = realV;
 
-    beamBreakDebouncer.setDebounceType(DebounceType.kFalling);
+    beamBreakDebouncer.setDebounceType(DebounceType.kRising);
 
     PhoenixUtil.tryUntilOk(10, () -> indexerMotor.getConfigurator().apply(indexerConfig, 1));
     indexerMotor.optimizeBusUtilization();
@@ -68,6 +70,12 @@ public class IndexerIOTalonFX extends IndexerIO {
   @Override
   public void updateInputs() {
     BaseStatusSignal.refreshAll(velocity, temperature, statorCurrent, supplyCurrent, appliedVolts);
+
+    if(beamBreak.get())
+    {
+      beamBreakTimer.reset();
+    }
+
     super.appliedVolts = appliedVolts.getValueAsDouble();
     super.statorCurrentAmps = statorCurrent.getValueAsDouble();
     super.supplyCurrentAmps = supplyCurrent.getValueAsDouble();

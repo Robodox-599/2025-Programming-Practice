@@ -51,7 +51,7 @@ public class IndexerConstants {
   // BeamBreak constants
 
   public static final int beamBreakPort = 3;
-  public static final double beamBreakDebounce = 0.3;
+  public static final double beamBreakDebounce = 0.015;
 
   // Velocity Clamps
 

@@ -1,60 +1,69 @@
 package frc.robot.subsystems.intake.intakerollers;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants.IntakeRollerStates;
 
 public class IntakeRoller {
   private final IntakeRollerIO io;
-  private Timer beamBreakTimer = new Timer(); 
-  private DigitalInput beamBreak;
   private WantedState wantedState = WantedState.STOP;
   private CurrentState currentState = CurrentState.STOP;
   private CurrentState previousState = CurrentState.STOP;
 
   public IntakeRoller(IntakeRollerIO io) {
     this.io = io;
-    beamBreakTimer.start();
-    beamBreak = new DigitalInput(IntakeRollerConstants.beamBreakPort);
   }
 
   public void periodic() {
       io.updateInputs();
-
-      if(beamBreak.get())
-      {
-        beamBreakTimer.reset();
-      }
   }
 
   public enum WantedState{
     INTAKING,
     SCORING,
-    HOLDNOTE,
+    HOLD_NOTE,
     STOP,
+    NO_NOTE,
   }
 
   public enum CurrentState{
     INTAKING,
     SCORING,
-    HOLDNOTE,
+    HOLD_NOTE,
     STOP,
+    NO_NOTE,
   }
 
   public void handleStateTransitions(){
     previousState = currentState;
     switch (wantedState) {
       case INTAKING:
-        currentState = CurrentState.INTAKING;
+        if(isNoteDetected()){
+          currentState = CurrentState.HOLD_NOTE;
+        }
+        else{
+          currentState = CurrentState.INTAKING;
+        }
         break;
       case SCORING:
-        currentState = CurrentState.SCORING;
+        if(!isNoteDetected()){
+          currentState = CurrentState.NO_NOTE;
+        }
+        else{
+          currentState = CurrentState.SCORING;
+        }
         break;
-      case HOLDNOTE:
-        currentState = CurrentState.HOLDNOTE;
+      case HOLD_NOTE:
+        currentState = CurrentState.HOLD_NOTE;
         break;
       case STOP:
         currentState = CurrentState.STOP;
+        break;
+      case NO_NOTE:
+        if(!isNoteDetected()){
+          currentState = CurrentState.NO_NOTE;
+        }
+        else{
+          currentState = CurrentState.HOLD_NOTE;
+        }
         break;
       default:
         currentState = CurrentState.STOP;
@@ -71,7 +80,7 @@ public class IntakeRoller {
         case SCORING:
           setVelocity(IntakeRollerStates.SCORING);
           break;
-        case HOLDNOTE:
+        case HOLD_NOTE:
           setVelocity(IntakeRollerStates.HOLDNOTE);
           break;
         case STOP:

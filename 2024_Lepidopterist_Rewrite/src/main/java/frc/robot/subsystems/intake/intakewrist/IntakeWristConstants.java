@@ -9,9 +9,8 @@ public class IntakeWristConstants {
   // wrist states (not 100% sure these are all of the needed states)
   public static enum IntakeWristStates {
     INTAKING(0),
-    HOLDNOTE(1),
-    SCORING(2),
-    STOP(3);
+    STOW(1),
+    STOP(2);
 
     private final int index;
 
@@ -28,9 +27,8 @@ public class IntakeWristConstants {
 
   public static final double[] intakeWristSetpoints = {
     0.6, // INTAKING
-    0.4, // HOLDING
-    0.7, // SCORING
-    0.05 // STOW
+    0.4, // STOW
+    0.0 // STOP
   };
 
   // Real motor config constants

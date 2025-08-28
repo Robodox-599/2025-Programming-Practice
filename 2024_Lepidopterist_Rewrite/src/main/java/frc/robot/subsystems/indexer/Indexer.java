@@ -1,21 +1,15 @@
 package frc.robot.subsystems.indexer;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.indexer.IndexerConstants.IndexerStates;
 
 public class Indexer {
   private final IndexerIO io;
-  private Timer beamBreakTimer = new Timer(); 
-  private DigitalInput beamBreak;
   private WantedState wantedState = WantedState.STOP;
   private CurrentState currentState = CurrentState.STOP;
   private CurrentState previousState = CurrentState.STOP;
 
   public Indexer(IndexerIO io) {
     this.io = io;
-    beamBreakTimer.start();
-    beamBreak = new DigitalInput(IndexerConstants.beamBreakPort);
   }
 
   public enum WantedState{
@@ -34,13 +28,8 @@ public class Indexer {
     NO_NOTE,
   }
 
-  public void periodic() {
+  public void updateInputs() {
       io.updateInputs();
-
-      if(beamBreak.get())
-      {
-        beamBreakTimer.reset();
-      }
   }
 
   public void handleStateTransitions(){
@@ -55,20 +44,15 @@ public class Indexer {
         }
         break;
       case SCORING:
-        if(isNoteDetected()){
-          currentState = CurrentState.SCORING;
+        if(!isNoteDetected()){
+          currentState = CurrentState.NO_NOTE;
         }
         else{
-          currentState = CurrentState.NO_NOTE;
+          currentState = CurrentState.SCORING;
         }
         break;
       case HOLD_NOTE:
-        if(isNoteDetected()){
-          currentState = CurrentState.HOLD_NOTE;
-        }
-        else {
-          currentState = CurrentState.NO_NOTE;
-        }
+        currentState = CurrentState.HOLD_NOTE;
         break;
       case STOP:
         currentState = CurrentState.STOP;

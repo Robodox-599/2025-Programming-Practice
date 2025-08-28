@@ -3,8 +3,8 @@ package frc.robot.util;
 import frc.robot.subsystems.indexer.IndexerConstants;
 import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants;
 import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants;
-import frc.robot.subsystems.shooter.shooterrollers.ShooterRollerConstants;
-import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants;
+//import frc.robot.subsystems.shooter.shooterrollers.ShooterRollerConstants;
+//import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants;
 
 public class SubsystemUtil {
   /*
@@ -28,9 +28,9 @@ public class SubsystemUtil {
     return IntakeRollerConstants.intakeRollerVelocities[state.getIndex()];
   }
 
-  public static double shooterRollerStateToVelocity(ShooterRollerConstants.ShooterRollerStates state) {
-    return ShooterRollerConstants.shooterRollerVelocities[state.getIndex()];
-  }
+  //public static double shooterRollerStateToVelocity(ShooterRollerConstants.ShooterRollerStates state) {
+    //return ShooterRollerConstants.shooterRollerVelocities[state.getIndex()];
+  //}
    
    /*
   public static double rollersStateToVelocity(IntakeRollersConstants.RollersStates state) {
@@ -52,7 +52,7 @@ public class SubsystemUtil {
     public static double intakeWristStateToSetpoint(IntakeWristConstants.IntakeWristStates state) {
       return (IntakeWristConstants.intakeWristSetpoints[state.getIndex()]);
     }
-    public static double shooterWristStateToSetpoint(ShooterWristConstants.ShooterWristStates state) {
-      return (ShooterWristConstants.shooterWristSetpoints[state.getIndex()]);
-    }
+    //public static double shooterWristStateToSetpoint(ShooterWristConstants.ShooterWristStates state) {
+      //return (ShooterWristConstants.shooterWristSetpoints[state.getIndex()]);
+    //}
 }
