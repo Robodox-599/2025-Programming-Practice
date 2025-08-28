@@ -13,18 +13,14 @@ public class IndexerIO {
   protected boolean noteInPosition = false;
 
   public void updateInputs() {}
-
   public void setVelocity(double velocity) {}
-
   public double getVelocity() {
     return velocity;
   }
   public void stop() {}
-
   public boolean isNoteDetected() {
     return false;
   }
-
   public boolean noteInPosition() {
     return false;
   }

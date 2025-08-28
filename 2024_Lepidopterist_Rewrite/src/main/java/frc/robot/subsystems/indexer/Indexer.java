@@ -10,6 +10,8 @@ public class Indexer {
 
   public Indexer(IndexerIO io) {
     this.io = io;
+    DogLog.log("Rollers/CurrentState", currentState);
+    DogLog.log("Rollers/WantedState", targetState);
   }
 
   public enum TargetState{
@@ -45,13 +47,13 @@ public class Indexer {
       case INDEXING:
         currentState = CurrentState.INDEXING;
         if(noteInPosition()){
-          currentState = CurrentState.NOTEINPOSITION;
+          currentState = CurrentState.NOTEINPOSTION;
         } else {
           currentState = CurrentState.INDEXING;
         }
         break;
-      case NOTEINPOSITION: 
-        currentState = CurrentState.NOTEINPOSITION;
+      case NOTEINPOSTION: 
+        currentState = CurrentState.NOTEINPOSTION;
         break;
       case NOTENOTDETECTED:
         currentState = CurrentState.NOTENOTDETECTED;
@@ -72,7 +74,7 @@ public class Indexer {
         case INDEXING:
           setVelocity(0);
           break;
-        case NOTEINPOSITION:
+        case NOTEINPOSTION:
           stop();
           break;
         case NOTENOTDETECTED:

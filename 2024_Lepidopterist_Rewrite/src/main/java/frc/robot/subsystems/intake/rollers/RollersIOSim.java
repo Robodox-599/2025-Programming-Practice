@@ -2,14 +2,12 @@ package frc.robot.subsystems.intake.rollers;
 import static frc.robot.subsystems.intake.rollers.RollersConstants.*;
 
 import dev.doglog.DogLog;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 public class RollersIOSim extends RollersIO {
   private final DCMotorSim rollersSim;
-  private PIDController rollersController = new PIDController(simkP, simkI, simkD);
   private static final DCMotor ROLLERS_GEARBOX = DCMotor.getKrakenX60Foc(1);
 
   public RollersIOSim() {
@@ -17,8 +15,6 @@ public class RollersIOSim extends RollersIO {
         new DCMotorSim(
             LinearSystemId.createDCMotorSystem(ROLLERS_GEARBOX, rollersMOI, gearRatio),
             ROLLERS_GEARBOX);
-    rollersController =
-        new PIDController(simkP, simkI, simkD);
   }
 
   @Override

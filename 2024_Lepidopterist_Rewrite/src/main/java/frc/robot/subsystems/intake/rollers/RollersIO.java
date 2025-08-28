@@ -9,12 +9,10 @@ public class RollersIO {
     protected double tempCelsius = 0.0;
   
     public void updateInputs() {}
-  
     public void setVelocity(double velocity) {}
-  
+    public void stop() {}
     public double getSpeed() {
       return velocity;
     }
-    public void stop() {}
   }
   
