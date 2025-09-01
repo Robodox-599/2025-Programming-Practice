@@ -1,19 +1,23 @@
 package frc.robot.subsystems.intake.intakerollers;
 
 import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants.IntakeRollerStates;
+import frc.robot.util.SubsystemChecker;
 
 public class IntakeRoller {
   private final IntakeRollerIO io;
   private WantedState wantedState = WantedState.STOP;
   private CurrentState currentState = CurrentState.STOP;
   private CurrentState previousState = CurrentState.STOP;
+  private SubsystemChecker subsystemChecker;
 
-  public IntakeRoller(IntakeRollerIO io) {
+  public IntakeRoller(IntakeRollerIO io, SubsystemChecker subsystemChecker) {
     this.io = io;
+    this.subsystemChecker = subsystemChecker;
   }
 
   public void periodic() {
       io.updateInputs();
+      subsystemChecker.updateIntakeRollerDetector(isNoteDetected());
   }
 
   public enum WantedState{
