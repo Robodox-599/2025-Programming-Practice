@@ -1,5 +1,5 @@
 package frc.robot.subsystems.intake.wrist;
-import static frc.robot.subsystems.intake.wrist.WristConstants.*;
+import static frc.robot.subsystems.intake.wrist.IntakeWristConstants.*;
 
 import dev.doglog.DogLog;
 import com.ctre.phoenix6.StatusSignal;
@@ -16,7 +16,7 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 
-public class WristIOTalonFX extends WristIO {
+public class IntakeWristIOTalonFX extends IntakeWristIO {
 
   private final TalonFX wristMotor;
   TalonFXConfiguration wristConfig;
@@ -32,7 +32,7 @@ public class WristIOTalonFX extends WristIO {
   private final MotionMagicVoltage m_request;
   private final CANcoder cancoder;
 
-  public WristIOTalonFX() {
+  public IntakeWristIOTalonFX() {
 
     wristMotor = new TalonFX(wristMotorID, wristMotorCANBus);
     wristConfig = new TalonFXConfiguration();
@@ -76,13 +76,13 @@ public class WristIOTalonFX extends WristIO {
     super.currentPosition = position.getValueAsDouble();
     super.tempCelsius = temperature.getValueAsDouble();
    
-    DogLog.log("Wrist/Velocity", super.velocity);
-    DogLog.log("Wrist/CurrentAmps", super.currentAmps);
-    DogLog.log("Wrist/Temperature", super.tempCelsius);
-    DogLog.log("Wrist/TargetPosition", targetPosition);
-    DogLog.log("Wrist/AppliedVoltage", super.appliedVoltage);
-    DogLog.log("Wrist/CurrentPosition", super.currentPosition);
-    DogLog.log("Wrist/AbsolutePosition", absolutePosition.getValueAsDouble());
+    DogLog.log("Intake/Wrist/Velocity", super.velocity);
+    DogLog.log("Intake/Wrist/CurrentAmps", super.currentAmps);
+    DogLog.log("Intake/Wrist/Temperature", super.tempCelsius);
+    DogLog.log("Intake/Wrist/TargetPosition", targetPosition);
+    DogLog.log("Intake/Wrist/AppliedVoltage", super.appliedVoltage);
+    DogLog.log("Intake/Wrist/CurrentPosition", super.currentPosition);
+    DogLog.log("Intake/Wrist/AbsolutePosition", absolutePosition.getValueAsDouble());
   }
   @Override
   public void goToAngle(double angle) {

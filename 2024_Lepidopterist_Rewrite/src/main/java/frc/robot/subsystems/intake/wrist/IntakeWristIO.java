@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.wrist;
 
-public class WristIO {
+public class IntakeWristIO {
     protected double appliedVoltage = 0;
     protected double velocity = 0;
     protected double currentAmps = 0;

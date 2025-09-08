@@ -1,23 +1,23 @@
-package frc.robot.subsystems.intake.wrist;
+package frc.robot.subsystems.shooter.wrist;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import static frc.robot.subsystems.intake.wrist.WristConstants.*;
+import static frc.robot.subsystems.intake.wrist.IntakeWristConstants.*;
 
-public class WristIOSim extends WristIO {
+public class ShooterWristIOSim extends ShooterWristIO {
   private final DCMotorSim wristSim;
   private PIDController wristPID = new PIDController(simkP, simkI, simkD);
   private static final DCMotor WRIST_GEARBOX = DCMotor.getKrakenX60Foc(1);
 
-  public WristIOSim() {
+  public ShooterWristIOSim() {
     wristSim =
         new DCMotorSim(
             LinearSystemId.createDCMotorSystem(WRIST_GEARBOX, wristMOI, gearRatio), WRIST_GEARBOX);
 
-    wristPID = new PIDController(WristConstants.simkP, WristConstants.simkI, WristConstants.simkD);
+    wristPID = new PIDController(simkP, simkI, simkD);
   }
 
   @Override
@@ -30,11 +30,11 @@ public class WristIOSim extends WristIO {
     super.velocity = wristSim.getAngularVelocityRPM() / 60.0;
     super.currentPosition = wristSim.getAngularPositionRotations();
 
-    DogLog.log("Wrist/Temperature", super.tempCelsius);
-    DogLog.log("Wrist/CurrentAmps", super.currentAmps);
-    DogLog.log("Wrist/TargetPosition", super.targetPosition);
-    DogLog.log("Wrist/AppliedVoltage", super.appliedVoltage);
-    DogLog.log("Wrist/CurrentPosition", super.currentPosition);
+    DogLog.log("Shooter/Wrist/Temperature", super.tempCelsius);
+    DogLog.log("Shooter/Wrist/CurrentAmps", super.currentAmps);
+    DogLog.log("Shooter/Wrist/TargetPosition", super.targetPosition);
+    DogLog.log("Shooter/Wrist/AppliedVoltage", super.appliedVoltage);
+    DogLog.log("Shooter/Wrist/CurrentPosition", super.currentPosition);
   
 
     wristSim.setInputVoltage(

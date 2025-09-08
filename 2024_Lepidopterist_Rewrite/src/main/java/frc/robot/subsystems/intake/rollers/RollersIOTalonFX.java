@@ -71,11 +71,11 @@ public class RollersIOTalonFX extends RollersIO{
     super.supplyCurrentAmps = supplyCurrent.getValueAsDouble();
     super.tempCelsius = temperature.getValueAsDouble();
    
-    DogLog.log("Rollers/Velocity", super.velocity);
-    DogLog.log("Rollers/AppliedVoltage", super.appliedVoltage);
-    DogLog.log("Rollers/TempCelcius", super.tempCelsius);
-    DogLog.log("Rollers/StatorCurrentAmps", super.statorCurrentAmps);
-    DogLog.log("Rollers/SupplyCurrentAmps", super.supplyCurrentAmps);
+    DogLog.log("Intake/Rollers/Velocity", super.velocity);
+    DogLog.log("Intake/Rollers/AppliedVoltage", super.appliedVoltage);
+    DogLog.log("Intake/Rollers/TempCelcius", super.tempCelsius);
+    DogLog.log("Intake/Rollers/StatorCurrentAmps", super.statorCurrentAmps);
+    DogLog.log("Intake/Rollers/SupplyCurrentAmps", super.supplyCurrentAmps);
   }
 
   @Override

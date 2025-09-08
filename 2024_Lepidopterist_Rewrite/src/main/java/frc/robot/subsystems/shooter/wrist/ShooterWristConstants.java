@@ -1,6 +1,6 @@
-package frc.robot.subsystems.intake.wrist;
+package frc.robot.subsystems.shooter.wrist;
 
-public class WristConstants {
+public class ShooterWristConstants {
 
     public static final int wristMotorID = 0;
     public static final String wristMotorCANBus = "rio";
@@ -30,9 +30,11 @@ public class WristConstants {
     public static final double cancoderOffset = 0;
 
     public static enum WristStates {
-      INTAKING(0),
-      STOW(1),
-      STOPPED(2);
+      SHOOTINGSPEAKER(0),
+      SHOOTINGAMP(1),
+      HOLD(2),
+      STOW(3),
+      STOPPED(4);
 
       private final int index;
       WristStates(int index) {

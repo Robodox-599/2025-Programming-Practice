@@ -2,12 +2,12 @@ package frc.robot.subsystems.intake.wrist;
 
 import dev.doglog.DogLog;
 
-public class Wrist {
-  private final WristIO io;
+public class IntakeWrist {
+  private final IntakeWristIO io;
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
 
-  public Wrist(WristIO io) {
+  public IntakeWrist(IntakeWristIO io) {
     this.io = io;
   }
 
@@ -78,7 +78,7 @@ public class Wrist {
     io.goToAngle(angle);
   }
 
-  public WristIO getIO() {
+  public IntakeWristIO getIO() {
     return io;
   }
 }
