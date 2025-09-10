@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.intake.intakewrist;
+package frc.robot.subsystems.shooter.shooterwrist;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -11,6 +11,7 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import dev.doglog.DogLog;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Angle;
@@ -18,13 +19,12 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
-import frc.robot.subsystems.intake.intakewrist.ShooterWristConstants.ShooterWristStates;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants.ShooterWristStates;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
-import static frc.robot.subsystems.intake.intakewrist.ShooterWristConstants.*;
 
-public class IntakeWristIOTalonFX extends IntakeWristIO {
-
+public class ShooterWristIOTalonFX extends SubsystemBase {
   private final TalonFX wristMotor;
   TalonFXConfiguration wristConfig;
   private final MotionMagicVoltage mmRequest;
@@ -39,7 +39,7 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     wristMotor = new TalonFX(wristMotorID, wristMotorCANBus);
     wristConfig = new TalonFXConfiguration();
     mmRequest =
-        new MotionMagicVoltage(SubsystemUtil.intakeWristStateToSetpoint(ShooterWristStates.STOP))
+        new MotionMagicVoltage(SubsystemUtil.shooterWristStateToSetpoint(ShooterWristStates.STOP))
             .withSlot(0)
             .withEnableFOC(true);
    
@@ -82,13 +82,13 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     super.atSetpoint =
         Math.abs(super.currentPositionDegrees - super.targetPosition) < wristPositionTolerance;
 
-    DogLog.log("IntakeWrist/AppliedVoltage", super.appliedVolts);
-    DogLog.log("IntakeWrist/CurrentAmps", super.currentAmps);
-    DogLog.log("IntakeWrist/Velocity", super.velocity);
-    DogLog.log("IntakeWrist/Temperature", super.tempCelsius);
-    DogLog.log("IntakeWrist/CurrentPosition", super.currentPositionDegrees);
-    DogLog.log("IntakeWrist/WristAtSetpoint", super.atSetpoint);
-    DogLog.log("IntakeWrist/TargetPosition", targetPosition);
+    DogLog.log("ShooterWrist/AppliedVoltage", super.appliedVolts);
+    DogLog.log("ShooterWrist/CurrentAmps", super.currentAmps);
+    DogLog.log("ShooterWrist/Velocity", super.velocity);
+    DogLog.log("ShooterWrist/Temperature", super.tempCelsius);
+    DogLog.log("ShooterWrist/CurrentPosition", super.currentPositionDegrees);
+    DogLog.log("ShooterWrist/WristAtSetpoint", super.atSetpoint);
+    DogLog.log("ShooterWrist/TargetPosition", targetPosition);
   }
 
   @Override
@@ -109,7 +109,7 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
   @Override
   public void setAngle(ShooterWristStates state) { 
     double position =
-        MathUtil.clamp(SubsystemUtil.intakeWristStateToSetpoint(state), wristMinAngle, wristMaxAngle);
+        MathUtil.clamp(SubsystemUtil.shooterWristStateToSetpoint(state), wristMinAngle, wristMaxAngle);
     super.targetPosition = position;
     mmRequest.withPosition(position);
     wristMotor.setControl(mmRequest);

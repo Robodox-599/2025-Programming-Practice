@@ -1,20 +1,16 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.intake.intakewrist;
+package frc.robot.subsystems.shooter.shooterwrist;
 
-public class IntakeWristConstants {
-
+public class ShooterWristConstants {
   // wrist states (not 100% sure these are all of the needed states)
-  public static enum IntakeWristStates {
+  public static enum ShooterWristStates {
     INTAKING(0),
     STOW(1),
     STOP(2);
 
     private final int index;
 
-    IntakeWristStates(int index) {
+    ShooterWristStates(int index) {
       this.index = index;
     }
 
@@ -25,7 +21,7 @@ public class IntakeWristConstants {
 
   // Setpoints
 
-  public static final double[] intakeWristSetpoints = {
+  public static final double[] shooterWristSetpoints = {
     0.6, // INTAKING
     0.4, // STOW
     0.0 // STOP

@@ -1,14 +1,19 @@
-package frc.robot.subsystems.intake.intakewrist;
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
-import frc.robot.subsystems.intake.intakewrist.ShooterWristConstants.ShooterWristStates;
+package frc.robot.subsystems.shooter.shooterwrist;
 
-public class IntakeWrist {
-  private final IntakeWristIO io;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants.ShooterWristStates;
+
+public class ShooterWrist extends SubsystemBase {
+  private final ShooterWristIO io;
   private WantedState wantedState = WantedState.STOP;
   private CurrentState currentState = CurrentState.STOP;
   private CurrentState previousState = CurrentState.STOP;
 
-  public IntakeWrist(IntakeWristIO io) {
+  public ShooterWrist(ShooterWristIO io) {
     this.io = io;
   }
 
