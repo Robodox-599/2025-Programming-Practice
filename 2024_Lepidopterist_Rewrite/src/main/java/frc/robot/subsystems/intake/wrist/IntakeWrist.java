@@ -34,7 +34,7 @@ public class IntakeWrist {
         currentState = CurrentState.INTAKING;
         break;
       case STOW:
-        currentState = CurrentState.STOPPED;
+        currentState = CurrentState.STOW;
         break;
       case STOPPED:
         currentState = CurrentState.STOPPED;

@@ -30,10 +30,10 @@ public class IndexerConstants {
   public static final double indexerHoldNote = 0;
 
   public static enum indexerState {
-    NOTEDETECTED(0),
+    NO_NOTE(0),
     INDEXING(1),
-    NOTEINPOSITION(2),
-    NOTENOTDETECTED(3),
+    NOTE_IN_POSITION(2),
+    HOLD_NOTE(3),
     STOPPED(4);
     
     private final int index;

@@ -30,9 +30,9 @@ public class ShooterWristConstants {
     public static final double cancoderOffset = 0;
 
     public static enum WristStates {
-      SHOOTINGSPEAKER(0),
-      SHOOTINGAMP(1),
-      HOLD(2),
+      SHOOTING_SPEAKER(0),
+      SHOOTING_AMP(1),
+      HOLDING(2),
       STOW(3),
       STOPPED(4);
 

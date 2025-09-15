@@ -15,18 +15,18 @@ public class Indexer {
   }
 
   public enum TargetState{
-    NOTEDETECTED,
+    NO_NOTE,
     INDEXING,
-    NOTEINPOSTION,
-    NOTENOTDETECTED,
+    NOTE_IN_POSTION,
+    HOLD_NOTE,
     STOPPED
   }
 
   public enum CurrentState{
-    NOTEDETECTED,
+    NO_NOTE,
     INDEXING,
-    NOTEINPOSTION,
-    NOTENOTDETECTED,
+    NOTE_IN_POSTION,
+    HOLD_NOTE,
     STOPPED
   }
 
@@ -37,26 +37,26 @@ public class Indexer {
   private void stateTransitions() {
     previousState = currentState;
     switch (targetState) {
-      case NOTEDETECTED:
-        if(noteDetected()){
-          currentState = CurrentState.NOTEDETECTED;
-        } else {
-          currentState = CurrentState.NOTENOTDETECTED;
-        }
+      case NO_NOTE:
+        currentState = CurrentState.NO_NOTE;
         break;
       case INDEXING:
         currentState = CurrentState.INDEXING;
         if(noteInPosition()){
-          currentState = CurrentState.NOTEINPOSTION;
+          currentState = CurrentState.NOTE_IN_POSTION;
         } else {
           currentState = CurrentState.INDEXING;
         }
         break;
-      case NOTEINPOSTION: 
-        currentState = CurrentState.NOTEINPOSTION;
+      case NOTE_IN_POSTION: 
+      if(noteInPosition()){
+        currentState = CurrentState.NOTE_IN_POSTION;
+      } else {
+        currentState = CurrentState.INDEXING;
+      }
         break;
-      case NOTENOTDETECTED:
-        currentState = CurrentState.NOTENOTDETECTED;
+      case HOLD_NOTE:
+        currentState = CurrentState.HOLD_NOTE;
         break;
       case STOPPED:
         currentState = CurrentState.STOPPED;
@@ -69,15 +69,15 @@ public class Indexer {
   private void setStates() {
     if (previousState != currentState) {
       switch (currentState) {
-        case NOTEDETECTED:
+        case NO_NOTE:
           break;
         case INDEXING:
           setVelocity(0);
           break;
-        case NOTEINPOSTION:
+        case NOTE_IN_POSTION:
           stop();
           break;
-        case NOTENOTDETECTED:
+        case HOLD_NOTE:
           stop();
         case STOPPED:
           stop();
