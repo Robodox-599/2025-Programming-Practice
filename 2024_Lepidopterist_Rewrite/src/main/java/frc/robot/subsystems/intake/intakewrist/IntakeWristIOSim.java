@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems.intake.intakewrist;
 
-import static frc.robot.subsystems.intake.intakewrist.ShooterWristConstants.*;
+import static frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.*;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.math.MathUtil;
@@ -12,7 +12,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import frc.robot.subsystems.intake.intakewrist.ShooterWristConstants.ShooterWristStates;
+import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.IntakeWristStates;
 
 public class IntakeWristIOSim extends IntakeWristIO {
   private static final DCMotor WRIST_GEARBOX = DCMotor.getKrakenX60Foc(1);
@@ -63,9 +63,9 @@ public class IntakeWristIOSim extends IntakeWristIO {
   }
 
   @Override
-  public void setAngle(ShooterWristStates state) {
+  public void setAngle(IntakeWristStates state) {
     targetPosition =
-        MathUtil.clamp(ShooterWristConstants.intakeWristSetpoints[state.getIndex()], wristMinAngle, wristMaxAngle);
+        MathUtil.clamp(IntakeWristConstants.intakeWristSetpoints[state.getIndex()], wristMinAngle, wristMaxAngle);
     wristSim.setInputVoltage(wristPID.calculate(targetPosition));
   }
 }

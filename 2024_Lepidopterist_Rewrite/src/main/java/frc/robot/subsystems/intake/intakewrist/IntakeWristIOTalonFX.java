@@ -18,10 +18,10 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
-import frc.robot.subsystems.intake.intakewrist.ShooterWristConstants.ShooterWristStates;
+import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.IntakeWristStates;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
-import static frc.robot.subsystems.intake.intakewrist.ShooterWristConstants.*;
+import static frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.*;
 
 public class IntakeWristIOTalonFX extends IntakeWristIO {
 
@@ -39,7 +39,7 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     wristMotor = new TalonFX(wristMotorID, wristMotorCANBus);
     wristConfig = new TalonFXConfiguration();
     mmRequest =
-        new MotionMagicVoltage(SubsystemUtil.intakeWristStateToSetpoint(ShooterWristStates.STOP))
+        new MotionMagicVoltage(SubsystemUtil.intakeWristStateToSetpoint(IntakeWristStates.STOP))
             .withSlot(0)
             .withEnableFOC(true);
    
@@ -107,7 +107,7 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
   }
 
   @Override
-  public void setAngle(ShooterWristStates state) { 
+  public void setAngle(IntakeWristStates state) { 
     double position =
         MathUtil.clamp(SubsystemUtil.intakeWristStateToSetpoint(state), wristMinAngle, wristMaxAngle);
     super.targetPosition = position;

@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake.intakewrist;
 
-import frc.robot.subsystems.intake.intakewrist.ShooterWristConstants.ShooterWristStates;
+import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants.IntakeWristStates;
 
 public class IntakeWrist {
   private final IntakeWristIO io;
@@ -50,22 +50,22 @@ public class IntakeWrist {
     if(previousState != currentState){
       switch (currentState) {
         case INTAKING:
-          setAngle(ShooterWristStates.INTAKING);
+          setAngle(IntakeWristStates.INTAKING);
           break;
         case STOW:
-          setAngle(ShooterWristStates.STOW);
+          setAngle(IntakeWristStates.STOW);
           break;
         case STOP:
-          setAngle(ShooterWristStates.STOP);
+          setAngle(IntakeWristStates.STOP);
           break;
         default:
-          setAngle(ShooterWristStates.STOP);
+          setAngle(IntakeWristStates.STOP);
           break;
       }
     }
   }
 
-  public void setAngle(ShooterWristConstants.ShooterWristStates state) {
+  public void setAngle(IntakeWristConstants.IntakeWristStates state) {
     io.setAngle(state);
   }
 

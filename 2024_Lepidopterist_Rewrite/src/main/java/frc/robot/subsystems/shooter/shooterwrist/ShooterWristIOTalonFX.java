@@ -20,7 +20,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants.ShooterWristStates;
+import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants.*;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
 
