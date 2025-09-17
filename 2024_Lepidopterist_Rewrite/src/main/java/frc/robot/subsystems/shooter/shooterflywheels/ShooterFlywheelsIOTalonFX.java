@@ -1,4 +1,4 @@
-package frc.robot.subsystems.intake.intakerollers;
+package frc.robot.subsystems.shooter.shooterflywheels;
 
 import static frc.robot.subsystems.indexer.IndexerConstants.*;
 
@@ -20,13 +20,13 @@ import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants.IntakeRol
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
 
-public class IntakeRollerIOTalonFX extends ShooterFlywheelsIO {
+public class ShooterFlywheelsIOTalonFX extends ShooterFlywheelsIO {
   private final TalonFX intakeRollerMotor;
   TalonFXConfiguration indexerConfig;
   Debouncer beamBreakDebouncer = new Debouncer(beamBreakDebounce);
   private Timer beamBreakTimer = new Timer(); 
   private DigitalInput beamBreak;
-  private IntakeRollerConstants.IntakeRollerStates currentState = IntakeRollerStates.STOP;
+  private IntakeRollerConstants.ShooterFlywheelsConstants currentState = IntakeRollerStates.STOP;
 
   private final StatusSignal<AngularVelocity> velocity;
   private final StatusSignal<Voltage> appliedVolts;
@@ -36,9 +36,9 @@ public class IntakeRollerIOTalonFX extends ShooterFlywheelsIO {
 
   private double desiredVelocity;
 
-  public IntakeRollerIOTalonFX() {
+  public ShooterFlywheelsIOTalonFX() {
     intakeRollerMotor = new TalonFX(rollersMotorID, rollersMotorCANBus);
-    beamBreak = new DigitalInput(IntakeRollerConstants.beamBreakPort);
+    beamBreak = new DigitalInput(ShooterFlywheelsConstants.beamBreakPort);
     beamBreakTimer.start();
 
     indexerConfig = new TalonFXConfiguration();

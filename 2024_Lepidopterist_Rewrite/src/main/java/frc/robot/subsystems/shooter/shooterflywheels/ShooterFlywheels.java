@@ -1,16 +1,17 @@
-package frc.robot.subsystems.intake.intakerollers;
+package frc.robot.subsystems.shooter.shooterflywheels;
 
 import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants.IntakeRollerStates;
+import frc.robot.subsystems.shooter.shooterflywheels.ShooterFlywheelsConstants;
 import frc.robot.util.SubsystemChecker;
 
-public class IntakeRoller {
+public class ShooterFlywheels {
   private final ShooterFlywheelsIO io;
   private WantedState wantedState = WantedState.STOP;
   private CurrentState currentState = CurrentState.STOP;
   private CurrentState previousState = CurrentState.STOP;
   private SubsystemChecker subsystemChecker;
 
-  public IntakeRoller(ShooterFlywheelsIO io, SubsystemChecker subsystemChecker) {
+  public ShooterFlywheels(ShooterFlywheelsIO io, SubsystemChecker subsystemChecker) {
     this.io = io;
     this.subsystemChecker = subsystemChecker;
   }
@@ -79,25 +80,25 @@ public class IntakeRoller {
     if(previousState != currentState){
       switch (currentState) {
         case INTAKING:
-          setVelocity(IntakeRollerStates.INTAKING);
+          setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.INTAKING);
           break;
         case SCORING:
-          setVelocity(IntakeRollerStates.SCORING);
+          setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.SCORING);
           break;
         case HOLD_NOTE:
-          setVelocity(IntakeRollerStates.HOLDNOTE);
+          setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.HOLDNOTE);
           break;
         case STOP:
-          setVelocity(IntakeRollerStates.STOP);
+          setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.STOP);
           break;
         default:
-          setVelocity(IntakeRollerStates.STOP);
+          setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.STOP);
           break;
       }
     }
   }
 
-  public void setVelocity(IntakeRollerStates state) {
+  public void setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates state) {
     io.setVelocity(state);
   }
 
