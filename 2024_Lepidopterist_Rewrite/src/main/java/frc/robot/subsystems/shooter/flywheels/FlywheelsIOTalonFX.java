@@ -20,6 +20,8 @@ public class FlywheelsIOTalonFX extends FlywheelsIO{
   TalonFXConfiguration bottomFlywheelConfig;
 
   private double wantedVelocity;
+  private double topFlywheelVelocity;
+  private double bottomFlywheelVelocity;
 
   private final StatusSignal<AngularVelocity> topVelocity;
   private final StatusSignal<Voltage> topAppliedVolts;
@@ -113,8 +115,7 @@ public class FlywheelsIOTalonFX extends FlywheelsIO{
     DogLog.log("Shooter/Flywheels/Bottom Flywheel/StatorCurrentAmps", super.bottomStatorCurrentAmps);
     DogLog.log("Shooter/Flywheels/Bottom Flywheel/SupplyCurrentAmps", super.bottomSupplyCurrentAmps);
     
-    DogLog.log("Shooter/Flywheels/Top Flywheel/isAtSpeed", super.isTopFlywheelAtSpeed);
-    DogLog.log("Shooter/Flywheels/Top Flywheel/isAtSpeed", super.isBottomFlywheelAtSpeed);
+    DogLog.log("Shooter/Flywheels/areFlywheelsAtSpeed", super.areFlywheelsAtSpeed);
   }
 
   @Override
@@ -126,6 +127,16 @@ public class FlywheelsIOTalonFX extends FlywheelsIO{
   public void setVelocity(double velocity) {
     topFlywheelMotor.set(velocity);
     bottomFlywheelMotor.set(velocity);
+  }
+
+  public boolean areFlywheelsAtSpeed() {
+    topFlywheelVelocity = topVelocity.getValueAsDouble();
+    bottomFlywheelVelocity = bottomVelocity.getValueAsDouble();
+    if (topFlywheelVelocity == wantedVelocity && bottomFlywheelVelocity == wantedVelocity){
+      return true;
+    } else {
+      return false;
+    }
   }
  }
 
