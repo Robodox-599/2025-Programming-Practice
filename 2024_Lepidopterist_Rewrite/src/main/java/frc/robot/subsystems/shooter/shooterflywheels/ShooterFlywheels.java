@@ -18,7 +18,7 @@ public class ShooterFlywheels {
 
   public void periodic() {
       io.updateInputs();
-      subsystemChecker.updateIntakeRollerDetector(isNoteDetected());
+      subsystemChecker.updateIntakeRollerDetector(isTopNoteDetected());
   }
 
   public enum WantedState{
@@ -30,7 +30,6 @@ public class ShooterFlywheels {
   }
 
   public enum CurrentState{
-    INTAKING,
     SCORING,
     HOLD_NOTE,
     STOP,
@@ -40,14 +39,6 @@ public class ShooterFlywheels {
   public void handleStateTransitions(){
     previousState = currentState;
     switch (wantedState) {
-      case INTAKING:
-        if(isNoteDetected()){
-          currentState = CurrentState.HOLD_NOTE;
-        }
-        else{
-          currentState = CurrentState.INTAKING;
-        }
-        break;
       case SCORING:
         if(!isNoteDetected()){
           currentState = CurrentState.NO_NOTE;
@@ -55,9 +46,6 @@ public class ShooterFlywheels {
         else{
           currentState = CurrentState.SCORING;
         }
-        break;
-      case HOLD_NOTE:
-        currentState = CurrentState.HOLD_NOTE;
         break;
       case STOP:
         currentState = CurrentState.STOP;
@@ -79,14 +67,8 @@ public class ShooterFlywheels {
   public void applyStates(){
     if(previousState != currentState){
       switch (currentState) {
-        case INTAKING:
-          setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.INTAKING);
-          break;
         case SCORING:
           setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.SCORING);
-          break;
-        case HOLD_NOTE:
-          setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.HOLDNOTE);
           break;
         case STOP:
           setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates.STOP);
@@ -106,7 +88,7 @@ public class ShooterFlywheels {
     io.stop();
   }
 
-  public boolean isNoteDetected() {
-    return io.isNoteDetected;
+  public boolean isTopNoteDetected() {
+    return io.topIsNoteDetected;
   }
 }

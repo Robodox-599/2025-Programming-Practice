@@ -2,6 +2,7 @@ package frc.robot.util;
 
 import frc.robot.subsystems.indexer.IndexerConstants;
 import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants;
+import frc.robot.subsystems.shooter.shooterflywheels.ShooterFlywheelsConstants;
 import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants;
 //import frc.robot.subsystems.shooter.shooterrollers.ShooterRollerConstants;
 //import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants;
@@ -26,6 +27,10 @@ public class SubsystemUtil {
 
   public static double intakeRollerStateToVelocity(IntakeRollerConstants.IntakeRollerStates state) {
     return IntakeRollerConstants.intakeRollerVelocities[state.getIndex()];
+  }
+
+  public static double shooterFlywheelStateToVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates state) {
+    return ShooterFlywheelsConstants.shooterFlywheelVelocities[state.getIndex()];
   }
 
   //public static double shooterRollerStateToVelocity(ShooterRollerConstants.ShooterRollerStates state) {

@@ -13,4 +13,9 @@ public class SubsystemChecker {
   {
     
   }
+
+  public void updateFlywheelDetector(boolean isNoteDetected)
+  {
+    
+  }
 }

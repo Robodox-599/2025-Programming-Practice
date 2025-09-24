@@ -3,24 +3,35 @@ package frc.robot.subsystems.shooter.shooterflywheels;
 import frc.robot.subsystems.shooter.shooterflywheels.ShooterFlywheelsConstants;
 
 public abstract class ShooterFlywheelsIO {
-  protected double tempCelsius = 0.0;
-  protected double statorCurrentAmps = 0.0;
-  protected double supplyCurrentAmps = 0.0;
-
-  protected double appliedVolts = 0.0;
-  protected double velocity = 0.0;
-  protected double desiredVelocity = 0.0;
-  protected boolean atSetSpeed = false;
-  protected boolean isNoteDetected = false;
+  // top flywheel motor
+  protected double topAppliedVolts = 0.0;
+  protected double topVelocity = 0.0;
+  protected double topDesiredVelocity = 0.0;
+  protected boolean topAtSetSpeed = false;
+  protected boolean topIsNoteDetected = false;
+  protected double topTempCelsius = 0.0;
+  protected double topStatorCurrentAmps = 0.0;
+  protected double topSupplyCurrentAmps = 0.0;
+  
+  // bottom flywheel motor
+  protected double bottomAppliedVolts = 0.0;
+  protected double bottomVelocity = 0.0;
+  protected double bottomDesiredVelocity = 0.0;
+  protected boolean bottomAtSetSpeed = false;
+  protected boolean bottomIsNoteDetected = false;
+  protected double bottomTempCelsius = 0.0;
+  protected double bottomStatorCurrentAmps = 0.0;
+  protected double bottomSupplyCurrentAmps = 0.0;
+  
   protected ShooterFlywheelsConstants.ShooterFlywheelsStates state = ShooterFlywheelsConstants.ShooterFlywheelsStates.STOP;
-
+  
   public void updateInputs() {}
 
   public void stop() {}
 
   public void setVelocity(ShooterFlywheelsConstants.ShooterFlywheelsStates state) {}
 
-  public double getVelocity() {
-    return velocity;
+  public double getTopVelocity() {
+    return topVelocity;
   }
 }

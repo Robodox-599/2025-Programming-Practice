@@ -2,10 +2,8 @@ package frc.robot.subsystems.shooter.shooterflywheels;
 
 public class ShooterFlywheelsConstants {
   public static enum ShooterFlywheelsStates {
-    INTAKING(0),
-    SCORING(1),      
-    HOLDNOTE(2),
-    STOP(3);
+    SCORING(0),      
+    STOP(1);
 
     private final int index;
 
@@ -19,16 +17,16 @@ public class ShooterFlywheelsConstants {
   }
 
   public static final double[] shooterFlywheelVelocities = {
-    0.6, // intaking note
     -0.4, // scoring note
-    0.0, // holding note
-    0.0, // stowed
+    0.0, // stop
   };
 
   // Real Motor config constants 
 
-  public static final int rollersMotorID = 0;
-  public static final String rollersMotorCANBus = "rio";
+  public static final int topFlywheelMotorID = 0;
+  public static final int bottomFlywheelMotorID = 0;
+  public static final String topMotorCANBus = "top";
+  public static final String bottomMotorCANBus = "bottom";
 
   public static final boolean EnableCurrentLimit = true;
   public static final int ContinousCurrentLimit = 50;
