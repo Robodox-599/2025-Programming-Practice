@@ -51,6 +51,9 @@ public class ShooterFlywheelsIOSim extends ShooterFlywheelsIO {
     super.bottomVelocity = bottomFlywheelSimMotor.getAngularVelocityRPM() / 60.0;
     super.bottomTempCelsius = 25.0;
 
+    super.isAtPrepScoreSpeed = 
+    (Math.abs(topFlywheelSimMotor.getAngularVelocityRPM() / 60.0) == 3.0f && Math.abs(bottomFlywheelSimMotor.getAngularVelocityRPM() / 60.0) == 3.0f /*Prep score speed */) ? true : false;
+
     DogLog.log("Flywheels/Top/Velocity", super.topVelocity);
     DogLog.log("Flywheels/Top/Voltage", super.topAppliedVolts);
     DogLog.log("Flywheels/Top/StatorCurrentAmps", super.topStatorCurrentAmps);
@@ -62,6 +65,8 @@ public class ShooterFlywheelsIOSim extends ShooterFlywheelsIO {
     DogLog.log("Flywheels/Bottom/StatorCurrentAmps", super.bottomStatorCurrentAmps);
     DogLog.log("Flywheels/Bottom/AtSetSpeed", super.bottomAtSetSpeed);
     DogLog.log("Flywheels/Bottom/Temp", 60);
+
+    DogLog.log("IntakeWrist/isAtPrepScoreSpeed", super.isAtPrepScoreSpeed);
 
     DogLog.log("Flywheels/State", super.state.toString());
   }

@@ -4,6 +4,7 @@ import frc.robot.subsystems.indexer.IndexerConstants;
 import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants;
 import frc.robot.subsystems.shooter.shooterflywheels.ShooterFlywheelsConstants;
 import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants;
+import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants;
 //import frc.robot.subsystems.shooter.shooterrollers.ShooterRollerConstants;
 //import frc.robot.subsystems.shooter.shooterwrist.ShooterWristConstants;
 
@@ -54,7 +55,7 @@ public class SubsystemUtil {
     return (ShooterWristConstants.setpoints[state.getIndex()]);
     }
     */
-    public static double intakeWristStateToSetpoint(IntakeWristConstants.intakeWristStates state) {
+    public static double intakeWristStateToSetpoint(IntakeWristConstants.IntakeWristStates state) {
       return (IntakeWristConstants.intakeWristSetpoints[state.getIndex()]);
     }
 

@@ -41,12 +41,16 @@ public class ShooterWristIOSim extends SubsystemBase {
     super.currentPositionDegrees = wristSim.getAngularPositionRotations();
     super.tempCelsius = 25.0;
 
+    super.isAtPrepScoreSetpoint = (wristSim.getAngularPositionRotations() == 0.7f /*prep score setpoint */) ? true : false;
+
     DogLog.log("ShooterWrist/CurrentAmps", super.currentAmps);
     DogLog.log("ShooterWrist/AppliedVoltage", super.appliedVolts);
     DogLog.log("ShooterWrist/TargetPosition", super.targetPosition);
     DogLog.log("ShooterWrist/CurrentPosition", super.currentPositionDegrees);
     DogLog.log("ShooterWrist/State", super.state.toString());
     DogLog.log("ShooterWrist/Temperature", super.tempCelsius);
+    DogLog.log("IntakeWrist/isAtPrepScoreSetpoint", super.isAtPrepScoreSetpoint);
+
 
     wristSim.setInputVoltage(
         wristPID.calculate(super.currentPositionDegrees, super.targetPosition));

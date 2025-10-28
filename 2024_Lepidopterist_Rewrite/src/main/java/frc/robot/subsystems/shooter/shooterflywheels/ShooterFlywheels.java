@@ -27,6 +27,7 @@ public class ShooterFlywheels {
     HOLD_NOTE,
     STOP,
     NO_NOTE,
+    PREPSCORE,
   }
 
   public enum CurrentState{
@@ -34,13 +35,14 @@ public class ShooterFlywheels {
     HOLD_NOTE,
     STOP,
     NO_NOTE,
+    PREPSCORE,
   }
 
   public void handleStateTransitions(){
     previousState = currentState;
     switch (wantedState) {
       case SCORING:
-        if(!isNoteDetected()){
+        if(!isTopNoteDetected()){
           currentState = CurrentState.NO_NOTE;
         }
         else{
@@ -51,7 +53,7 @@ public class ShooterFlywheels {
         currentState = CurrentState.STOP;
         break;
       case NO_NOTE:
-        if(!isNoteDetected()){
+        if(!isTopNoteDetected()){
           currentState = CurrentState.NO_NOTE;
         }
         else{
@@ -90,5 +92,9 @@ public class ShooterFlywheels {
 
   public boolean isTopNoteDetected() {
     return io.topIsNoteDetected;
+  }
+
+  public boolean isAtPrepScoreSpeed(){
+    return io.isAtPrepScoreSpeed;
   }
 }

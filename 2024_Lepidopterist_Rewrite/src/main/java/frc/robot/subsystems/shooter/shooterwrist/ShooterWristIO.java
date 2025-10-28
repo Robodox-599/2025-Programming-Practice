@@ -14,6 +14,7 @@ public class ShooterWristIO extends SubsystemBase {
   protected boolean atSetpoint = false;
   protected ShooterWristConstants.ShooterWristStates state = ShooterWristStates.STOP;
 
+  protected boolean isAtPrepScoreSetpoint = false;
 
   public void updateInputs() {}
 

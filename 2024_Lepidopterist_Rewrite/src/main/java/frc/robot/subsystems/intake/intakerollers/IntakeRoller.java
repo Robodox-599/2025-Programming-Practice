@@ -4,13 +4,13 @@ import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants.IntakeRol
 import frc.robot.util.SubsystemChecker;
 
 public class IntakeRoller {
-  private final ShooterFlywheelsIO io;
+  private final IntakeRollerIO io;
   private WantedState wantedState = WantedState.STOP;
   private CurrentState currentState = CurrentState.STOP;
   private CurrentState previousState = CurrentState.STOP;
   private SubsystemChecker subsystemChecker;
 
-  public IntakeRoller(ShooterFlywheelsIO io, SubsystemChecker subsystemChecker) {
+  public IntakeRoller(IntakeRollerIO io, SubsystemChecker subsystemChecker) {
     this.io = io;
     this.subsystemChecker = subsystemChecker;
   }
@@ -108,4 +108,9 @@ public class IntakeRoller {
   public boolean isNoteDetected() {
     return io.isNoteDetected;
   }
+
+  public boolean isIntakeRollersStopped(){
+    return io.isIntakeRollersStopped;
+  }
+  
 }

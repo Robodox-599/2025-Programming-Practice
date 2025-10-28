@@ -107,4 +107,6 @@ public class IndexerIOTalonFX extends IndexerIO {
     double velocity = SubsystemUtil.indexerStateToVelocity(state);
     indexerMotor.set(velocity);
   }
+
+  
 }

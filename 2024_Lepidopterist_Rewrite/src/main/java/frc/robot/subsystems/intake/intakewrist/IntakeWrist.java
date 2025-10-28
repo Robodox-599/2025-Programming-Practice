@@ -76,4 +76,8 @@ public class IntakeWrist {
   public void stop() {
     io.stop();
   }
+
+  public boolean isIntakeWristAtStow(){
+    return io.isIntakeWristAtStow;
+  }
 }

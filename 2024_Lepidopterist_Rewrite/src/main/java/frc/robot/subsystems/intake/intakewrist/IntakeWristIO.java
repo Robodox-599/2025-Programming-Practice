@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems.intake.intakewrist;
 
-import frc.robot.subsystems.shooter.shooterwrist.IntakeWristConstants;
+import frc.robot.subsystems.intake.intakewrist.IntakeWristConstants;
 
 public abstract class IntakeWristIO {
   protected double tempCelsius = 0.0;
@@ -15,6 +15,8 @@ public abstract class IntakeWristIO {
   protected double currentPositionDegrees = 0.0;
   protected boolean atSetpoint = false;
   protected IntakeWristConstants.IntakeWristStates state = IntakeWristConstants.IntakeWristStates.STOP;
+
+  protected boolean isIntakeWristAtStow = false;
 
 
   public void updateInputs() {}
@@ -27,7 +29,7 @@ public abstract class IntakeWristIO {
 
   public void setBrake(boolean brake) {}
 
-  public void setAngle(IntakeWrist.IntakeWristStates state) {}
+  public void setAngle(IntakeWristConstants.IntakeWristStates state) {}
 
   public double getCurrentVolts() {
     return appliedVolts;

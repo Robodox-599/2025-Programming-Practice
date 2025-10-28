@@ -16,9 +16,7 @@ import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants;
-import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants.IntakeRollerStates;
-import frc.robot.subsystems.shooter.shooterflywheels.ShooterFlywheelsConstants.ShooterFlywheelsStates;
+import frc.robot.subsystems.shooter.shooterflywheels.ShooterFlywheelsConstants.*;
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
 
@@ -46,10 +44,11 @@ public class ShooterFlywheelsIOTalonFX extends ShooterFlywheelsIO {
   private double desiredVelocity;
 
   public ShooterFlywheelsIOTalonFX() {
-    topFlywheelMotor = new TalonFX(topFlywheelMotorID, topMotorCANBus);
+    topFlywheelMotor = new TalonFX(ShooterFlywheelsConstants.topFlywheelMotorID, topMotorCANBus);
     bottomFlywheelMotor = new TalonFX(bottomFlywheelMotorID, bottomMotorCANBus);
     beamBreak = new DigitalInput(ShooterFlywheelsConstants.beamBreakPort);
     beamBreakTimer.start();
+    TalonFXConfiguration topMotorConfig;
 
     topMotorConfig = new TalonFXConfiguration();
     bottomMotorConfig = new TalonFXConfiguration();
@@ -84,7 +83,7 @@ public class ShooterFlywheelsIOTalonFX extends ShooterFlywheelsIO {
     beamBreakDebouncer.setDebounceType(DebounceType.kFalling);
 
     PhoenixUtil.tryUntilOk(10, () -> topFlywheelMotor.getConfigurator().apply(topMotorConfig, 1));
-    intakeRollerMotor.optimizeBusUtilization();
+    topFlywheelMotor.optimizeBusUtilization();
 
     PhoenixUtil.tryUntilOk(10, () -> bottomFlywheelMotor.getConfigurator().apply(bottomMotorConfig, 1));
     bottomFlywheelMotor.optimizeBusUtilization();
@@ -133,6 +132,10 @@ public class ShooterFlywheelsIOTalonFX extends ShooterFlywheelsIO {
 
     super.topIsNoteDetected = beamBreakDebouncer.calculate(!beamBreak.get());
     super.bottomIsNoteDetected = beamBreakDebouncer.calculate(!beamBreak.get());
+
+    super.isAtPrepScoreSpeed = 
+    (Math.abs(topVelocity.getValueAsDouble()) == 3.0f && Math.abs(bottomVelocity.getValueAsDouble()) == 3.0f /*Prep score speed */) ? true : false;
+
     super.state = currentState; 
 
     // top motor logging
@@ -152,6 +155,7 @@ public class ShooterFlywheelsIOTalonFX extends ShooterFlywheelsIO {
     DogLog.log("Flywheels/Bottom/NoteDetected", super.bottomIsNoteDetected);
     
     DogLog.log("IntakeRollers/State", super.state.toString());
+    DogLog.log("IntakeWrist/isAtPrepScoreSpeed", super.isAtPrepScoreSpeed);
     DogLog.log("IntakeRollers/BeamBreak", beamBreak.get());
   }
 

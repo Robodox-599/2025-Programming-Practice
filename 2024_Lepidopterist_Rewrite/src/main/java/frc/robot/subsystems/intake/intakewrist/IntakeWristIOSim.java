@@ -41,12 +41,15 @@ public class IntakeWristIOSim extends IntakeWristIO {
     super.currentPositionDegrees = wristSim.getAngularPositionRotations();
     super.tempCelsius = 25.0;
 
+    super.isIntakeWristAtStow = (wristSim.getAngularPositionRotations() == 0.4f /*Stow setpoint angle */) ? true : false;
+
     DogLog.log("IntakeWrist/CurrentAmps", super.currentAmps);
     DogLog.log("IntakeWrist/AppliedVoltage", super.appliedVolts);
     DogLog.log("IntakeWrist/TargetPosition", super.targetPosition);
     DogLog.log("IntakeWrist/CurrentPosition", super.currentPositionDegrees);
     DogLog.log("IntakeWrist/State", super.state.toString());
     DogLog.log("IntakeWrist/Temperature", super.tempCelsius);
+    DogLog.log("IntakeWrist/isIntakeWristAtStow", super.isIntakeWristAtStow);
 
     wristSim.setInputVoltage(
         wristPID.calculate(super.currentPositionDegrees, super.targetPosition));

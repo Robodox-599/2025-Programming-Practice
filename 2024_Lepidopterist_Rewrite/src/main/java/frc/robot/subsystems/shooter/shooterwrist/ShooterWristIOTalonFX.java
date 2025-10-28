@@ -81,6 +81,7 @@ public class ShooterWristIOTalonFX extends SubsystemBase {
     super.tempCelsius = temperature.getValueAsDouble();
     super.atSetpoint =
         Math.abs(super.currentPositionDegrees - super.targetPosition) < wristPositionTolerance;
+    super.isAtPrepScoreSetpoint = (position.GetValueAsDouble() == 0.7f /*prep score setpoint */) ? true : false;
 
     DogLog.log("ShooterWrist/AppliedVoltage", super.appliedVolts);
     DogLog.log("ShooterWrist/CurrentAmps", super.currentAmps);
@@ -89,6 +90,7 @@ public class ShooterWristIOTalonFX extends SubsystemBase {
     DogLog.log("ShooterWrist/CurrentPosition", super.currentPositionDegrees);
     DogLog.log("ShooterWrist/WristAtSetpoint", super.atSetpoint);
     DogLog.log("ShooterWrist/TargetPosition", targetPosition);
+    DogLog.log("IntakeWrist/isAtPrepScoreSetpoint", super.isAtPrepScoreSetpoint);
   }
 
   @Override

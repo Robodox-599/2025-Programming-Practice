@@ -3,7 +3,8 @@ package frc.robot.subsystems.shooter.shooterflywheels;
 public class ShooterFlywheelsConstants {
   public static enum ShooterFlywheelsStates {
     SCORING(0),      
-    STOP(1);
+    STOP(1),
+    PREPSCORE(2);
 
     private final int index;
 

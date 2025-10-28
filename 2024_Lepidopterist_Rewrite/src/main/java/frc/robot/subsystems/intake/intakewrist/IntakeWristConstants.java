@@ -21,7 +21,7 @@ public class IntakeWristConstants {
 
   // Setpoints
 
-  public static final double[] shooterWristSetpoints = {
+  public static final double[] intakeWristSetpoints = {
     0.6, // INTAKING
     0.4, // STOW
     0.0 // STOP

@@ -20,7 +20,7 @@ import frc.robot.subsystems.intake.intakerollers.IntakeRollerConstants.IntakeRol
 import frc.robot.util.PhoenixUtil;
 import frc.robot.util.SubsystemUtil;
 
-public class IntakeRollerIOTalonFX extends ShooterFlywheelsIO {
+public class IntakeRollerIOTalonFX extends IntakeRollerIO {
   private final TalonFX intakeRollerMotor;
   TalonFXConfiguration indexerConfig;
   Debouncer beamBreakDebouncer = new Debouncer(beamBreakDebounce);
@@ -88,12 +88,15 @@ public class IntakeRollerIOTalonFX extends ShooterFlywheelsIO {
     super.isNoteDetected = beamBreakDebouncer.calculate(!beamBreak.get());
     super.state = currentState; 
 
+    super.isIntakeRollersStopped = (velocity.getValueAsDouble() == 0.0f) ? true : false;
+
     DogLog.log("IntakeRollers/Velocity", super.velocity);
     DogLog.log("IntakeRollers/AppliedVoltage", super.appliedVolts);
     DogLog.log("IntakeRollers/TempCelcius", super.tempCelsius);
     DogLog.log("IntakeRollers/StatorCurrentAmps", super.statorCurrentAmps);
     DogLog.log("IntakeRollers/SupplyCurrentAmps", super.supplyCurrentAmps);
     DogLog.log("IntakeRollers/State", super.state.toString());
+    DogLog.log("IntakeWrist/isIntakeRollersStopped", super.isIntakeRollersStopped);
 
     DogLog.log("IntakeRollers/NoteDetected", super.isNoteDetected);
     DogLog.log("IntakeRollers/BeamBreak", beamBreak.get());

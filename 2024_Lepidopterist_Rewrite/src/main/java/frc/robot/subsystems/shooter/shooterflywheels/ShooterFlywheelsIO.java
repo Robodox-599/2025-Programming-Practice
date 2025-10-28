@@ -22,6 +22,8 @@ public abstract class ShooterFlywheelsIO {
   protected double bottomTempCelsius = 0.0;
   protected double bottomStatorCurrentAmps = 0.0;
   protected double bottomSupplyCurrentAmps = 0.0;
+
+  protected boolean isAtPrepScoreSpeed = false;
   
   protected ShooterFlywheelsConstants.ShooterFlywheelsStates state = ShooterFlywheelsConstants.ShooterFlywheelsStates.STOP;
   

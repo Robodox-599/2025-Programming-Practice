@@ -82,6 +82,8 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     super.atSetpoint =
         Math.abs(super.currentPositionDegrees - super.targetPosition) < wristPositionTolerance;
 
+    super.isIntakeWristAtStow = (position.getValueAsDouble() == 0.4f /*Stow setpoint angle */) ? true : false;
+
     DogLog.log("IntakeWrist/AppliedVoltage", super.appliedVolts);
     DogLog.log("IntakeWrist/CurrentAmps", super.currentAmps);
     DogLog.log("IntakeWrist/Velocity", super.velocity);
@@ -89,6 +91,7 @@ public class IntakeWristIOTalonFX extends IntakeWristIO {
     DogLog.log("IntakeWrist/CurrentPosition", super.currentPositionDegrees);
     DogLog.log("IntakeWrist/WristAtSetpoint", super.atSetpoint);
     DogLog.log("IntakeWrist/TargetPosition", targetPosition);
+    DogLog.log("IntakeWrist/isIntakeWristAtStow", super.isIntakeWristAtStow);
   }
 
   @Override

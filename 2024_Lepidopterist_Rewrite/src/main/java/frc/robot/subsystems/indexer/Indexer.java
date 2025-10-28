@@ -107,4 +107,8 @@ public class Indexer {
   public boolean isNoteDetected() {
     return io.isNoteDetected;
   }
+
+  public boolean isHoldingNote(){
+    return false;
+  }
 }

@@ -81,4 +81,8 @@ public class ShooterWrist extends SubsystemBase {
   public void stop() {
     io.stop();
   }
+
+  public boolean isAtPrepScoreSetpoint(){
+    return io.isAtPrepScoreSetpoint;
+  }
 }

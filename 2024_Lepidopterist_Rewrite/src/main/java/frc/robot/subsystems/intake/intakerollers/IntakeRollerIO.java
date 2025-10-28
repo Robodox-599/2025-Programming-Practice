@@ -14,6 +14,8 @@ public abstract class IntakeRollerIO {
   protected boolean isNoteDetected = false;
   protected IntakeRollerConstants.IntakeRollerStates state = IntakeRollerStates.STOP;
 
+  protected boolean isIntakeRollersStopped = false;
+
   public void updateInputs() {}
 
   public void stop() {}
