@@ -6,12 +6,7 @@ package frc.robot.Subsystems.RampRollers;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class RampRollers extends SubsystemBase {
+public class RampRollers {
   /** Creates a new RampRollers. */
   public RampRollers() {}
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
 }
