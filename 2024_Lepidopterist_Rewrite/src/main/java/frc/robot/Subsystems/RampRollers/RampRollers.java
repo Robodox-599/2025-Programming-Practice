@@ -7,6 +7,16 @@ package frc.robot.Subsystems.RampRollers;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RampRollers {
+  private final RampRollersIO io;
+
+
   /** Creates a new RampRollers. */
-  public RampRollers() {}
+  public RampRollers(RampRollersIO io) {
+    this.io = io;
+  }
+
+  public void updateInputs() {
+    io.setPosition(0);
+  }
+
 }
