@@ -1,5 +1,17 @@
 package frc.robot.Subsystems.RampRollers;
 
 public class RampRollersConstants {
+    public static final int rampRollersMotorID = 0;
+    public static final String rampRollersCANBus = "rio";
+    public static final int beamBreakPort = 0;
+    public static final double rampRollersDebounceTimeSeconds = 0.2;
+
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kS = 0;
+    public static final double kV = 0;
+
+    public static final double supplyCurrentLimit = 40;
 
 }

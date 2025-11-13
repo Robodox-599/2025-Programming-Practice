@@ -7,14 +7,20 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Subsystems.RampRollers.RampRollers;
+import frc.robot.Subsystems.RampRollers.RampRollersIOTalonFX;
 
 public class Robot extends TimedRobot {
+  private final RampRollers rampRollers;
+
   private Command m_autonomousCommand;
 
-  private final RobotContainer m_robotContainer;
-
+  //first thing that runs when program starts
   public Robot() {
-    m_robotContainer = new RobotContainer();
+    // if in real mode
+    rampRollers = new RampRollers(new RampRollersIOTalonFX());
+    configureBindings();
   }
 
   @Override
@@ -33,7 +39,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -69,4 +75,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testExit() {}
+
+    // meer stinks
+      
+  
+    private void configureBindings() {}
+  
+    public Command getAutonomousCommand() {
+      return Commands.print("No autonomous command configured");
+    }
 }
