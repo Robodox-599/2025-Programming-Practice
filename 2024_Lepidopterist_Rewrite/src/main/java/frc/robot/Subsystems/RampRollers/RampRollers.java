@@ -7,16 +7,102 @@ package frc.robot.Subsystems.RampRollers;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RampRollers {
-  private final RampRollersIO io;
+ private final RampRollersIO io;
+ private WantedState wantedState = WantedState.STOPPED;
+ private CurrentState currentState = CurrentState.STOPPED;
 
+ public enum WantedState {
+  STOPPED,
+  INTAKING,
+  HOLD_CORAL,
+  SCORE
+ }
 
-  /** Creates a new RampRollers. */
+ public enum CurrentState {
+  STOPPED,
+  INTAKING,
+  HOLD_CORAL,
+  SCORE
+ }
+
   public RampRollers(RampRollersIO io) {
     this.io = io;
   }
 
-  public void updateInputs() {
-    io.setPosition(0);
-  }
+  private void handleStateTransitions(){
+    switch (wantedState) {
+    case STOPPED:
+    currentState = CurrentState.STOPPED;
+    break;
+    case INTAKING:
+      if (isCoralDetected()) {
+       wantedState = WantedState.HOLD_CORAL;
+       currentState = CurrentState.HOLD_CORAL;
+      } else {
+        currentState = CurrentState.INTAKING;
+      }
+    break;
+    case HOLD_CORAL:
+    if (!isCoralDetected()) {
+      wantedState = WantedState.INTAKING;
+      currentState = CurrentState.INTAKING;
+     } else {
+      currentState = CurrentState.HOLD_CORAL;
+     }
+    break;
+    case SCORE:
+    if (!isCoralDetected()) {
+      wantedState = WantedState.INTAKING;
+      currentState = CurrentState.INTAKING;
+     } else {
+      currentState = CurrentState.SCORE;
+     }
+    default:
+    currentState = CurrentState.STOPPED;
+    break;}
+    }
 
+    private void applyState(){
+      switch (currentState) {
+      case STOPPED:
+        stop();
+        break;
+      case INTAKING:
+        setVelocity(0.5); 
+        break;
+      case HOLD_CORAL:
+        setPosition(io.holdPosition);
+        break;
+        case SCORE:
+        setVelocity(-0.5);
+        break;
+      default:
+        stop();
+        break;}
+      }
+
+      public void updateInputs(){
+        handleStateTransitions();
+        applyState();
+      }
+
+      public void setVelocity(double velocity) {
+        io.setVelocity(velocity);
+      }
+
+      public void stop() {
+        io.stop();
+      }
+
+      public void setPosition(double position) {
+        io.setPosition(position);
+      }
+
+      public void setWantedState(WantedState wantedState) {
+        this.wantedState = wantedState;
+      }
+
+      public boolean isCoralDetected(){
+        return io.isCoralDetected;
+      }
 }

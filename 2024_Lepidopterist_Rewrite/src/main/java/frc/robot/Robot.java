@@ -8,21 +8,21 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.RampRollers.RampRollers;
-import frc.robot.Subsystems.RampRollers.RampRollersIOSim;
+import frc.robot.Subsystems.RampRollers.RampRollers.WantedState;
 import frc.robot.Subsystems.RampRollers.RampRollersIOTalonFX;
 
 public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
+  private final CommandXboxController controller = new CommandXboxController(0);
 
   private Command m_autonomousCommand;
 
-  public Robot() {
+  public Robot(){
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
-
     configureBindings();
   }
-
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
@@ -39,7 +39,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -76,9 +75,17 @@ public class Robot extends TimedRobot {
   @Override
   public void testExit() {}
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    controller.a().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
 
-  public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    controller.b().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
+
+    controller.leftTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORE)));
+
   }
-}
+  
+    public Command getAutonomousCommand() {
+      return Commands.print("No autonomous command configured");
+    }
+  }
+

@@ -1,9 +1,9 @@
 package frc.robot.Subsystems.RampRollers;
 
 public class RampRollersConstants {
-    public static final int rampRollersMotorID = 0;
+    public static final int rampRollersMotorID = 23;
     public static final String rampRollersCANBus = "rio";
-    public static final int beamBreakPort = 0;
+    public static final int beamBreakPort = 1;
     public static final double rampRollersDebounceTimeSeconds = 0.2;
 
     public static final double kP = 0;
