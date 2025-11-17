@@ -5,7 +5,7 @@ public abstract class RampRollersIO {
     protected double velocity = 0.0;
 
     protected boolean isCoralDetected = false;
-    //protected double currentPosition = 0.0;
+    protected double heldCurrentPosition = 0.0;
 
     public void updateInputs() {}
 
@@ -13,7 +13,9 @@ public abstract class RampRollersIO {
 
     public void setPosition(double position) {}
 
-    //public double getPosition(){}
+    public double heldCurrentPosition() {
+        return heldCurrentPosition;
+    }
 
     public void stop() {}
 }

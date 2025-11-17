@@ -11,6 +11,8 @@ public class RampRollers {
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
 
+  private double currentPosition = 0.0f;
+
   public enum WantedState{
     INTAKING,
     HOLD_CORAL,
@@ -84,7 +86,7 @@ public class RampRollers {
         setVelocity(2);
         break;
       case HOLD_CORAL:
-        setPosition(currentPosition());
+        setPosition(io.heldCurrentPosition);
         break;
       default:
         setVelocity(0);
@@ -108,12 +110,7 @@ public class RampRollers {
     return io.isCoralDetected;
   }
 
-  public double currentPosition(){
-    return io.position;
-  }
-
   public void setPosition(double position){
     io.setPosition(position);
   }
-
 }
