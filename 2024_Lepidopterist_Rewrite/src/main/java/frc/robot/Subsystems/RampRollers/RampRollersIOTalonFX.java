@@ -11,6 +11,7 @@ import dev.doglog.DogLog;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -28,10 +29,12 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     private final StatusSignal<Temperature> rampRollersTemperature;
     private final StatusSignal<Voltage> rampRollersAppliedVolts;
     private final StatusSignal<Angle> rampRollersPosition;
-    //(Homework) also include stator current, supply current, position 
+    //(Homework) also include stator current/ supply current
     //both are StatusSignal<Current>
     //add variables to IO
     // .getSupplyCurrent or .getStatorCurrent
+    private final StatusSignal<Current> rampRollersStatorCurrent;
+
 
     public RampRollersIOTalonFX() {
         rampRollersMotor = new TalonFX(RampRollersConstants.rampRollersMotorID, RampRollersConstants.rampRollersCANBus);
@@ -57,7 +60,9 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampRollersTemperature = rampRollersMotor.getDeviceTemp();
         rampRollersAppliedVolts = rampRollersMotor.getMotorVoltage();
         rampRollersPosition = rampRollersMotor.getPosition();
-        // stator current, supply current, position
+        // stator current, supply current
+        rampRollersStatorCurrent = rampRollersMotor.getStatorCurrent();
+
 
         BaseStatusSignal.setUpdateFrequencyForAll(50, rampRollersVelocityRad, rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition);
 
@@ -76,9 +81,12 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         //calculate => waits the debounceTime, if true for the duration of the debounceTime, then it's set to true
         super.isCoralDetected = rampDebouncer.calculate(!rampBeamBreak.get());
 
+        super.current = rampRollersStatorCurrent.getValueAsDouble();
+
         DogLog.log("RampRollers/Position", super.position);
         DogLog.log("RampRollers/Velocity", super.velocity);
         DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
+        DogLog.log("RampRollers/statorCurrent", super.current);
     }
     
     @Override
@@ -93,7 +101,13 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     }
 
     //"set" sets the speed, "setControl" is applicable to a variety of things, however setControl needs to have a request (sometimes importing the PositionDutyCycle needs to be done manually)
+    @Override
     public void setPosition(double position){
         rampRollersMotor.setControl(new PositionDutyCycle(position));
+    }
+
+    @Override
+    public void setCurrent(double current){
+        rampRollersMotor.setVoltage(current);
     }
 }

@@ -8,11 +8,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.RampRollers.RampRollers;
+import frc.robot.Subsystems.RampRollers.RampRollers.WantedState;
 import frc.robot.Subsystems.RampRollers.RampRollersIOTalonFX;
 
 public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
+  private final CommandXboxController controller = new CommandXboxController(0);
 
   private Command m_autonomousCommand;
 
@@ -79,7 +82,13 @@ public class Robot extends TimedRobot {
     // meer stinks
       
   
-    private void configureBindings() {}
+    private void configureBindings() {
+      controller.a().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
+
+      controller.b().onFalse(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
+
+      controller.leftTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORING)));
+    }
   
     public Command getAutonomousCommand() {
       return Commands.print("No autonomous command configured");

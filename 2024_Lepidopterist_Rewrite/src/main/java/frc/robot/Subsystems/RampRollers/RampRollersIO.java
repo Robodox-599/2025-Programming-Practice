@@ -6,6 +6,7 @@ public abstract class RampRollersIO {
     //use protected only in IO and when defining values
     protected double position = 0.0;
     protected double velocity = 0.0;
+    protected double current = 0.0;
 
     protected boolean isCoralDetected = false;
 
@@ -16,5 +17,7 @@ public abstract class RampRollersIO {
     public void stop() {}
 
     public void setPosition(double position) {}
+
+    public void setCurrent(double current){}
 
 }
