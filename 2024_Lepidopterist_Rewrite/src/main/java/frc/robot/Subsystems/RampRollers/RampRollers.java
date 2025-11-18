@@ -4,7 +4,6 @@
 
 package frc.robot.Subsystems.RampRollers;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RampRollers {
   private final RampRollersIO io;

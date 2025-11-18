@@ -34,6 +34,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     //add variables to IO
     // .getSupplyCurrent or .getStatorCurrent
     private final StatusSignal<Current> rampRollersStatorCurrent;
+    private final StatusSignal<Current> rampRollersSupplyCurrent;
 
 
     public RampRollersIOTalonFX() {
@@ -60,8 +61,10 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampRollersTemperature = rampRollersMotor.getDeviceTemp();
         rampRollersAppliedVolts = rampRollersMotor.getMotorVoltage();
         rampRollersPosition = rampRollersMotor.getPosition();
-        // stator current, supply current
+        // stator current
         rampRollersStatorCurrent = rampRollersMotor.getStatorCurrent();
+        //supply current
+        rampRollersSupplyCurrent = rampRollersMotor.getSupplyCurrent();
 
 
         BaseStatusSignal.setUpdateFrequencyForAll(50, rampRollersVelocityRad, rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition);
@@ -87,6 +90,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         DogLog.log("RampRollers/Velocity", super.velocity);
         DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
         DogLog.log("RampRollers/statorCurrent", super.current);
+        DogLog.log("RampRollers/supplyCurrent", super.current);
     }
     
     @Override
