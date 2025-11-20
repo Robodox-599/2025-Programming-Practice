@@ -13,6 +13,7 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.AsynchronousInterrupt;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class RampRollersIOTalonFX extends RampRollersIO {
@@ -22,6 +23,8 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     private Debouncer rampDebouncer = new Debouncer(0.2);
 
     private boolean hasHeldPositionBeenSet = false;
+
+    private AsynchronusInterrupt beamBreakInterrupt;
 
     private final StatusSignal<AngularVelocity> rampRollersVelocityRad;
     private final StatusSignal<Temperature> rampRollersTemperature;
@@ -56,6 +59,16 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         BaseStatusSignal.setUpdateFrequencyForAll(50,rampRollersVelocityRad, 
             rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition, rampRollersStatorCurrent, 
                 rampRollersSupplyCurrent);
+
+        beamBreakInterrupt = new AsynchronousInterrupt(rampBeamBreak, (rising, falling) -> {
+            // if(rising){ // coral -> no coral
+                
+            // }
+            if(falling){ // no coral -> coral
+                super.heldCurrentPosition = rampRollersMotor.getPosition().getValueAsDouble();
+            }
+        });
+
         rampRollersMotor.optimizeBusUtilization();
     }
     
@@ -66,10 +79,20 @@ public class RampRollersIOTalonFX extends RampRollersIO {
 
         super.position = rampRollersPosition.getValueAsDouble();
         super.velocity = rampRollersVelocityRad.getValueAsDouble();
+        super.supplyCurrent = rampRollersSupplyCurrent.getValueAsDouble();
+        super.statorCurrent = rampRollersStatorCurrent.getValueAsDouble();
+        super.appliedVolts = rampRollersAppliedVolts.getValueAsDouble();
+        super.tempCelsius = rampRollersTemperature.getValueAsDouble();
+
         super.isCoralDetected = rampDebouncer.calculate(!rampBeamBreak.get());
 
         DogLog.log("RampRollers/Velocity", super.velocity);
         DogLog.log("RampRollers/Position", super.position);
+        DogLog.log("RampRollers/SupplyCurrent", super.supplyCurrent);
+        DogLog.log("RampRollers/StatorCurrent", super.statorCurrent);
+
+        DogLog.log("RampRollers/AppliedVolts", super.appliedVolts);
+        DogLog.log("RampRollers/Temperature", super.tempCelsius);
         DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
     }
 
@@ -86,21 +109,5 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     @Override
     public void setVelocity(double velocity) {
         rampRollersMotor.set(velocity);
-    }
-
-    @Override
-    public double heldCurrentPosition(){
-        if(super.isCoralDetected){
-            if(!hasHeldPositionBeenSet){
-                super.heldCurrentPosition = super.position;
-                hasHeldPositionBeenSet = true;
-            }
-            
-            return super.heldCurrentPosition;
-        }
-        else{
-            hasHeldPositionBeenSet = false;
-            return super.heldCurrentPosition;
-        }
     }
 }

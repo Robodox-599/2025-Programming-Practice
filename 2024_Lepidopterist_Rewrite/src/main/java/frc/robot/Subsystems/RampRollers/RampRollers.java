@@ -11,7 +11,7 @@ public class RampRollers {
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
 
-  private double currentPosition = 0.0f;
+  private double currentPosition = 0.0;
 
   public enum WantedState{
     INTAKING,
@@ -113,4 +113,9 @@ public class RampRollers {
   public void setPosition(double position){
     io.setPosition(position);
   }
+
+  public double holdCurrentPosition(){
+    return io.holdCurrentPosition();
+  }
+
 }
