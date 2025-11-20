@@ -113,9 +113,4 @@ public class RampRollers {
   public void setPosition(double position){
     io.setPosition(position);
   }
-
-  public double holdCurrentPosition(){
-    return io.holdCurrentPosition();
-  }
-
 }
