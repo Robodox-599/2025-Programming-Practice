@@ -34,6 +34,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     public RampRollersIOTalonFX() {
         rampRollersMotor = new TalonFX(RampRollersConstants.rampRollersMotorID, RampRollersConstants.rampRollersCANBus);
         rampRollersConfig = new TalonFXConfiguration();
+        rampBeamBreak = new DigitalInput(RampRollersConstants.beamBreakPort);
         
         rampRollersConfig.Slot0.kP = RampRollersConstants.kP;
         rampRollersConfig.Slot0.kP = RampRollersConstants.kI;
@@ -63,6 +64,11 @@ public class RampRollersIOTalonFX extends RampRollersIO {
                 super.holdPosition = super.position;
             }
         });
+
+        beamBreakInterrupt.enable();
+
+        beamBreakInterrupt.setInterruptEdges(true, true);
+
         rampRollersMotor.optimizeBusUtilization();
     }
     
