@@ -14,6 +14,7 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.AsynchronousInterrupt;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class RampRollersIOTalonFX extends RampRollersIO {
@@ -36,6 +37,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     private final StatusSignal<Current> rampRollersStatorCurrent;
     private final StatusSignal<Current> rampRollersSupplyCurrent;
 
+    private AsynchronousInterrupt beamBreakInterrupt;
 
     public RampRollersIOTalonFX() {
         rampRollersMotor = new TalonFX(RampRollersConstants.rampRollersMotorID, RampRollersConstants.rampRollersCANBus);
@@ -63,20 +65,27 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampRollersPosition = rampRollersMotor.getPosition();
         // stator current
         rampRollersStatorCurrent = rampRollersMotor.getStatorCurrent();
-        //supply current
+        // supply current
         rampRollersSupplyCurrent = rampRollersMotor.getSupplyCurrent();
 
+        BaseStatusSignal.setUpdateFrequencyForAll(50, rampRollersVelocityRad, rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition, rampRollersSupplyCurrent, rampRollersStatorCurrent);
 
-        BaseStatusSignal.setUpdateFrequencyForAll(50, rampRollersVelocityRad, rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition);
+        
+        beamBreakInterrupt = new AsynchronousInterrupt(rampBeamBreak, (rising,falling) -> {
+            if (falling){
+                super.wantedCoralPosition = getPosition();
+            }
+            //rising going from false to true
+            //falling going true to false
+        });
 
         //this must be applied LAST
         rampRollersMotor.optimizeBusUtilization();
-
     }
 
     @Override 
     public void updateInputs() {
-        BaseStatusSignal.refreshAll(rampRollersVelocityRad, rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition);
+        BaseStatusSignal.refreshAll(rampRollersVelocityRad, rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition, rampRollersStatorCurrent, rampRollersSupplyCurrent);
         //super gets the thing from the parent in this case RampRollersIO
         super.position = rampRollersPosition.getValueAsDouble();
         super.velocity = rampRollersVelocityRad.getValueAsDouble();
@@ -84,13 +93,14 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         //calculate => waits the debounceTime, if true for the duration of the debounceTime, then it's set to true
         super.isCoralDetected = rampDebouncer.calculate(!rampBeamBreak.get());
 
-        super.current = rampRollersStatorCurrent.getValueAsDouble();
+        super.statorCurrent = rampRollersStatorCurrent.getValueAsDouble();
+        super.supplyCurrent = rampRollersSupplyCurrent.getValueAsDouble();
 
         DogLog.log("RampRollers/Position", super.position);
         DogLog.log("RampRollers/Velocity", super.velocity);
         DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
-        DogLog.log("RampRollers/statorCurrent", super.current);
-        DogLog.log("RampRollers/supplyCurrent", super.current);
+        DogLog.log("RampRollers/statorCurrent", super.statorCurrent);
+        DogLog.log("RampRollers/supplyCurrent", super.supplyCurrent);
     }
     
     @Override
@@ -111,7 +121,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     }
 
     @Override
-    public void setCurrent(double current){
-        rampRollersMotor.setVoltage(current);
+    public double getPosition(){
+        return rampRollersMotor.getPosition().getValueAsDouble();
     }
 }

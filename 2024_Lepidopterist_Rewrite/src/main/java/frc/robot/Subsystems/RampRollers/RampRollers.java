@@ -4,11 +4,15 @@
 
 package frc.robot.Subsystems.RampRollers;
 
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 
 public class RampRollers {
   private final RampRollersIO io;
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
+  private boolean previousIsCoralDetected = false;
+  private boolean currentIsCoralDetected = false;
+  private double wantedCoralPosition;
 
   public enum WantedState{
     STOPPED,
@@ -30,12 +34,13 @@ public class RampRollers {
     //clicking on it shows which one ur refering to
     this.io = io;
 
-
   }
 
   public void updateInputs() { //runs every 0.02 sec
     handleStateTransitions();
     applyStates();
+    previousIsCoralDetected = currentIsCoralDetected;
+    currentIsCoralDetected = isCoralDetected();
   }
 
   private void handleStateTransitions() {
@@ -70,6 +75,7 @@ public class RampRollers {
     }
   }
 
+  //explain what the difference between this and the thing above
   private void applyStates() {
     switch (currentState) {
       case STOPPED:
@@ -82,7 +88,7 @@ public class RampRollers {
         setVelocity(0.5);
         break;
       case HOLD_CORAL:
-        setVelocity(0);
+        setPosition(io.wantedCoralPosition);
       default:
         stop();
         break;
@@ -103,5 +109,9 @@ public class RampRollers {
 
   public boolean isCoralDetected() {
     return io.isCoralDetected;
+  }
+
+  public void setPosition(double position){
+    io.setPosition(position);
   }
 }

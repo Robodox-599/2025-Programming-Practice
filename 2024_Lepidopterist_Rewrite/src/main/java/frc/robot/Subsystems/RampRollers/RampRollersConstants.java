@@ -13,5 +13,6 @@ public class RampRollersConstants {
     public static final double kV = 0;
 
     public static final double supplyCurrentLimit = 40;
+    public static final double statorCurrentLimit = 40;
 
 }
