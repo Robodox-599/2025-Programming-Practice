@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
   public Robot() {
     // if in real mode
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
-    RampRollers one = new RampRollers(new RampRollersIOTalonFX());
+    // RampRollers one = new RampRollers(new RampRollersIOTalonFX());
     configureBindings();
   }
 
@@ -87,7 +87,7 @@ public class Robot extends TimedRobot {
       // X Stop, Right Bumper Intake, Right trigger scoring
       controller.rightBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
 
-      controller.x().onFalse(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
+      controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
 
       controller.rightTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORING)));
     }
