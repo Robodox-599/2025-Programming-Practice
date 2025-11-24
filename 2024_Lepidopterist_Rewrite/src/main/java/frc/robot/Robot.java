@@ -72,11 +72,11 @@ public class Robot extends TimedRobot {
   public void testExit() {}
 
   private void configureBindings() {
-    controller.a().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
+    controller.rightBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
 
-    controller.b().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
+    controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
 
-    controller.leftTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORE)));
+    controller.rightTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORE)));
 
   }
   
