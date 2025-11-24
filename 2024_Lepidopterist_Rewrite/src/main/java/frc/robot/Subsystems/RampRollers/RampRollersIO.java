@@ -6,9 +6,9 @@ public abstract class RampRollersIO {
     public void setVelocity(double velocity) {};
     public void setPosition(double position) {};
     public void stop() {};
-    public double holdPosition() {
-        return holdPosition;
-    }
+    // public double holdPosition() {
+    //     return holdPosition;
+    // }
     
     protected double position = 0;
     protected double velocity = 0;

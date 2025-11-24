@@ -13,6 +13,7 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.AsynchronousInterrupt;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class RampRollersIOTalonFX extends RampRollersIO {
@@ -27,6 +28,8 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     private final StatusSignal<Voltage> rampRollersAppliedVolts;
     private final StatusSignal<Current> rampRollersStatorCurrent;
     private final StatusSignal<Current> rampRollersSupplyCurrent;
+
+    private AsynchronousInterrupt beamBreakInterrupt;
 
     public RampRollersIOTalonFX() {
         rampRollersMotor = new TalonFX(RampRollersConstants.rampRollersMotorID, RampRollersConstants.rampRollersCANBus);
@@ -54,6 +57,12 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         BaseStatusSignal.setUpdateFrequencyForAll(50,
         rampRollersVelocityRad, rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition,
         rampRollersStatorCurrent, rampRollersSupplyCurrent);
+
+        beamBreakInterrupt = new AsynchronousInterrupt(rampBeamBreak, (rising, falling) -> {
+            if (falling) {
+                super.holdPosition = super.position;
+            }
+        });
         rampRollersMotor.optimizeBusUtilization();
     }
     
@@ -84,14 +93,14 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampRollersMotor.set(velocity);
     }
 
-    @Override
-    public double holdPosition() {
-        if(isCoralDetected) {
-            super.holdPosition = super.position;
+    // @Override
+    // public double holdPosition() {
+    //     if(isCoralDetected) {
+    //         super.holdPosition = super.position;
            
-            return super.holdPosition;
-        } else {
-            return super.holdPosition;
-        }
-    }
+    //         return super.holdPosition;
+    //     } else {
+    //         return super.holdPosition;
+    //     }
+    // }
 }
