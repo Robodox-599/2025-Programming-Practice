@@ -13,6 +13,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.AsynchronousInterrupt;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class RampRollersIOTalonFX extends RampRollersIO {
@@ -27,7 +28,9 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     private final StatusSignal<Angle> rampRollersPosition;
     // stator current, supply current
     // both are StatusSignal<Current>
-    // .getSuppyCurrent or .getStatorCurrent
+    // .getSupplyCurrent or .getStatorCurrent
+
+    private AsynchronousInterrupt beamBreakInterrupt;
 
     public RampRollersIOTalonFX() {
         rampRollersMotor = new TalonFX(RampRollersConstants.rampRollersMotorID, RampRollersConstants.rampRollersCANBus);
@@ -54,6 +57,15 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampRollersPosition = rampRollersMotor.getPosition();
 
         BaseStatusSignal.setUpdateFrequencyForAll(50, rampRollersVelocityRad, rampRollersTemperature, rampRollersAppliedVolts, rampRollersPosition);
+
+        beamBreakInterrupt = new AsynchronousInterrupt(rampBeamBreak, (rising, falling) -> {
+            if (rising) { // coral -> no coral
+                // d
+            } 
+            if (falling) { // no coral -> coral
+                // sdadawd
+            }
+        });
 
         rampRollersMotor.optimizeBusUtilization();
     }
