@@ -20,7 +20,6 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     private final TalonFX rampRollersMotor;
     TalonFXConfiguration rampRollersConfig;
     private DigitalInput rampBeamBreak;
-    private Debouncer rampDebouncer = new Debouncer(0.2);
 
     private boolean hasHeldPositionBeenSet = false;
 
@@ -36,6 +35,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     public RampRollersIOTalonFX() {
         rampRollersMotor = new TalonFX(RampRollersConstants.rampRollersMotorID, RampRollersConstants.rampRollersCANBus);
         rampRollersConfig = new TalonFXConfiguration();
+        rampBeamBreak = new DigitalInput(RampRollersConstants.beamBreakPort)
         
         rampRollersConfig.Slot0.kP = RampRollersConstants.kP;
         rampRollersConfig.Slot0.kP = RampRollersConstants.kI;
@@ -69,6 +69,10 @@ public class RampRollersIOTalonFX extends RampRollersIO {
             }
         });
 
+        beamBreakInterrupt.enable();
+
+        beamBreakInterrupt.setInterruptEdges(true, true);
+
         rampRollersMotor.optimizeBusUtilization();
     }
     
@@ -84,7 +88,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         super.appliedVolts = rampRollersAppliedVolts.getValueAsDouble();
         super.tempCelsius = rampRollersTemperature.getValueAsDouble();
 
-        super.isCoralDetected = rampDebouncer.calculate(!rampBeamBreak.get());
+        super.isCoralDetected = !rampBeamBreak.get();
 
         DogLog.log("RampRollers/Velocity", super.velocity);
         DogLog.log("RampRollers/Position", super.position);
