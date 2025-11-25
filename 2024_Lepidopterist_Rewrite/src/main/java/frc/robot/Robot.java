@@ -1,5 +1,7 @@
 package frc.robot;
 
+import dev.doglog.DogLog;
+import dev.doglog.DogLogOptions;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -16,6 +18,14 @@ public class Robot extends TimedRobot {
   // private Command m_autonomousCommand;
 
   public Robot(){
+
+    DogLog.setOptions(
+        new DogLogOptions()
+            .withCaptureDs(true)
+            .withCaptureNt(true)
+            .withNtPublish(true)
+            .withCaptureConsole(true));
+
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
     configureBindings();
   }
