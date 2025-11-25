@@ -7,7 +7,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import dev.doglog.DogLog;
-import edu.wpi.first.math.filter.Debouncer;
+// import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -20,7 +20,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     private final TalonFX rampRollersMotor;
     TalonFXConfiguration rampRollersConfig;
     private DigitalInput rampBeamBreak;
-    private Debouncer rampDebouncer = new Debouncer(0.2);
+    // private Debouncer rampDebouncer = new Debouncer(0.2);
 
     private final StatusSignal<AngularVelocity> rampRollersVelocityRad;
     private final StatusSignal<Temperature> rampRollersTemperature;
@@ -78,7 +78,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampRollersStatorCurrent, rampRollersSupplyCurrent);
         super.position = rampRollersPosition.getValueAsDouble();
         super.velocity = rampRollersVelocityRad.getValueAsDouble();
-        super.isCoralDetected = rampDebouncer.calculate(!rampBeamBreak.get());
+        super.isCoralDetected = !rampBeamBreak.get();
         DogLog.log("RampRollers/Position", super.position);
         DogLog.log("RampRollers/Position", super.velocity);
         DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
