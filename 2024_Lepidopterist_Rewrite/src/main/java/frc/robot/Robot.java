@@ -13,7 +13,7 @@ public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
   private final CommandXboxController controller = new CommandXboxController(0);
 
-  private Command m_autonomousCommand;
+  // private Command m_autonomousCommand;
 
   public Robot(){
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
@@ -36,9 +36,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    // if (m_autonomousCommand != null) {
+      // m_autonomousCommand.schedule();
+    // }
   }
 
   @Override
@@ -49,13 +49,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.cancel();
+    // }
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    rampRollers.updateInputs();
+  }
 
   @Override
   public void teleopExit() {}
