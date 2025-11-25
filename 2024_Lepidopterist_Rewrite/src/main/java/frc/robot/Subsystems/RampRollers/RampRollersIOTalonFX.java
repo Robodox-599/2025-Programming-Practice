@@ -77,6 +77,8 @@ public class RampRollersIOTalonFX extends RampRollersIO {
             //falling going true to false
         });
 
+        beamBreakInterrupt.enable();
+
         //this must be applied LAST
         rampRollersMotor.optimizeBusUtilization();
     }
