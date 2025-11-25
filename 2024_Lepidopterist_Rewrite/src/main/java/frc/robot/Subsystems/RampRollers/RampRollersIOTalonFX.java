@@ -93,7 +93,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         //calculate => waits the debounceTime, if true for the duration of the debounceTime, then it's set to true
 
         //this thing right here might be wrong
-        super.isCoralDetected =!rampBeamBreak.get();
+        super.isCoralDetected = !rampBeamBreak.get();
 
         super.statorCurrent = rampRollersStatorCurrent.getValueAsDouble();
         super.supplyCurrent = rampRollersSupplyCurrent.getValueAsDouble();
