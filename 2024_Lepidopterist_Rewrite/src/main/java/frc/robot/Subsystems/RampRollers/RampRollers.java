@@ -83,7 +83,7 @@ public class RampRollers {
         setVelocity(0.5);
         break;
       case SCORING:
-        setVelocity(2);
+        setVelocity(-2);
         break;
       case HOLD_CORAL:
         setPosition(io.heldCurrentPosition);
