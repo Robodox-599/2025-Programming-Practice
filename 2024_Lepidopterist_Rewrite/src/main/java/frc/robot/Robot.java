@@ -63,7 +63,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    rampRollers.updateInputs();
+  }
 
   @Override
   public void teleopExit() {}
