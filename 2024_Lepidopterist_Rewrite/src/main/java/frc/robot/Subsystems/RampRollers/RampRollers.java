@@ -86,7 +86,7 @@ public class RampRollers {
         stop();
         break;
       case INTAKING:
-        setVelocity(0.5);
+        setVelocity(-0.5);
         break;
       case SCORING:
         setVelocity(0.5);
