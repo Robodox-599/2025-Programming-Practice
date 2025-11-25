@@ -6,6 +6,8 @@ package frc.robot.Subsystems.RampRollers;
 
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 
+import dev.doglog.DogLog;
+
 public class RampRollers {
   private final RampRollersIO io;
   private WantedState wantedState = WantedState.STOPPED;
@@ -41,6 +43,8 @@ public class RampRollers {
     applyStates();
     previousIsCoralDetected = currentIsCoralDetected;
     currentIsCoralDetected = isCoralDetected();
+    DogLog.log("RampRollers/wantedStated", wantedState);
+    DogLog.log("RampRollers/currentState", currentState);
   }
 
   private void handleStateTransitions() {

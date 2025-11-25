@@ -23,7 +23,6 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     //settings of the motor (i.e. sets the limits of current, speed, & PID values)
     private final TalonFXConfiguration rampRollersConfig;
     private final DigitalInput rampBeamBreak;
-    private final Debouncer rampDebouncer;
 
     //Initialize, and add it to refresh after
     private final StatusSignal<AngularVelocity> rampRollersVelocityRad;
@@ -43,7 +42,6 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampRollersMotor = new TalonFX(RampRollersConstants.rampRollersMotorID, RampRollersConstants.rampRollersCANBus);
         rampRollersConfig = new TalonFXConfiguration();
         rampBeamBreak = new DigitalInput(RampRollersConstants.beamBreakPort);
-        rampDebouncer = new Debouncer(RampRollersConstants.rampRollersDebounceTimeSeconds);
 
         //general settings is Config, and within those specific settings there are different options which are slots i.e. crosshair profiles
         rampRollersConfig.Slot0.kP = RampRollersConstants.kP;
@@ -91,7 +89,9 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         super.velocity = rampRollersVelocityRad.getValueAsDouble();
 
         //calculate => waits the debounceTime, if true for the duration of the debounceTime, then it's set to true
-        super.isCoralDetected = rampDebouncer.calculate(!rampBeamBreak.get());
+
+        //this thing right here might be wrong
+        super.isCoralDetected =!rampBeamBreak.get();
 
         super.statorCurrent = rampRollersStatorCurrent.getValueAsDouble();
         super.supplyCurrent = rampRollersSupplyCurrent.getValueAsDouble();
