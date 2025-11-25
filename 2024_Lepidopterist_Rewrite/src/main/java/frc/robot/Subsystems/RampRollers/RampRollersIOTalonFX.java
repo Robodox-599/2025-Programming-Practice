@@ -23,7 +23,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
 
     private boolean hasHeldPositionBeenSet = false;
 
-    private AsynchronusInterrupt beamBreakInterrupt;
+    private AsynchronousInterrupt beamBreakInterrupt;
 
     private final StatusSignal<AngularVelocity> rampRollersVelocityRad;
     private final StatusSignal<Temperature> rampRollersTemperature;
@@ -35,7 +35,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     public RampRollersIOTalonFX() {
         rampRollersMotor = new TalonFX(RampRollersConstants.rampRollersMotorID, RampRollersConstants.rampRollersCANBus);
         rampRollersConfig = new TalonFXConfiguration();
-        rampBeamBreak = new DigitalInput(RampRollersConstants.beamBreakPort)
+        rampBeamBreak = new DigitalInput(RampRollersConstants.beamBreakPort);
         
         rampRollersConfig.Slot0.kP = RampRollersConstants.kP;
         rampRollersConfig.Slot0.kP = RampRollersConstants.kI;

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.RampRollers.RampRollers;
+import frc.robot.Subsystems.RampRollers.RampRollers.WantedState;
 import frc.robot.Subsystems.RampRollers.RampRollersIOSim;
 import frc.robot.Subsystems.RampRollers.RampRollersIOTalonFX;
 
