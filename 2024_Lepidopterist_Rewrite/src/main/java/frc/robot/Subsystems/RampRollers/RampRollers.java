@@ -2,11 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems.RampRollers;
+package frc.robot.subsystems.ramprollers;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class RampRollers {
+public class RampRollers extends SubsystemBase {
   private final RampRollersIO io;
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
@@ -35,6 +35,8 @@ public class RampRollers {
   public void updateInputs() {
     handleStateTransitions();
     applyStates();
+
+    io.updateInputs();
   }
 
   public void handleStateTransitions(){
