@@ -39,6 +39,8 @@ public class RampRollers {
   }
 
   public void updateInputs() { //runs every 0.02 sec
+    //updateInputs first
+    io.updateInputs();
     handleStateTransitions();
     applyStates();
     previousIsCoralDetected = currentIsCoralDetected;
