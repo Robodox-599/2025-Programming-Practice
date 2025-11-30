@@ -4,8 +4,6 @@
 
 package frc.robot.Subsystems.RampRollers;
 
-import com.ctre.phoenix6.controls.PositionDutyCycle;
-
 import dev.doglog.DogLog;
 
 public class RampRollers {

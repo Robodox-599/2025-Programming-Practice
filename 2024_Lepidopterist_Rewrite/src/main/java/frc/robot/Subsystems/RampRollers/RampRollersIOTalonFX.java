@@ -8,7 +8,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import dev.doglog.DogLog;
-import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -20,6 +19,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class RampRollersIOTalonFX extends RampRollersIO {
     //shows error if it isn't defined
     private final TalonFX rampRollersMotor;
+
     //settings of the motor (i.e. sets the limits of current, speed, & PID values)
     private final TalonFXConfiguration rampRollersConfig;
     private final DigitalInput rampBeamBreak;
