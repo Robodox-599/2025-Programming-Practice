@@ -9,37 +9,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class EndeffectorRollers extends SubsystemBase {
   private final EndeffectorRollersIO io;
-
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
 
   public enum WantedState{
-    INTAKING_CORAL_STATION,
-    INTAKING_ALGAE,
-    SCORING_CORAL_TROUGH,
-    SCORING_CORAL_L2,
-    SCORING_CORAL_L3,
-    SCORING_CORAL_L4,
-    SCORING_ALGAE,
+    INTAKING_CORAL,
     HOLD_CORAL,
-    HOLD_ALGAE,
+    SCORING_CORAL,
     STOPPED,
   }
 
   public enum CurrentState{
-    INTAKING_CORAL_STATION,
-    INTAKING_ALGAE,
-    SCORING_CORAL_TROUGH,
-    SCORING_CORAL_L2,
-    SCORING_CORAL_L3,
-    SCORING_CORAL_L4,
-    SCORING_ALGAE,
+    INTAKING_CORAL,
     HOLD_CORAL,
-    HOLD_ALGAE,
+    SCORING_CORAL,
     STOPPED,
   }
 
-  /** Creates a new RampRollers. */
   public EndeffectorRollers(EndeffectorRollersIO io) {
     this.io = io;
   }
@@ -48,7 +34,7 @@ public class EndeffectorRollers extends SubsystemBase {
     handleStateTransitions();
     applyStates();
 
-    DogLog.log("EndeffectorRollers/wantedStated", wantedState);
+    DogLog.log("EndeffectorRollers/wantedState", wantedState);
     DogLog.log("EndeffectorRollers/currentState", currentState);
 
     io.updateInputs();
@@ -56,59 +42,34 @@ public class EndeffectorRollers extends SubsystemBase {
 
   public void handleStateTransitions(){
     switch(wantedState){
-      case INTAKING_CORAL_STATION:
+      case STOPPED:
+        currentState = CurrentState.STOPPED;
+        break;
+      case INTAKING_CORAL:
         if(isCoralDetected()){
           wantedState = WantedState.HOLD_CORAL;
           currentState = CurrentState.HOLD_CORAL;
         }
         else{
-          currentState = CurrentState.INTAKING_CORAL_STATION;
+          currentState = CurrentState.INTAKING_CORAL;
         }
-        break;
-      case INTAKING_ALGAE:
-        if(isCoralDetected()){
-          wantedState = WantedState.HOLD_CORAL;
-          currentState = CurrentState.HOLD_CORAL;
-        }
-        else{
-          currentState = CurrentState.INTAKING_ALGAE;
-        }
-        break;
-      case SCORING_CORAL_TROUGH:
-        currentState = CurrentState.SCORING_CORAL_TROUGH;
-        break;
-      case SCORING_CORAL_L2:
-        currentState = CurrentState.SCORING_CORAL_L2;
-        break;
-      case SCORING_CORAL_L3:
-        currentState = CurrentState.SCORING_CORAL_L3;
-        break;
-      case SCORING_CORAL_L4:
-        currentState = CurrentState.SCORING_CORAL_L4;
-        break;
-      case SCORING_ALGAE:
-        currentState = CurrentState.SCORING_ALGAE;
         break;
       case HOLD_CORAL:
         if(!isCoralDetected()){
-          wantedState = WantedState.STOPPED;
-          currentState = CurrentState.STOPPED;
+          wantedState = WantedState.INTAKING_CORAL;
+          currentState = CurrentState.INTAKING_CORAL;
         }
         else{
           currentState = CurrentState.HOLD_CORAL;
         }
-        break;
-      case HOLD_ALGAE:
-        if(isCoralDetected()){
-          wantedState = WantedState.HOLD_CORAL;
-          currentState = CurrentState.HOLD_CORAL;
+      case SCORING_CORAL:
+        if(!isCoralDetected()){
+          wantedState = WantedState.INTAKING_CORAL;
+          currentState = CurrentState.INTAKING_CORAL;
         }
         else{
-          currentState = CurrentState.HOLD_ALGAE;
+          currentState = CurrentState.SCORING_CORAL;
         }
-        break;
-      case STOPPED:
-        currentState = CurrentState.STOPPED;
         break;
       default:
         currentState = CurrentState.STOPPED;
@@ -118,35 +79,17 @@ public class EndeffectorRollers extends SubsystemBase {
 
   public void applyStates(){
     switch(currentState){
-      case INTAKING_CORAL_STATION:
+      case STOPPED:
         stop();
         break;
-      case INTAKING_ALGAE:
-        setVelocity(-0.7);
-        break;
-      case SCORING_CORAL_TROUGH:
+      case INTAKING_CORAL:
         setVelocity(-0.3);
         break;
-      case SCORING_CORAL_L2:
+      case SCORING_CORAL:
         setVelocity(-0.5);
-        break;
-      case SCORING_CORAL_L3:
-        setVelocity(-0.5);
-        break;
-      case SCORING_CORAL_L4:
-        setVelocity(-0.8);
-        break;
-      case SCORING_ALGAE:
-        setVelocity(-0.9);
         break;
       case HOLD_CORAL:
         setPosition(io.heldCurrentPosition);
-        break;
-      case HOLD_ALGAE:
-        setPosition(io.heldCurrentPosition);
-        break;
-      case STOPPED:
-        setVelocity(0);
         break;
       default:
         setVelocity(0);
