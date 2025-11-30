@@ -16,15 +16,12 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.AsynchronousInterrupt;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
   private final TalonFX endeffectorRollersMotor;
     TalonFXConfiguration endeffectorRollersConfig;
     private DigitalInput endeffectorRollersBeamBreak;
-
-    private AsynchronousInterrupt beamBreakInterrupt;
 
     private final StatusSignal<AngularVelocity> endeffectorRollersVelocityRad;
     private final StatusSignal<Temperature> endeffectorRollersTemperature;
@@ -63,8 +60,6 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
             endeffectorRollersTemperature, endeffectorRollersAppliedVolts, endeffectorRollersPosition, endeffectorRollersStatorCurrent, 
                 endeffectorRollersSupplyCurrent);
 
-        beamBreakInterrupt.enable();
-        beamBreakInterrupt.setInterruptEdges(true, true);
         endeffectorRollersMotor.optimizeBusUtilization();
     }
     

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.ramprollers;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RampRollers extends SubsystemBase {
@@ -33,6 +34,9 @@ public class RampRollers extends SubsystemBase {
   public void updateInputs() {
     handleStateTransitions();
     applyStates();
+
+    DogLog.log("RampRollers/wantedStated", wantedState);
+    DogLog.log("RampRollers/currentState", currentState);
 
     io.updateInputs();
   }
