@@ -11,8 +11,6 @@ public class RampRollers extends SubsystemBase {
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
 
-  private double currentPosition = 0.0;
-
   public enum WantedState{
     INTAKING,
     HOLD_CORAL,
@@ -85,7 +83,7 @@ public class RampRollers extends SubsystemBase {
         setVelocity(-0.3);
         break;
       case SCORING:
-        setVelocity(-.5);
+        setVelocity(-0.5);
         break;
       case HOLD_CORAL:
         setPosition(io.heldCurrentPosition);
