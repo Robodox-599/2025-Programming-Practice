@@ -7,7 +7,7 @@ public class RampRollersConstants {
     public static final double rampRollersDebounceTimeSeconds = 0.2;
     public static final int rampRollersGearRatio = 2;
 
-    public static final double kP = 0.45;
+    public static final double kP = 0.3;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kS = 0.03;
