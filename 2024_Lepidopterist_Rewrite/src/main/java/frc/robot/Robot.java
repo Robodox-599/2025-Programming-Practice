@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    rampRollers.updateInputs();
     CommandScheduler.getInstance().run();
   }
 
@@ -64,10 +65,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() { 
-    rampRollers.updateInputs();
-
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void teleopExit() {}
