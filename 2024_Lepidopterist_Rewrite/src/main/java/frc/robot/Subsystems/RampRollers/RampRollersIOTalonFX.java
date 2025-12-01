@@ -3,6 +3,7 @@ package frc.robot.Subsystems.RampRollers;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -61,7 +62,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
 
         beamBreakInterrupt = new AsynchronousInterrupt(rampBeamBreak, (rising, falling) -> {
             if (falling) {
-                super.holdPosition = super.position;
+                super.holdPosition = rampRollersMotor.getPosition().getValueAsDouble();
             }
         });
 
@@ -80,8 +81,9 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         super.velocity = rampRollersVelocityRad.getValueAsDouble();
         super.isCoralDetected = !rampBeamBreak.get();
         DogLog.log("RampRollers/Position", super.position);
-        DogLog.log("RampRollers/Position", super.velocity);
+        DogLog.log("RampRollers/Velocity", super.velocity);
         DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
+        DogLog.log("RampRollers/HoldPosition", super.holdPosition);
     }
 
     @Override
@@ -91,7 +93,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
 
     @Override
     public void setPosition(double position) {
-        rampRollersMotor.setPosition(position);
+        rampRollersMotor.setControl(new PositionDutyCycle(position));
     }
 
     @Override

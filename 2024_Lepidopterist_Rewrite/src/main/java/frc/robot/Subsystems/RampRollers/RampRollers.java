@@ -1,6 +1,8 @@
 
 package frc.robot.Subsystems.RampRollers;
 
+import dev.doglog.DogLog;
+
 public class RampRollers {
  private final RampRollersIO io;
  private WantedState wantedState = WantedState.STOPPED;
@@ -52,6 +54,7 @@ public class RampRollers {
      } else {
       currentState = CurrentState.SCORE;
      }
+    break;
     default:
     currentState = CurrentState.STOPPED;
     break;}
@@ -77,8 +80,10 @@ public class RampRollers {
       }
 
       public void updateInputs(){
+        io.updateInputs();
         handleStateTransitions();
         applyState();
+        DogLog.log("RampRollers/WantedState", wantedState.toString());
       }
 
       public void setVelocity(double velocity) {
