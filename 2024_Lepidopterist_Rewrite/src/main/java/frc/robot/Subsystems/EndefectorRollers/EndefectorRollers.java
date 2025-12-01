@@ -9,18 +9,14 @@ public class EndefectorRollers {
   STOPPED,
   INTAKING,
   HOLD_CORAL,
-  SCORE_L1,
-  SCORE_L2_L3,
-  SCORE_L4
+  SCORE
  }
 
  public enum CurrentState {
     STOPPED,
     INTAKING,
     HOLD_CORAL,
-    SCORE_L1,
-    SCORE_L2_L3,
-    SCORE_L4
+    SCORE
  }
 
   public EndefectorRollers(EndefectorRollersIO io) {
@@ -48,30 +44,15 @@ public class EndefectorRollers {
       currentState = CurrentState.HOLD_CORAL;
      }
     break;
-    case SCORE_L1:
+    case SCORE:
     if (!isCoralInEndefector()) {
       wantedState = WantedState.INTAKING;
       currentState = CurrentState.INTAKING;
      } else {
-      currentState = CurrentState.SCORE_L1;
+      currentState = CurrentState.SCORE;
      }
     break;
-    case SCORE_L2_L3:
-    if (!isCoralInEndefector()) {
-      wantedState = WantedState.INTAKING;
-      currentState = CurrentState.INTAKING;
-     } else {
-      currentState = CurrentState.SCORE_L2_L3;
-     }
-    break;
-    case SCORE_L4:
-    if (!isCoralInEndefector()) {
-      wantedState = WantedState.INTAKING;
-      currentState = CurrentState.INTAKING;
-     } else {
-      currentState = CurrentState.SCORE_L4;
-     }
-    break;
+
     default:
     currentState = CurrentState.STOPPED;
     break;}
@@ -88,14 +69,9 @@ public class EndefectorRollers {
       case HOLD_CORAL:
         setPosition(io.holdPosition);
         break;
-        case SCORE_L1:
+        case SCORE:
         setVelocity(-0);
-        break;
-        case SCORE_L2_L3:
-        setVelocity(-0);
-        break;
-        case SCORE_L4:
-        setVelocity(-0);
+
         break;
       default:
         stop();
