@@ -64,8 +64,9 @@ public class EndefectorRollersIOTalonFX extends EndefectorRollersIO {
         super.velocity = endefectorRollersVelocityRad.getValueAsDouble();
         super.isCoralInEndefector = !endefectorBeamBreak.get();
         DogLog.log("EndefectorRollers/Position", super.position);
-        DogLog.log("EndefectorRollers/Position", super.velocity);
+        DogLog.log("EndefectorRollers/Velocity", super.velocity);
         DogLog.log("EndefectorRollers/isCoralDetected", super.isCoralInEndefector);
+        DogLog.log("EndefectorRollers/HoldPosition", super.holdPosition);
     }
 
     @Override

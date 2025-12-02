@@ -84,6 +84,7 @@ public class RampRollers {
         handleStateTransitions();
         applyState();
         DogLog.log("RampRollers/WantedState", wantedState.toString());
+        DogLog.log("RampRollers/CurrentState", currentState.toString());
       }
 
       public void setVelocity(double velocity) {
