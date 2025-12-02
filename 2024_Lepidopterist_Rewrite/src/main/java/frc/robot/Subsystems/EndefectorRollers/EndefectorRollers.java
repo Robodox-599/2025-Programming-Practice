@@ -1,4 +1,6 @@
-package frc.robot.Subsystems.EndefectorRollers;
+package frc.robot.subsystems.endefectorrollers;
+
+import dev.doglog.DogLog;
 
 public class EndefectorRollers {
  private final EndefectorRollersIO io;
@@ -79,8 +81,11 @@ public class EndefectorRollers {
       }
 
       public void updateInputs(){
+        io.updateInputs();
         handleStateTransitions();
         applyState();
+        DogLog.log("EndefectorRollers/WantedState", wantedState.toString());
+        DogLog.log("EndefectorRollers/CurrentState", currentState.toString());
       }
 
       public void setVelocity(double velocity) {
