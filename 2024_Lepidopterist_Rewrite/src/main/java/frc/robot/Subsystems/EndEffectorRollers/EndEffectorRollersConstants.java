@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.EndEffectorRollers;
+package frc.robot.Subsystems.endEffectorRollers;
 
 public class EndEffectorRollersConstants {
 

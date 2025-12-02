@@ -9,13 +9,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Subsystems.RampRollers.RampRollers;
-import frc.robot.Subsystems.RampRollers.RampRollers.WantedState;
-import frc.robot.Subsystems.RampRollers.RampRollersIOTalonFX;
+import frc.robot.Subsystems.endEffectorRollers.EndEffectorRollers;
+import frc.robot.Subsystems.endEffectorRollers.EndEffectorRollersIO;
+import frc.robot.Subsystems.endEffectorRollers.EndEffectorRollersIOTalonFX;
+import frc.robot.Subsystems.rampRollers.RampRollers;
+import frc.robot.Subsystems.rampRollers.RampRollers.WantedState;
+import frc.robot.Subsystems.rampRollers.RampRollersIOTalonFX;
+
 
 public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
+  private final EndEffectorRollers endEffectorRollers;
   private final CommandXboxController controller = new CommandXboxController(0);
+
 
   private Command m_autonomousCommand;
 
@@ -23,7 +29,7 @@ public class Robot extends TimedRobot {
   public Robot() {
     // if in real mode
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
-    // RampRollers one = new RampRollers(new RampRollersIOTalonFX());
+    endEffectorRollers = new EndEffectorRollers(new EndEffectorRollersIOTalonFX());
     configureBindings();
   }
 
@@ -86,11 +92,13 @@ public class Robot extends TimedRobot {
   
     private void configureBindings() {
       // X Stop, Right Bumper Intake, Right trigger scoring
-      controller.rightBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
+      controller.rightBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
+      controller.rightTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.SCORING)));
 
-      controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
+      controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)));
 
-      controller.rightTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORING)));
+      controller.leftBumper().onTrue(Commands.runOnce(() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING)));
+      controller.leftTrigger().onTrue(Commands.runOnce (() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING)));
     }
   
     public Command getAutonomousCommand() {

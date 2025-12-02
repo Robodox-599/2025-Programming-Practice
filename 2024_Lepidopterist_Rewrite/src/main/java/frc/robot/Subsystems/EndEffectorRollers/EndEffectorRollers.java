@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.EndEffectorRollers;
+package frc.robot.Subsystems.endEffectorRollers;
 
 import dev.doglog.DogLog;
 
@@ -101,5 +101,10 @@ public class EndEffectorRollers {
 
     public void setPosition(double position){
         io.setPosition(position);
+    }
+
+    public Object setWantedState(WantedState intaking) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setWantedState'");
     }
 }

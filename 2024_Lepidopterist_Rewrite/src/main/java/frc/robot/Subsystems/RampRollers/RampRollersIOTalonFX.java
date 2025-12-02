@@ -1,4 +1,6 @@
-package frc.robot.Subsystems.RampRollers;
+package frc.robot.Subsystems.rampRollers;
+
+import java.security.Key;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -103,6 +105,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
         DogLog.log("RampRollers/statorCurrent", super.statorCurrent);
         DogLog.log("RampRollers/supplyCurrent", super.supplyCurrent);
+        DogLog.log("RampRollers/wantedCoralPosition", super.wantedCoralPosition);
     }
     
     @Override
@@ -119,6 +122,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
     //"set" sets the speed, "setControl" is applicable to a variety of things, however setControl needs to have a request (sometimes importing the PositionDutyCycle needs to be done manually)
     @Override
     public void setPosition(double position){
+        //PositiondutyCycle uses PID/Feet Forward, setPosition doesn't use that
         rampRollersMotor.setControl(new PositionDutyCycle(position));
     }
 

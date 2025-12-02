@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems.RampRollers;
+package frc.robot.Subsystems.rampRollers;
 
 import dev.doglog.DogLog;
 
@@ -43,7 +43,7 @@ public class RampRollers {
     applyStates();
     previousIsCoralDetected = currentIsCoralDetected;
     currentIsCoralDetected = isCoralDetected();
-    DogLog.log("RampRollers/wantedStated", wantedState);
+    DogLog.log("RampRollers/wantedState", wantedState);
     DogLog.log("RampRollers/currentState", currentState);
   }
 

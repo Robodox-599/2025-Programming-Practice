@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.EndEffectorRollers;
+package frc.robot.Subsystems.endEffectorRollers;
 
 public abstract class EndEffectorRollersIO {
     protected double position = 0.0;
