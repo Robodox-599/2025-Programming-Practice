@@ -7,8 +7,10 @@ package frc.robot.subsystems.endeffector.endeffectorrollers;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.controls.*;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.Angle;
@@ -94,7 +96,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
 
     @Override
     public void setPosition(double position) {
-        endeffectorRollersMotor.setPosition(position);
+        endeffectorRollersMotor.setControl(new PositionDutyCycle(position));
     }
 
     @Override
