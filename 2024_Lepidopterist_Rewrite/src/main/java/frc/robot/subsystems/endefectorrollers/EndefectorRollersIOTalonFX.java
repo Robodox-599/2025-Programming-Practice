@@ -3,6 +3,7 @@ package frc.robot.subsystems.endefectorrollers;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import dev.doglog.DogLog;
@@ -18,6 +19,7 @@ public class EndefectorRollersIOTalonFX extends EndefectorRollersIO {
     private final TalonFX endefectorRollersMotor;
     TalonFXConfiguration endefectorRollersConfig;
     private DigitalInput endefectorBeamBreak;
+
     private Debouncer endefectorDebouncer = new Debouncer(0.2);
 
     private final StatusSignal<AngularVelocity> endefectorRollersVelocityRad;
@@ -81,7 +83,7 @@ public class EndefectorRollersIOTalonFX extends EndefectorRollersIO {
 
     @Override
     public void setPosition(double position) {
-        endefectorRollersMotor.setPosition(position);
+        endefectorRollersMotor.setControl(new PositionDutyCycle(position));
     }
 
     @Override
