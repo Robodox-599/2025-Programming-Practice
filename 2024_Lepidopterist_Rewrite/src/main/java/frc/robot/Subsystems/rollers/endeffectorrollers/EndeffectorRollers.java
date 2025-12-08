@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems.endeffector.endeffectorrollers;
+package frc.robot.Subsystems.rollers.endeffectorrollers;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -46,30 +46,13 @@ public class EndeffectorRollers extends SubsystemBase {
         currentState = CurrentState.STOPPED;
         break;
       case INTAKING_CORAL:
-        if(isCoralDetected()){
-          wantedState = WantedState.HOLD_CORAL;
-          currentState = CurrentState.HOLD_CORAL;
-        }
-        else{
-          currentState = CurrentState.INTAKING_CORAL;
-        }
+        currentState = CurrentState.INTAKING_CORAL;
         break;
       case HOLD_CORAL:
-        if(!isCoralDetected()){
-          wantedState = WantedState.INTAKING_CORAL;
-          currentState = CurrentState.INTAKING_CORAL;
-        }
-        else{
-          currentState = CurrentState.HOLD_CORAL;
-        }
+        currentState = CurrentState.HOLD_CORAL;
+        break;
       case SCORING_CORAL:
-        if(!isCoralDetected()){
-          wantedState = WantedState.INTAKING_CORAL;
-          currentState = CurrentState.INTAKING_CORAL;
-        }
-        else{
-          currentState = CurrentState.SCORING_CORAL;
-        }
+        currentState = CurrentState.SCORING_CORAL;
         break;
       default:
         currentState = CurrentState.STOPPED;
