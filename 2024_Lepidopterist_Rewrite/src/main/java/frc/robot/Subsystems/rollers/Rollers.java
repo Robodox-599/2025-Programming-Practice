@@ -6,7 +6,6 @@ package frc.robot.Subsystems.rollers;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Subsystems.rollers.RampRollers.RampRollers;
-import frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState;
 //import frc.robot.Subsystems.rollers.endeffectorrollers.WantedState;
 import frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers;
 
@@ -31,6 +30,7 @@ public class Rollers extends SubsystemBase {
     RAMP_INTAKING,
     RAMP_HOLD_CORAL,
     ROLLERS_INTAKE,
+    
     ENDEFFECTOR_HOLD_CORAL,
     ENDEFFECTOR_SCORE,
     STOPPED,
@@ -73,18 +73,17 @@ public class Rollers extends SubsystemBase {
         }
           break;
       case ROLLERS_INTAKE:
-        if(!rampRollers.isCoralDetected()){
+        if (!rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
+          wantedState = WantedState.RAMP_INTAKING;
+          currentState = CurrentState.RAMP_INTAKING;
+        } else if(rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()){
           wantedState = WantedState.RAMP_HOLD_CORAL;
           currentState = CurrentState.RAMP_HOLD_CORAL;
-        }
-        else{
-          while (rampRollers.isCoralDetected() && endeffectorRollers.isCoralDetected()) {
-            currentState = CurrentState.ROLLERS_INTAKE;
-
-            if(!rampRollers.isCoralDetected()){
-              break;
-            }
-          }
+        } else if(!rampRollers.isCoralDetected() && endeffectorRollers.isCoralDetected()){
+          wantedState = WantedState.ENDEFFECTOR_HOLD_CORAL;
+          currentState = CurrentState.ENDEFFECTOR_HOLD_CORAL;
+        } else {
+          currentState = CurrentState.ROLLERS_INTAKE;
         }
         break;
       case ENDEFFECTOR_HOLD_CORAL:
