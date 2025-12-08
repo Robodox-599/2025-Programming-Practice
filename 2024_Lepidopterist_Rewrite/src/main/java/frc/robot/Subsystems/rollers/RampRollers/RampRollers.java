@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems.RampRollers;
+package frc.robot.Subsystems.rollers.RampRollers;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,14 +15,14 @@ public class RampRollers extends SubsystemBase {
   public enum WantedState{
     INTAKING,
     HOLD_CORAL,
-    SCORING,
+    SCORING_CORAL,
     STOPPED,
   }
 
   public enum CurrentState{
     INTAKING,
     HOLD_CORAL,
-    SCORING,
+    SCORING_CORAL,
     STOPPED,
   }
 
@@ -47,30 +47,13 @@ public class RampRollers extends SubsystemBase {
         currentState = CurrentState.STOPPED;
         break;
       case INTAKING:
-        if(isCoralDetected()){
-          wantedState = WantedState.HOLD_CORAL;
-          currentState = CurrentState.HOLD_CORAL;
-        }
-        else{
-          currentState = CurrentState.INTAKING;
-        }
+        currentState = CurrentState.INTAKING;
         break;
       case HOLD_CORAL:
-        if(!isCoralDetected()){
-          wantedState = WantedState.INTAKING;
-          currentState = CurrentState.INTAKING;
-        }
-        else{
-          currentState = CurrentState.HOLD_CORAL;
-        }
-      case SCORING:
-        if(!isCoralDetected()){
-          wantedState = WantedState.INTAKING;
-          currentState = CurrentState.INTAKING;
-        }
-        else{
-          currentState = CurrentState.SCORING;
-        }
+        currentState = CurrentState.HOLD_CORAL;
+        break;
+      case SCORING_CORAL:
+        currentState = CurrentState.SCORING_CORAL;
         break;
       default:
         currentState = CurrentState.STOPPED;
@@ -86,7 +69,7 @@ public class RampRollers extends SubsystemBase {
       case INTAKING:
         setVelocity(-0.3);
         break;
-      case SCORING:
+      case SCORING_CORAL:
         setVelocity(-0.5);
         break;
       case HOLD_CORAL:

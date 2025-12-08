@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Subsystems.RampRollers.RampRollers;
-import frc.robot.Subsystems.RampRollers.RampRollersIOTalonFX;
-import frc.robot.Subsystems.RampRollers.RampRollers.WantedState;
+import frc.robot.Subsystems.rollers.RampRollers.RampRollers;
+import frc.robot.Subsystems.rollers.RampRollers.RampRollersIOTalonFX;
+import frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState;
 
 public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
 
     controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
 
-    controller.rightTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORING)));
+    controller.rightTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORING_CORAL)));
   }
 
 
