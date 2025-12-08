@@ -101,7 +101,7 @@ public class Rollers {
             endefectorRollers.setWantedState(EndefectorRollers.WantedState.STOPPED);
             break;
             case ROLLERS_INTAKING:
-            rampRollers.setWantedState(RampRollers.WantedState.SCORE);
+            rampRollers.setWantedState(RampRollers.WantedState.TRANSFERING);
             endefectorRollers.setWantedState(EndefectorRollers.WantedState.INTAKING);
             break;
             case ENDEFECTOR_HOLD_CORAL:

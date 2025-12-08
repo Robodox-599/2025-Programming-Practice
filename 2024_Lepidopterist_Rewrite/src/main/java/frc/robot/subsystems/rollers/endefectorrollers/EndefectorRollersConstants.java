@@ -5,6 +5,7 @@ public class EndefectorRollersConstants {
     public static final String endefectorRollersCANBus = "rio";
     public static final int endefectorBeamBreakPort = 0;
     public static final double endEfectorRollersDebounceTimeSeconds = 0;
+    public static final double gearRatio = 0;
 
     public static final double kP = 0.3;
     public static final double kI = 0;

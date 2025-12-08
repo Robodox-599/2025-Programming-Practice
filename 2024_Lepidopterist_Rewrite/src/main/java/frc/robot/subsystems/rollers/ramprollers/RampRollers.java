@@ -1,5 +1,5 @@
 
-package frc.robot.subsystems.ramprollers;
+package frc.robot.subsystems.rollers.ramprollers;
 
 import dev.doglog.DogLog;
 
@@ -12,14 +12,14 @@ public class RampRollers {
   STOPPED,
   INTAKING,
   HOLD_CORAL,
-  SCORE
+  TRANSFERING
  }
 
  public enum CurrentState {
   STOPPED,
   INTAKING,
   HOLD_CORAL,
-  SCORE
+  TRANSFERING
  }
 
   public RampRollers(RampRollersIO io) {
@@ -47,12 +47,12 @@ public class RampRollers {
       currentState = CurrentState.HOLD_CORAL;
      }
     break;
-    case SCORE:
+    case TRANSFERING:
     if (!isCoralDetected()) {
       wantedState = WantedState.INTAKING;
       currentState = CurrentState.INTAKING;
      } else {
-      currentState = CurrentState.SCORE;
+      currentState = CurrentState.TRANSFERING;
      }
     break;
     default:
@@ -71,7 +71,7 @@ public class RampRollers {
       case HOLD_CORAL:
         setPosition(io.holdPosition);
         break;
-        case SCORE:
+        case TRANSFERING:
         setVelocity(-0.5);
         break;
       default:
