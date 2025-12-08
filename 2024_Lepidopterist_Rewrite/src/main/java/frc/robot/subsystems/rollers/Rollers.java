@@ -73,7 +73,7 @@ public class Rollers extends SubsystemBase {
       case ROLLERS_INTAKE: {      
         if (!rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
           // Nothing in the system yet
-          currentState = CurrentState.RAMP_INTAKING;
+          currentState = CurrentState.ROLLERS_INTAKE;
         } else if (rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
           // Coral is at the ramp only so we run BOTH to move it toward the end effector
           currentState = CurrentState.ROLLERS_INTAKE;
