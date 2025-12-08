@@ -2,12 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems.rollers;
+package frc.robot.subsystems.rollers;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Subsystems.rollers.RampRollers.RampRollers;
-//import frc.robot.Subsystems.rollers.endeffectorrollers.WantedState;
-import frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers;
+import frc.robot.subsystems.rollers.endeffectorrollers.EndeffectorRollers;
+import frc.robot.subsystems.rollers.ramprollers.RampRollers;
 
 public class Rollers extends SubsystemBase {
   
