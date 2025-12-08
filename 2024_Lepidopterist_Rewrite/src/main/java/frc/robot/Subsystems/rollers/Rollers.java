@@ -13,7 +13,7 @@ import frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers;
 public class Rollers extends SubsystemBase {
   
   private final RampRollers rampRollers;
-  private final EndeffectorRollers endeffectorrollers;
+  private final EndeffectorRollers endeffectorRollers;
 
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
@@ -36,6 +36,19 @@ public class Rollers extends SubsystemBase {
     STOPPED,
   }
 
+  public Rollers(EndeffectorRollers endefRollers, RampRollers rampRollers) {
+    this.rampRollers = rampRollers;
+    this.endeffectorRollers = endefRollers;
+  }
+
+  @Override
+  public void periodic() {
+    rampRollers.updateInputs();
+    endeffectorRollers.updateInputs();
+    handleStateTransitions();
+    applyStates();
+  }
+
   public void handleStateTransitions(){
     switch(wantedState){
       case STOPPED:
@@ -51,7 +64,7 @@ public class Rollers extends SubsystemBase {
         }
         break;
       case RAMP_HOLD_CORAL:
-        if(!endeffectorrollers.isCoralDetected()){
+        if(!endeffectorRollers.isCoralDetected()){
           wantedState = WantedState.RAMP_INTAKING;
           currentState = CurrentState.RAMP_INTAKING;
         }
@@ -65,7 +78,7 @@ public class Rollers extends SubsystemBase {
           currentState = CurrentState.RAMP_HOLD_CORAL;
         }
         else{
-          while (rampRollers.isCoralDetected() && endeffectorrollers.isCoralDetected()) {
+          while (rampRollers.isCoralDetected() && endeffectorRollers.isCoralDetected()) {
             currentState = CurrentState.ROLLERS_INTAKE;
 
             if(!rampRollers.isCoralDetected()){
@@ -75,7 +88,7 @@ public class Rollers extends SubsystemBase {
         }
         break;
       case ENDEFFECTOR_HOLD_CORAL:
-        if(endeffectorrollers.isCoralDetected()){
+        if(endeffectorRollers.isCoralDetected()){
           wantedState = WantedState.ROLLERS_INTAKE;
           currentState = CurrentState.ROLLERS_INTAKE;
         }
@@ -84,7 +97,7 @@ public class Rollers extends SubsystemBase {
         }
         break;
       case ENDEFFECTOR_SCORE:
-        if(!endeffectorrollers.isCoralDetected()){
+        if(!endeffectorRollers.isCoralDetected()){
           wantedState = WantedState.ROLLERS_INTAKE;
           currentState = CurrentState.ROLLERS_INTAKE;
         }
@@ -101,34 +114,29 @@ public class Rollers extends SubsystemBase {
   public void applyStates(){
     switch(currentState){
       case STOPPED:
-        endeffectorrollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
         rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.STOPPED);
         break;
       case RAMP_INTAKING:
-        endeffectorrollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
         rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.INTAKING);
         break;
       case RAMP_HOLD_CORAL:
-        endeffectorrollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
         rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.HOLD_CORAL);
         break;
       case ROLLERS_INTAKE: // lowk my brain is fried rn and this makes the most sense to me
-        endeffectorrollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.SCORING_CORAL);
+        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.SCORING_CORAL);
         rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.SCORING_CORAL);
         break;
       case ENDEFFECTOR_HOLD_CORAL:
-        endeffectorrollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.HOLD_CORAL);
+        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.HOLD_CORAL);
         rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.STOPPED);
         break;
       case ENDEFFECTOR_SCORE:
-        endeffectorrollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.SCORING_CORAL);
+        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.SCORING_CORAL);
         rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.STOPPED);
         break;
     }
-  }
-
-  public Rollers(EndeffectorRollers endefRollers, RampRollers rampRollers) {
-    this.rampRollers = rampRollers;
-    this.endeffectorrollers = endefRollers;
   }
 }
