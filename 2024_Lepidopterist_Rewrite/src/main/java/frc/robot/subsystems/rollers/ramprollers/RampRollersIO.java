@@ -1,4 +1,4 @@
-package frc.robot.poopoo.poo3;
+package frc.robot.subsystems.rollers.ramprollers;
 
 public abstract class RampRollersIO {
 
@@ -8,7 +8,7 @@ public abstract class RampRollersIO {
     protected double velocity = 0.0;
     protected double statorCurrent = 0.0;
     protected double supplyCurrent = 0.0;
-    protected double wantedCoralPosition = 0.0;
+    public double wantedCoralPositionRampRollers = 0.0;
 
     protected boolean isCoralDetected = false;
 

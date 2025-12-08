@@ -1,6 +1,4 @@
-package frc.robot.poopoo.poo3;
-
-import java.security.Key;
+package frc.robot.subsystems.rollers.ramprollers;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -73,7 +71,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         
         beamBreakInterrupt = new AsynchronousInterrupt(rampBeamBreak, (rising,falling) -> {
             if (falling){
-                super.wantedCoralPosition = getPosition();
+                super.wantedCoralPositionRampRollers = getPosition();
             }
             //rising going from false to true
             //falling going true to false
@@ -105,7 +103,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
         DogLog.log("RampRollers/statorCurrent", super.statorCurrent);
         DogLog.log("RampRollers/supplyCurrent", super.supplyCurrent);
-        DogLog.log("RampRollers/wantedCoralPosition", super.wantedCoralPosition);
+        DogLog.log("RampRollers/wantedCoralPosition", super.wantedCoralPositionRampRollers);
     }
     
     @Override

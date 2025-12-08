@@ -1,4 +1,4 @@
-package frc.robot.poopoo.poo;
+package frc.robot.subsystems.rollers.endeffectorrollers;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -66,13 +66,13 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
 
         super.position = endEffectorRollersPosition.getValueAsDouble();
         super.velocity = endEffectorRollersVelocityRad.getValueAsDouble();
-        super.isCoralDetected = !endEffectorBeamBreak.get();
+        super.isCoralDetectedEndEffectorRollers = !endEffectorBeamBreak.get();
         super.statorCurrent = endEffectorRollersStatorCurrent.getValueAsDouble();
         super.supplyCurrent = endEffectorRollersSupplyCurrent.getValueAsDouble();
 
         DogLog.log("endEffectorRollers/Position", super.position);
         DogLog.log("endEffectorRollers/Velocity", super.velocity);
-        DogLog.log("endEffectorRollers/isCoralDetected", super.isCoralDetected);
+        DogLog.log("endEffectorRollers/isCoralDetected", super.isCoralDetectedEndEffectorRollers);
         DogLog.log("endEffectorRollers/statorCurrent", super.statorCurrent);
         DogLog.log("endEffectorRollers/supplyCurrent", super.supplyCurrent);
 
@@ -96,5 +96,9 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     @Override
     public double getPosition(){
         return endEffectorRollersMotor.getPosition().getValueAsDouble();
+    }
+
+    public void endEffectorRollerStop(){
+        endEffectorRollersMotor.stopMotor();
     }
 }
