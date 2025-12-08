@@ -115,28 +115,28 @@ public class Rollers extends SubsystemBase {
   public void applyStates(){
     switch(currentState){
       case STOPPED:
-        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
-        rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
+        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
         break;
       case RAMP_INTAKING:
-        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
-        rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.INTAKING);
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
+        rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
         break;
       case RAMP_HOLD_CORAL:
-        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.STOPPED);
-        rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.HOLD_CORAL);
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
+        rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
         break;
       case ROLLERS_INTAKE: // lowk my brain is fried rn and this makes the most sense to me
-        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.SCORING_CORAL);
-        rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.SCORING_CORAL);
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_CORAL);
+        rampRollers.setWantedState(RampRollers.WantedState.SCORING_CORAL);
         break;
       case ENDEFFECTOR_HOLD_CORAL:
-        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.HOLD_CORAL);
-        rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.HOLD_CORAL);
+        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
         break;
       case ENDEFFECTOR_SCORE:
-        endeffectorRollers.setWantedState(frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers.WantedState.SCORING_CORAL);
-        rampRollers.setWantedState(frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_CORAL);
+        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
         break;
     }
   }
