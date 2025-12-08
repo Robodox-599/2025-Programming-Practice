@@ -9,18 +9,28 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Subsystems.rollers.Rollers;
 import frc.robot.Subsystems.rollers.RampRollers.RampRollers;
 import frc.robot.Subsystems.rollers.RampRollers.RampRollersIOTalonFX;
 import frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState;
+import frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers;
+import frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollersIOTalonFX;
 
 public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
+  private final EndeffectorRollers endeffectorRollers;
+
+  private final Rollers rollers;
+
   private final CommandXboxController controller = new CommandXboxController(0);
 
   private Command m_autonomousCommand;
 
   public Robot() {
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
+    endeffectorRollers = new EndeffectorRollers(new EndeffectorRollersIOTalonFX());
+    rollers = new Rollers(endeffectorRollers, rampRollers);
+
 
     configureBindings();
   }
@@ -81,7 +91,9 @@ public class Robot extends TimedRobot {
   public void testExit() {}
 
   private void configureBindings() {
-    controller.rightBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
+    controller.leftBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
+    
+    controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ROLLERS_INTAKE)));
 
     controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
 

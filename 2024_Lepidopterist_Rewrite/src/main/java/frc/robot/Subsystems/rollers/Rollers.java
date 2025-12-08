@@ -41,8 +41,7 @@ public class Rollers extends SubsystemBase {
     this.endeffectorRollers = endefRollers;
   }
 
-  @Override
-  public void periodic() {
+  public void updateInputs() {
     rampRollers.updateInputs();
     endeffectorRollers.updateInputs();
     handleStateTransitions();
@@ -139,5 +138,9 @@ public class Rollers extends SubsystemBase {
         rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
         break;
     }
+  }
+
+  public void setWantedState(WantedState wantedState){
+    this.wantedState = wantedState;
   }
 }
