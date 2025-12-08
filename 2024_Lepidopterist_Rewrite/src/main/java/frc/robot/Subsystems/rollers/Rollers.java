@@ -72,22 +72,24 @@ public class Rollers extends SubsystemBase {
           currentState = CurrentState.RAMP_HOLD_CORAL;
         }
           break;
-      case ROLLERS_INTAKE:
+      case ROLLERS_INTAKE: {      
         if (!rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
-          wantedState = WantedState.RAMP_INTAKING;
+          // Nothing in the system yet
           currentState = CurrentState.RAMP_INTAKING;
-        } else if(rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()){
-          wantedState = WantedState.RAMP_HOLD_CORAL;
-          currentState = CurrentState.RAMP_HOLD_CORAL;
-        } else if(!rampRollers.isCoralDetected() && endeffectorRollers.isCoralDetected()){
-          wantedState = WantedState.ENDEFFECTOR_HOLD_CORAL;
-          currentState = CurrentState.ENDEFFECTOR_HOLD_CORAL;
-        } else {
+        } else if (rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
+          // Coral is at the ramp only so we run BOTH to move it toward the end effector
           currentState = CurrentState.ROLLERS_INTAKE;
+        } else if (rampRollers.isCoralDetected() && endeffectorRollers.isCoralDetected()) {
+          // Coral is somewhere between the sensors 
+          currentState = CurrentState.ROLLERS_INTAKE;
+        } else { // !rampHas && endHas
+          // Coral is only at the end effector now so we’re done transferring
+          currentState = CurrentState.ENDEFFECTOR_HOLD_CORAL;
         }
         break;
+      }          
       case ENDEFFECTOR_HOLD_CORAL:
-        if(endeffectorRollers.isCoralDetected()){
+        if(!endeffectorRollers.isCoralDetected()){
           wantedState = WantedState.ROLLERS_INTAKE;
           currentState = CurrentState.ROLLERS_INTAKE;
         }
