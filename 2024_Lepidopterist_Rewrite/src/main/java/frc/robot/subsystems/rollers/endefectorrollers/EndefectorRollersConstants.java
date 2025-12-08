@@ -1,4 +1,4 @@
-package frc.robot.subsystems.endefectorrollers;
+package frc.robot.subsystems.rollers.endefectorrollers;
 
 public class EndefectorRollersConstants {
     public static final int endefectorRollersMotorID = 16;

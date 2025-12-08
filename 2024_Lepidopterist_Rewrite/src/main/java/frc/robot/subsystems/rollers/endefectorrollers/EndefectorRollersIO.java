@@ -1,4 +1,4 @@
-package frc.robot.subsystems.endefectorrollers;
+package frc.robot.subsystems.rollers.endefectorrollers;
 
 public abstract class EndefectorRollersIO {
     protected double position = 0;
