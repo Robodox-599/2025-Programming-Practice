@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.rollers.endeffectorrollers.EndEffectorRollers;
-import frc.robot.subsystems.rollers.endeffectorrollers.EndEffectorRollersIOTalonFX;
-import frc.robot.subsystems.rollers.ramprollers.RampRollers;
-import frc.robot.subsystems.rollers.ramprollers.RampRollersIOTalonFX;
+import frc.robot.poopoo.poo.EndEffectorRollers;
+import frc.robot.poopoo.poo.EndEffectorRollersIO;
+import frc.robot.poopoo.poo.EndEffectorRollersIOTalonFX;
+import frc.robot.poopoo.poo3.RampRollers;
+import frc.robot.poopoo.poo3.RampRollersIOTalonFX;
+import frc.robot.poopoo.poo3.RampRollers.WantedState;
 
 
 public class Robot extends TimedRobot {
