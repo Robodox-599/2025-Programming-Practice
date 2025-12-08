@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.rollers.Rollers;
 import frc.robot.Subsystems.rollers.RampRollers.RampRollers;
 import frc.robot.Subsystems.rollers.RampRollers.RampRollersIOTalonFX;
-import frc.robot.Subsystems.rollers.RampRollers.RampRollers.WantedState;
 import frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollers;
 import frc.robot.Subsystems.rollers.endeffectorrollers.EndeffectorRollersIOTalonFX;
 
@@ -91,13 +90,13 @@ public class Robot extends TimedRobot {
   public void testExit() {}
 
   private void configureBindings() {
-    controller.leftBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.INTAKING)));
-    
+    controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.RAMP_INTAKING)));
+
     controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ROLLERS_INTAKE)));
 
-    controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.STOPPED)));
+    controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.STOPPED)));
 
-    controller.rightTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(WantedState.SCORING_CORAL)));
+    controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE)));
   }
 
 
