@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.rollers.endefectorrollers.EndefectorRollers;
-import frc.robot.subsystems.rollers.endefectorrollers.EndefectorRollersIOTalonFX;
-import frc.robot.subsystems.rollers.ramprollers.RampRollers;
-import frc.robot.subsystems.rollers.ramprollers.RampRollersIOTalonFX;
+import frc.robot.subsystems.endefectorrollers.EndefectorRollers;
+import frc.robot.subsystems.endefectorrollers.EndefectorRollersIOTalonFX;
+import frc.robot.subsystems.ramprollers.RampRollers;
+import frc.robot.subsystems.ramprollers.RampRollersIOTalonFX;
 import frc.robot.subsystems.rollers.Rollers;
 
 
@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     rampRollers.updateInputs();
     endefectorRollers.updateInputs();
+    rollers.updateInputs();
     CommandScheduler.getInstance().run();
     // endefectorRollers.updateInputs();
   }

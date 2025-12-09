@@ -1,7 +1,7 @@
 package frc.robot.subsystems.rollers;
 import dev.doglog.DogLog;
-import frc.robot.subsystems.rollers.endefectorrollers.EndefectorRollers;
-import frc.robot.subsystems.rollers.ramprollers.RampRollers;
+import frc.robot.subsystems.endefectorrollers.EndefectorRollers;
+import frc.robot.subsystems.ramprollers.RampRollers;
 
 public class Rollers {
  private final EndefectorRollers endefectorRollers;
@@ -55,10 +55,7 @@ public class Rollers {
            }
         break;
         case ROLLERS_INTAKING:
-        if (!rampRollers.isCoralDetected() && !endefectorRollers.isCoralInEndefector()) {
-            wantedState = wantedSuperState.RAMP_INTAKING;
-            currentState = currentSuperState.RAMP_INTAKING;
-           } else if(!rampRollers.isCoralDetected() && endefectorRollers.isCoralInEndefector()){
+        if(!rampRollers.isCoralDetected() && endefectorRollers.isCoralInEndefector()){
             wantedState = wantedSuperState.ENDEFECTOR_HOLD_CORAL;
             currentState = currentSuperState.ENDEFECTOR_HOLD_CORAL;
            } else {

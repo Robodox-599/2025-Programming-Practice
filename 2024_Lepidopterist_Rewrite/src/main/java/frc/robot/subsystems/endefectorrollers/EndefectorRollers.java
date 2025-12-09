@@ -1,10 +1,9 @@
-
-package frc.robot.subsystems.rollers.ramprollers;
+package frc.robot.subsystems.endefectorrollers;
 
 import dev.doglog.DogLog;
 
-public class RampRollers {
- private final RampRollersIO io;
+public class EndefectorRollers {
+ private final EndefectorRollersIO io;
  private WantedState wantedState = WantedState.STOPPED;
  private CurrentState currentState = CurrentState.STOPPED;
 
@@ -12,17 +11,17 @@ public class RampRollers {
   STOPPED,
   INTAKING,
   HOLD_CORAL,
-  TRANSFERING
+  SCORE
  }
 
  public enum CurrentState {
-  STOPPED,
-  INTAKING,
-  HOLD_CORAL,
-  TRANSFERING
+    STOPPED,
+    INTAKING,
+    HOLD_CORAL,
+    SCORE
  }
 
-  public RampRollers(RampRollersIO io) {
+  public EndefectorRollers(EndefectorRollersIO io) {
     this.io = io;
   }
 
@@ -32,28 +31,13 @@ public class RampRollers {
     currentState = CurrentState.STOPPED;
     break;
     case INTAKING:
-      if (isCoralDetected()) {
-       wantedState = WantedState.HOLD_CORAL;
-       currentState = CurrentState.HOLD_CORAL;
-      } else {
         currentState = CurrentState.INTAKING;
-      }
     break;
     case HOLD_CORAL:
-    if (!isCoralDetected()) {
-      wantedState = WantedState.INTAKING;
-      currentState = CurrentState.INTAKING;
-     } else {
       currentState = CurrentState.HOLD_CORAL;
-     }
     break;
-    case TRANSFERING:
-    if (!isCoralDetected()) {
-      wantedState = WantedState.INTAKING;
-      currentState = CurrentState.INTAKING;
-     } else {
-      currentState = CurrentState.TRANSFERING;
-     }
+    case SCORE:
+      currentState = CurrentState.SCORE;
     break;
     default:
     currentState = CurrentState.STOPPED;
@@ -66,13 +50,14 @@ public class RampRollers {
         stop();
         break;
       case INTAKING:
-        setVelocity(-0.2); 
+        setVelocity(0.3); 
         break;
       case HOLD_CORAL:
         setPosition(io.holdPosition);
         break;
-        case TRANSFERING:
-        setVelocity(-0.5);
+        case SCORE:
+        setVelocity(0.5);
+
         break;
       default:
         stop();
@@ -83,8 +68,8 @@ public class RampRollers {
         io.updateInputs();
         handleStateTransitions();
         applyState();
-        DogLog.log("RampRollers/WantedState", wantedState.toString());
-        DogLog.log("RampRollers/CurrentState", currentState.toString());
+        DogLog.log("EndefectorRollers/WantedState", wantedState.toString());
+        DogLog.log("EndefectorRollers/CurrentState", currentState.toString());
       }
 
       public void setVelocity(double velocity) {
@@ -103,7 +88,7 @@ public class RampRollers {
         this.wantedState = wantedState;
       }
 
-      public boolean isCoralDetected(){
-        return io.isCoralDetected;
+      public boolean isCoralInEndefector(){
+        return io.isCoralInEndefector;
       }
 }

@@ -1,9 +1,10 @@
-package frc.robot.subsystems.rollers.endefectorrollers;
+
+package frc.robot.subsystems.ramprollers;
 
 import dev.doglog.DogLog;
 
-public class EndefectorRollers {
- private final EndefectorRollersIO io;
+public class RampRollers {
+ private final RampRollersIO io;
  private WantedState wantedState = WantedState.STOPPED;
  private CurrentState currentState = CurrentState.STOPPED;
 
@@ -11,17 +12,17 @@ public class EndefectorRollers {
   STOPPED,
   INTAKING,
   HOLD_CORAL,
-  SCORE
+  TRANSFERING
  }
 
  public enum CurrentState {
-    STOPPED,
-    INTAKING,
-    HOLD_CORAL,
-    SCORE
+  STOPPED,
+  INTAKING,
+  HOLD_CORAL,
+  TRANSFERING
  }
 
-  public EndefectorRollers(EndefectorRollersIO io) {
+  public RampRollers(RampRollersIO io) {
     this.io = io;
   }
 
@@ -31,30 +32,14 @@ public class EndefectorRollers {
     currentState = CurrentState.STOPPED;
     break;
     case INTAKING:
-      if (isCoralInEndefector()) {
-       wantedState = WantedState.HOLD_CORAL;
-       currentState = CurrentState.HOLD_CORAL;
-      } else {
         currentState = CurrentState.INTAKING;
-      }
     break;
     case HOLD_CORAL:
-    if (!isCoralInEndefector()) {
-      wantedState = WantedState.INTAKING;
-      currentState = CurrentState.INTAKING;
-     } else {
       currentState = CurrentState.HOLD_CORAL;
-     }
     break;
-    case SCORE:
-    if (!isCoralInEndefector()) {
-      wantedState = WantedState.INTAKING;
-      currentState = CurrentState.INTAKING;
-     } else {
-      currentState = CurrentState.SCORE;
-     }
+    case TRANSFERING:
+      currentState = CurrentState.TRANSFERING;
     break;
-
     default:
     currentState = CurrentState.STOPPED;
     break;}
@@ -66,14 +51,13 @@ public class EndefectorRollers {
         stop();
         break;
       case INTAKING:
-        setVelocity(0); 
+        setVelocity(-0.2); 
         break;
       case HOLD_CORAL:
         setPosition(io.holdPosition);
         break;
-        case SCORE:
-        setVelocity(-0);
-
+        case TRANSFERING:
+        setVelocity(-0.5);
         break;
       default:
         stop();
@@ -84,8 +68,8 @@ public class EndefectorRollers {
         io.updateInputs();
         handleStateTransitions();
         applyState();
-        DogLog.log("EndefectorRollers/WantedState", wantedState.toString());
-        DogLog.log("EndefectorRollers/CurrentState", currentState.toString());
+        DogLog.log("RampRollers/WantedState", wantedState.toString());
+        DogLog.log("RampRollers/CurrentState", currentState.toString());
       }
 
       public void setVelocity(double velocity) {
@@ -104,7 +88,7 @@ public class EndefectorRollers {
         this.wantedState = wantedState;
       }
 
-      public boolean isCoralInEndefector(){
-        return io.isCoralInEndefector;
+      public boolean isCoralDetected(){
+        return io.isCoralDetected;
       }
 }

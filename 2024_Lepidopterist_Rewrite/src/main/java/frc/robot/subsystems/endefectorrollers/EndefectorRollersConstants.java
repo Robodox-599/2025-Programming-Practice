@@ -1,9 +1,9 @@
-package frc.robot.subsystems.rollers.endefectorrollers;
+package frc.robot.subsystems.endefectorrollers;
 
 public class EndefectorRollersConstants {
     public static final int endefectorRollersMotorID = 16;
     public static final String endefectorRollersCANBus = "rio";
-    public static final int endefectorBeamBreakPort = 0;
+    public static final int endefectorBeamBreakPort = 2;
     public static final double endEfectorRollersDebounceTimeSeconds = 0;
     public static final double gearRatio = 0;
 
