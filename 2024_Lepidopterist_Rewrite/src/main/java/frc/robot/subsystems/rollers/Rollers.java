@@ -138,6 +138,10 @@ public class Rollers extends SubsystemBase {
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_CORAL);
         rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
         break;
+      default:
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
+        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
+
     }
   }
 
