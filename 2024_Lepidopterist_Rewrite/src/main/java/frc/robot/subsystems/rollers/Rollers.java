@@ -117,11 +117,9 @@ public class Rollers extends SubsystemBase {
         rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
         break;
       case RAMP_INTAKING:
-        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
         rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
         break;
       case RAMP_HOLD_CORAL:
-        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
         rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
         break;
       case ROLLERS_INTAKE: // lowk my brain is fried rn and this makes the most sense to me
