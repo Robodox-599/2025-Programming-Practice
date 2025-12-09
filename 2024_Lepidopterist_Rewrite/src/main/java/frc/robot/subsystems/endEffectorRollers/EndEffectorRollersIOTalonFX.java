@@ -1,4 +1,4 @@
-package frc.robot.poopoo.poo;
+package frc.robot.subsystems.endEffectorRollers;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;

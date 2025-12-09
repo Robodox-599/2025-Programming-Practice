@@ -1,4 +1,4 @@
-package frc.robot.poopoo.poo;
+package frc.robot.subsystems.endEffectorRollers;
 
 import dev.doglog.DogLog;
 
@@ -38,33 +38,16 @@ public class EndEffectorRollers {
 
     // decides what state the mahcine should be in
     private void handleStateTransitions(){
-        switch (wantedState){
-            case STOPPED:
-              currentState = CurrentState.STOPPED;
-              break;
-            case INTAKING:
-              if (isCoralDetected()){
-                wantedState = WantedState.HOLD_CORAL;
-                currentState = CurrentState.HOLD_CORAL;
-              } else {
-                currentState = CurrentState.INTAKING;
-              }
-              case SCORING:
-              if (!isCoralDetected()){
-                wantedState = WantedState.INTAKING;
-                currentState = CurrentState.INTAKING;
-              } else {
-                currentState = CurrentState.SCORING;
-              }
-              break;
-            case HOLD_CORAL:
-              if (!isCoralDetected()){
-                wantedState = WantedState.INTAKING;
-                currentState = CurrentState.INTAKING;
-              }  else{
-                currentState = CurrentState.HOLD_CORAL;
-              }
-          }
+      switch(wantedState){
+        case STOPPED:
+          currentState = CurrentState.STOPPED;
+        case INTAKING:
+          currentState = CurrentState.INTAKING;
+        case SCORING:
+          currentState = CurrentState.SCORING;
+        case HOLD_CORAL:
+          currentState = CurrentState.HOLD_CORAL;
+      }
     }
 
     // runs motor based on current state

@@ -1,4 +1,4 @@
-package frc.robot.poopoo.poo;
+package frc.robot.subsystems.endEffectorRollers;
 
 public class EndEffectorRollersIOSim extends EndEffectorRollersIO {
 
