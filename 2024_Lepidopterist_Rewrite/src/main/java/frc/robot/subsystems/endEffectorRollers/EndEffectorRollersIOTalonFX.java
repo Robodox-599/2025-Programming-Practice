@@ -31,6 +31,7 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     private final StatusSignal<Current> endEffectorRollersStatorCurrent;
     private final StatusSignal<Current> endEffectorRollersSupplyCurrent;
 
+
     public EndEffectorRollersIOTalonFX(){
         endEffectorRollersMotor = new TalonFX(EndEffectorRollersConstants.EndEffectorRollersMotorID, EndEffectorRollersConstants.EndEffectorRollersCANBus);
         endEffectorRollersConfig = new TalonFXConfiguration();
@@ -66,13 +67,16 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
 
         super.position = endEffectorRollersPosition.getValueAsDouble();
         super.velocity = endEffectorRollersVelocityRad.getValueAsDouble();
+
         super.isCoralDetected = !endEffectorBeamBreak.get();
+        super.isAlgaeDetected = !endEffectorBeamBreak.get().debounce.calculate(2);
+
         super.statorCurrent = endEffectorRollersStatorCurrent.getValueAsDouble();
         super.supplyCurrent = endEffectorRollersSupplyCurrent.getValueAsDouble();
-
         DogLog.log("endEffectorRollers/Position", super.position);
         DogLog.log("endEffectorRollers/Velocity", super.velocity);
         DogLog.log("endEffectorRollers/isCoralDetected", super.isCoralDetected);
+        DogLog.log("endEffectorRollers/isAlgaeDetected", super.isCoralDetected);
         DogLog.log("endEffectorRollers/statorCurrent", super.statorCurrent);
         DogLog.log("endEffectorRollers/supplyCurrent", super.supplyCurrent);
 
