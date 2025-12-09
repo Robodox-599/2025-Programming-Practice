@@ -2,32 +2,31 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.rollers.ramprollers;
+package frc.robot.subsystems.endeffectorrollers;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class RampRollers extends SubsystemBase {
-  private final RampRollersIO io;
+public class EndeffectorRollers extends SubsystemBase {
+  private final EndeffectorRollersIO io;
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
 
   public enum WantedState{
-    INTAKING,
+    INTAKING_CORAL,
     HOLD_CORAL,
     SCORING_CORAL,
     STOPPED,
   }
 
   public enum CurrentState{
-    INTAKING,
+    INTAKING_CORAL,
     HOLD_CORAL,
     SCORING_CORAL,
     STOPPED,
   }
 
-  /** Creates a new RampRollers. */
-  public RampRollers(RampRollersIO io) {
+  public EndeffectorRollers(EndeffectorRollersIO io) {
     this.io = io;
   }
 
@@ -35,8 +34,8 @@ public class RampRollers extends SubsystemBase {
     handleStateTransitions();
     applyStates();
 
-    DogLog.log("RampRollers/wantedStated", wantedState);
-    DogLog.log("RampRollers/currentState", currentState);
+    DogLog.log("EndeffectorRollers/wantedState", wantedState);
+    DogLog.log("EndeffectorRollers/currentState", currentState);
 
     io.updateInputs();
   }
@@ -46,8 +45,8 @@ public class RampRollers extends SubsystemBase {
       case STOPPED:
         currentState = CurrentState.STOPPED;
         break;
-      case INTAKING:
-        currentState = CurrentState.INTAKING;
+      case INTAKING_CORAL:
+        currentState = CurrentState.INTAKING_CORAL;
         break;
       case HOLD_CORAL:
         currentState = CurrentState.HOLD_CORAL;
@@ -66,7 +65,7 @@ public class RampRollers extends SubsystemBase {
       case STOPPED:
         stop();
         break;
-      case INTAKING:
+      case INTAKING_CORAL:
         setVelocity(-0.3);
         break;
       case SCORING_CORAL:

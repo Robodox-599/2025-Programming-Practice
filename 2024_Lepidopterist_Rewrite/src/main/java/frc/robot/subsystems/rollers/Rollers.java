@@ -5,8 +5,8 @@
 package frc.robot.subsystems.rollers;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.rollers.endeffectorrollers.EndeffectorRollers;
-import frc.robot.subsystems.rollers.ramprollers.RampRollers;
+import frc.robot.subsystems.endeffectorrollers.EndeffectorRollers;
+import frc.robot.subsystems.ramprollers.RampRollers;
 
 public class Rollers extends SubsystemBase {
   
@@ -80,7 +80,7 @@ public class Rollers extends SubsystemBase {
         } else if (rampRollers.isCoralDetected() && endeffectorRollers.isCoralDetected()) {
           // Coral is somewhere between the sensors 
           currentState = CurrentState.ROLLERS_INTAKE;
-        } else { // !rampHas && endHas
+        } else {
           // Coral is only at the end effector now so we’re done transferring
           currentState = CurrentState.ENDEFFECTOR_HOLD_CORAL;
         }
