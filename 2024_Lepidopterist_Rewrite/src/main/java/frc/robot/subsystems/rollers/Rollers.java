@@ -4,10 +4,9 @@
 
 package frc.robot.subsystems.rollers;
 
-import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.endeffectorrollers.EndeffectorRollers;
 import frc.robot.subsystems.ramprollers.RampRollers;
+import frc.robot.subsystems.endeffectorrollers.EndeffectorRollers;
 
 public class Rollers extends SubsystemBase {
   
@@ -46,9 +45,6 @@ public class Rollers extends SubsystemBase {
     endeffectorRollers.updateInputs();
     handleStateTransitions();
     applyStates();
-
-    DogLog.log("Rollers/wantedState", wantedState);
-    DogLog.log("Rollers/currentState", currentState);
   }
 
   public void handleStateTransitions(){
@@ -77,7 +73,7 @@ public class Rollers extends SubsystemBase {
       case ROLLERS_INTAKE: {      
         if (!rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
           // Nothing in the system yet
-          currentState = CurrentState.ROLLERS_INTAKE;
+          currentState = CurrentState.RAMP_INTAKING;
         } else if (rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
           // Coral is at the ramp only so we run BOTH to move it toward the end effector
           currentState = CurrentState.ROLLERS_INTAKE;
@@ -91,7 +87,7 @@ public class Rollers extends SubsystemBase {
         break;
       }          
       case ENDEFFECTOR_HOLD_CORAL:
-        if(endeffectorRollers.isCoralDetected()){
+        if(!endeffectorRollers.isCoralDetected()){
           wantedState = WantedState.ROLLERS_INTAKE;
           currentState = CurrentState.ROLLERS_INTAKE;
         }
@@ -114,34 +110,44 @@ public class Rollers extends SubsystemBase {
     }
   }
 
-  public void applyStates(){
-    switch(currentState){
+  public void applyStates() {
+    switch (currentState) {
       case STOPPED:
-        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
-        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(
+            EndeffectorRollers.WantedState.STOPPED);
+        rampRollers.setWantedState(
+            RampRollers.WantedState.STOPPED);
         break;
       case RAMP_INTAKING:
-        rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
+        endeffectorRollers.setWantedState(
+            EndeffectorRollers.WantedState.STOPPED);
+        rampRollers.setWantedState(
+            RampRollers.WantedState.INTAKING);
         break;
       case RAMP_HOLD_CORAL:
-        rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
+        endeffectorRollers.setWantedState(
+            EndeffectorRollers.WantedState.STOPPED);
+        rampRollers.setWantedState(
+            RampRollers.WantedState.HOLD_CORAL);
         break;
-      case ROLLERS_INTAKE: // lowk my brain is fried rn and this makes the most sense to me
-        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_CORAL);
-        rampRollers.setWantedState(RampRollers.WantedState.SCORING_CORAL);
+      case ROLLERS_INTAKE: // This state has fried my brain brto
+        endeffectorRollers.setWantedState(
+            EndeffectorRollers.WantedState.SCORING_CORAL);
+        rampRollers.setWantedState(
+            RampRollers.WantedState.SCORING_CORAL);
         break;
       case ENDEFFECTOR_HOLD_CORAL:
-        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.HOLD_CORAL);
-        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(
+            EndeffectorRollers.WantedState.HOLD_CORAL);
+        rampRollers.setWantedState(
+            RampRollers.WantedState.STOPPED);
         break;
       case ENDEFFECTOR_SCORE:
-        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_CORAL);
-        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
+        endeffectorRollers.setWantedState(
+            EndeffectorRollers.WantedState.SCORING_CORAL);
+        rampRollers.setWantedState(
+            RampRollers.WantedState.STOPPED);
         break;
-      default:
-        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
-        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
-
     }
   }
 
