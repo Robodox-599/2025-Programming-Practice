@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.rollers;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.endeffectorrollers.EndeffectorRollers;
 import frc.robot.subsystems.ramprollers.RampRollers;
@@ -45,6 +46,9 @@ public class Rollers extends SubsystemBase {
     endeffectorRollers.updateInputs();
     handleStateTransitions();
     applyStates();
+
+    DogLog.log("Rollers/wantedState", wantedState);
+    DogLog.log("Rollers/currentState", currentState);
   }
 
   public void handleStateTransitions(){

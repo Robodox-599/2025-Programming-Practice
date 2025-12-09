@@ -7,7 +7,7 @@ package frc.robot.subsystems.endeffectorrollers;
 public class EndeffectorRollersConstants {
   public static final int endeffectorRollersMotorID = 16;
     public static final String endeffectorRollersCANBus = "rio";
-    public static final int beamBreakPort = 1;
+    public static final int beamBreakPort = 2;
     public static final double endeffectorRollersDebounceTimeSeconds = 0.2;
     public static final double endeffectorRollersGearRatio = 3;
 
