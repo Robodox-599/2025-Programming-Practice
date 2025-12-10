@@ -14,19 +14,19 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import dev.doglog.DogLog;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
 
 public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
   private final TalonFX endeffectorRollersMotor;
     TalonFXConfiguration endeffectorRollersConfig;
     private DigitalInput endeffectorRollersBeamBreak;
-    private Timer algaeDetectorTimer = new Timer();
+    private final Debouncer algaeDebounce;
 
     private final StatusSignal<AngularVelocity> endeffectorRollersVelocityRad;
     private final StatusSignal<Temperature> endeffectorRollersTemperature;
@@ -48,6 +48,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         endeffectorRollersConfig.Slot0.kP = EndeffectorRollersConstants.kS;
         endeffectorRollersConfig.Slot0.kP = EndeffectorRollersConstants.kV;
         endeffectorRollersConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        algaeDebounce = new Debouncer(0.2, Debouncer.DebounceType.kRising);
 
         endeffectorRollersConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         endeffectorRollersConfig.CurrentLimits.SupplyCurrentLimit = EndeffectorRollersConstants.supplyCurrentLimit;
@@ -82,21 +83,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         super.tempCelsius = endeffectorRollersTemperature.getValueAsDouble();
 
         super.isCoralDetected = !endeffectorRollersBeamBreak.get();
-
-        if (super.statorCurrent > 20) {
-            // Start timer
-            if (algaeDetectorTimer.get() == 0) {
-                algaeDetectorTimer.start();
-            }
-        
-            if (algaeDetectorTimer.get() >= 0.2) {
-                super.isAlgaeDetected = true;
-            }
-        } else {
-            algaeDetectorTimer.stop();
-            algaeDetectorTimer.reset();
-            super.isAlgaeDetected = false;
-        }
+        super.isAlgaeDetected = algaeDebounce.calculate(super.statorCurrent > 20);
 
         DogLog.log("EndeffectorRollers/Velocity", super.velocity);
         DogLog.log("EndeffectorRollers/Position", super.position);
@@ -106,6 +93,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         DogLog.log("EndeffectorRollers/AppliedVolts", super.appliedVolts);
         DogLog.log("EndeffectorRollers/Temperature", super.tempCelsius);
         DogLog.log("EndeffectorRollers/isCoralDetected", super.isCoralDetected);
+        DogLog.log("EndeffectorRollers/isAlgaeDetected", super.isAlgaeDetected);
     }
 
     @Override
