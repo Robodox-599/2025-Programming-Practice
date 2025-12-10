@@ -18,6 +18,7 @@ public class EndeffectorRollers extends SubsystemBase {
     SCORING_CORAL,
     HOLD_ALGAE,
     SCORING_ALGAE,
+    INTAKING_ALGAE,
     STOPPED,
   }
 
@@ -27,6 +28,7 @@ public class EndeffectorRollers extends SubsystemBase {
     SCORING_CORAL,
     HOLD_ALGAE,
     SCORING_ALGAE,
+    INTAKING_ALGAE,
     STOPPED,
   }
 
@@ -64,6 +66,9 @@ public class EndeffectorRollers extends SubsystemBase {
       case SCORING_ALGAE:
         currentState = CurrentState.SCORING_ALGAE;
         break;
+      case INTAKING_ALGAE:
+        currentState = CurrentState.INTAKING_ALGAE;
+        break;
       default:
         currentState = CurrentState.STOPPED;
         break;
@@ -89,6 +94,9 @@ public class EndeffectorRollers extends SubsystemBase {
         break;
       case HOLD_ALGAE:
         holdAlgae(0.2);
+        break;
+      case INTAKING_ALGAE:
+        setVelocity(0.3);
         break;
       default:
         setVelocity(0);
