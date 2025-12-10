@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollersIOTalonFX;
+import frc.robot.subsystems.Rollers;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollers;
 import frc.robot.subsystems.rampRollers.RampRollers;
 import frc.robot.subsystems.rampRollers.RampRollersIOTalonFX;
@@ -20,6 +21,7 @@ public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
   private final EndEffectorRollers endEffectorRollers;
   private final CommandXboxController controller = new CommandXboxController(0);
+  private final Rollers rollers;
 
 
   private Command m_autonomousCommand;
@@ -29,6 +31,8 @@ public class Robot extends TimedRobot {
     // if in real mode
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
     endEffectorRollers = new EndEffectorRollers(new EndEffectorRollersIOTalonFX());
+    rollers = new Rollers(rampRollers, endEffectorRollers);
+
     configureBindings();
   }
 
@@ -36,6 +40,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     rampRollers.updateInputs();
     endEffectorRollers.updateInputs();
+    rollers.updateInputs();
     CommandScheduler.getInstance().run();
   }
 
@@ -91,9 +96,14 @@ public class Robot extends TimedRobot {
       
   
     private void configureBindings() {
-      // X Stop, Right Bumper Intake, Right trigger scoring
-      controller.rightBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
-      controller.rightTrigger().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.SCORING)));
+      // b intakeing coral from ramp only
+      // right bumper intake coral from both
+      //right trigger is to score coral/
+      // left bumper is to intake algae
+      // left trigger is to score algae
+      // stopp should be X
+      controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedSuperState.ROLLERS_INTAKING)));
+      controller.rightTrigger().onTrue(Commands.runOnce(() -> en.setWantedState(RampRollers.WantedState.SCORING)));
 
       controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)));
 
