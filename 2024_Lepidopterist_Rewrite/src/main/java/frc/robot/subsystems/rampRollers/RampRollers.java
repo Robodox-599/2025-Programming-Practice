@@ -10,7 +10,6 @@ public class RampRollers {
   private final RampRollersIO io;
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
-  private boolean previousIsCoralDetected = false;
   private boolean currentIsCoralDetected = false;
   public double wantedCoralPosition;
 
@@ -41,7 +40,6 @@ public class RampRollers {
     io.updateInputs();
     handleStateTransitions();
     applyStates();
-    previousIsCoralDetected = currentIsCoralDetected;
     currentIsCoralDetected = isCoralDetected();
     DogLog.log("RampRollers/wantedState", wantedState);
     DogLog.log("RampRollers/currentState", currentState);
@@ -77,6 +75,7 @@ public class RampRollers {
         break;
       case HOLD_CORAL:
         setPosition(io.wantedCoralPosition);
+        break;
       default:
         stop();
         break;

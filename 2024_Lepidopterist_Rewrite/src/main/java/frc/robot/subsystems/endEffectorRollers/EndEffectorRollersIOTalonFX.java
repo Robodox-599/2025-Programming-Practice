@@ -3,17 +3,20 @@ package frc.robot.subsystems.endEffectorRollers;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import dev.doglog.DogLog;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
+
 
 public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     //shows error if it isn't defined
@@ -31,6 +34,10 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     private final StatusSignal<Current> endEffectorRollersStatorCurrent;
     private final StatusSignal<Current> endEffectorRollersSupplyCurrent;
 
+    // delays only false to true transiitons
+    final Debouncer algaeDebounce;
+    
+
 
     public EndEffectorRollersIOTalonFX(){
         endEffectorRollersMotor = new TalonFX(EndEffectorRollersConstants.EndEffectorRollersMotorID, EndEffectorRollersConstants.EndEffectorRollersCANBus);
@@ -45,9 +52,10 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
 
         endEffectorRollersConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         endEffectorRollersConfig.CurrentLimits.SupplyCurrentLimit = EndEffectorRollersConstants.supplyCurrentLimit;
-
         endEffectorRollersMotor.getConfigurator().apply(endEffectorRollersConfig);
         endEffectorRollersMotor.setNeutralMode(NeutralModeValue.Brake);
+
+        algaeDebounce = new Debouncer(0.2, Debouncer.DebounceType.kRising);
 
         endEffectorRollersVelocityRad = endEffectorRollersMotor.getVelocity();
         endEffectorRollersTemperature = endEffectorRollersMotor.getDeviceTemp();
@@ -55,6 +63,8 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
         endEffectorRollersPosition = endEffectorRollersMotor.getPosition();
         endEffectorRollersStatorCurrent = endEffectorRollersMotor.getStatorCurrent();
         endEffectorRollersSupplyCurrent = endEffectorRollersMotor.getSupplyCurrent();
+
+
 
         BaseStatusSignal.setUpdateFrequencyForAll(50, endEffectorRollersVelocityRad, endEffectorRollersTemperature, endEffectorRollersAppliedVolts, endEffectorRollersPosition, endEffectorRollersSupplyCurrent, endEffectorRollersStatorCurrent);
 
@@ -64,15 +74,14 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     @Override
     public void updateInputs(){
         BaseStatusSignal.refreshAll(endEffectorRollersVelocityRad, endEffectorRollersTemperature, endEffectorRollersAppliedVolts, endEffectorRollersPosition, endEffectorRollersSupplyCurrent, endEffectorRollersStatorCurrent);
-
         super.position = endEffectorRollersPosition.getValueAsDouble();
         super.velocity = endEffectorRollersVelocityRad.getValueAsDouble();
 
         super.isCoralDetected = !endEffectorBeamBreak.get();
-        super.isAlgaeDetected = !endEffectorBeamBreak.get().debounce.calculate(2);
-
         super.statorCurrent = endEffectorRollersStatorCurrent.getValueAsDouble();
         super.supplyCurrent = endEffectorRollersSupplyCurrent.getValueAsDouble();
+        super.isAlgaeDetected = algaeDebounce.calculate(super.statorCurrent >= 20);
+
         DogLog.log("endEffectorRollers/Position", super.position);
         DogLog.log("endEffectorRollers/Velocity", super.velocity);
         DogLog.log("endEffectorRollers/isCoralDetected", super.isCoralDetected);
@@ -101,4 +110,9 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     public double getPosition(){
         return endEffectorRollersMotor.getPosition().getValueAsDouble();
     }
+    @Override
+    public void holdAlgae(){
+        endEffectorRollersMotor.setControl(new DutyCycleOut(0.2));
+    }
+
 }

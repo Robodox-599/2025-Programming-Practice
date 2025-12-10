@@ -10,12 +10,15 @@ public abstract class EndEffectorRollersIO {
     protected boolean isCoralDetected = false;
     protected boolean isAlgaeDetected = false;
 
+
     public void updateInputs(){}
     public void stop() {}
     public void setVelocity(double velocity) {}
     public void setPosition(double position) {}
+    public void holdAlgae(){}
     
     public double getPosition() {
         return 0.0;
     }
+
 }

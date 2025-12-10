@@ -58,7 +58,11 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
         case ALGAE_INTAKING:
           currentState = CurrentState.ALGAE_INTAKING;
         case ALGAE_HOLDING:
-          currentState = CurrentState.ALGAE_HOLDING;
+          if(isAlgaeDetected()){
+            currentState = CurrentState.ALGAE_HOLDING;
+          } else{
+            currentState = CurrentState.ALGAE_INTAKING;
+          }
           break;
         case ALGAE_SCORING:
           currentState = CurrentState.ALGAE_SCORING;
@@ -70,7 +74,6 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
       }
     }
 
-    // runs motor based on current state
     private void applyStates() {
         switch (currentState) {
           case INTAKING:
@@ -85,17 +88,18 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
             stop();
             break;
           case ALGAE_INTAKING:
-            setVelocity(.5);
+            setVelocity(0.5);
             break;
           case ALGAE_HOLDING:
-          if((super.statorCurrent == 20) && (isAlgaeDetected()){
-          }
+            holdAlgae();
+            break;
+          case ALGAE_SCORING:
+            setVelocity(-0.5);
           case STOPPED:
             stop();
             break;
-
+          }
         }
-      }
 
     public boolean isCoralDetected() {
         return io.isCoralDetected;

@@ -1,7 +1,5 @@
 package frc.robot.subsystems.rampRollers;
 
-import java.security.Key;
-
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;

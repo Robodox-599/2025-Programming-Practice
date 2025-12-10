@@ -31,11 +31,16 @@ public class Rollers {
     }
 
     public enum WantedSuperState {
+      //isolate rollers_Holding for holding 2 game pieces
         RAMP_INTAKING,
         RAMP_HOLDING_CORAL,
         ROLLERS_INTAKING,
+        ROLLERS_HOLDING_MULTI_GAME_PIECE,
         ENDEFFECTOR_HOLDING_CORAL,
         ENDEFFECTOR_SCORING_CORAL,
+        ENDEFFECTOR_INTAKING_ALGAE,
+        ENDEFFECTOR_HOLDING_ALGAE,
+        ENDEFFECTOR_SCORING_ALGAE,
         STOPPED
     }
 
@@ -44,8 +49,12 @@ public class Rollers {
         RAMP_INTAKING,
         RAMP_HOLDING_CORAL,
         ROLLERS_INTAKING,
+        ROLLERS_HOLDING_MULTI_GAME_PIECE,
         ENDEFFECTOR_HOLDING_CORAL,
         ENDEFFECTOR_SCORING_CORAL,
+        ENDEFFECTOR_INTAKING_ALGAE,
+        ENDEFFECTOR_HOLDING_ALGAE,
+        ENDEFFECTOR_SCORING_ALGAE,
         STOPPED
     }
 
@@ -67,15 +76,15 @@ public class Rollers {
               } else {
                 currentSuperState = CurrentSuperState.RAMP_INTAKING;
               }
-            break;
+              break;
             case RAMP_HOLDING_CORAL:
             if (!rampRollers.isCoralDetected()){
                 wantedSuperState = WantedSuperState.RAMP_INTAKING;
                 currentSuperState = CurrentSuperState.RAMP_INTAKING;
               }  else{
-                currentSuperState = CurrentSuperState.RAMP_HOLDING_CORAL;
+                currentSuperState = CurrentSuperState.RAMP_HOLDING_CORAL;D
               }
-            break;
+              break;
             case ROLLERS_INTAKING:
             if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){
                 wantedSuperState = WantedSuperState.ENDEFFECTOR_HOLDING_CORAL;
@@ -83,7 +92,7 @@ public class Rollers {
               } else {
                 currentSuperState = CurrentSuperState.ROLLERS_INTAKING;
               }
-            break;
+              break;
             case ENDEFFECTOR_HOLDING_CORAL:
             if (!endEffectorRollers.isCoralDetected()){
                 wantedSuperState = WantedSuperState.ROLLERS_INTAKING;
@@ -92,7 +101,7 @@ public class Rollers {
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
               }
             break;
-            case ENDEFFECTOR_SCORING_CORAL:
+              case ENDEFFECTOR_SCORING_CORAL:
             if (!endEffectorRollers.isCoralDetected()){
                 wantedSuperState = WantedSuperState.ROLLERS_INTAKING;
                 currentSuperState = CurrentSuperState.ROLLERS_INTAKING;
@@ -100,6 +109,13 @@ public class Rollers {
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_SCORING_CORAL;
               }
             break;
+              case ENDEFFECTOR_HOLDING_ALGAE:
+              if(endEffectorRollers.isAlgaeDetected()){
+                currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_ALGAE;
+              } else{
+                currentSuperState = CurrentSuperState.ENDEFFECTOR_INTAKING_ALGAE;
+              }
+              break;
             case STOPPED:
                 currentSuperState = CurrentSuperState.STOPPED;              
             break;
@@ -115,17 +131,25 @@ public class Rollers {
                 // Using the dot operator to access the object's function.
                 rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
+                break;
             case RAMP_INTAKING:
                 rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
+                break;
             case ROLLERS_INTAKING:
                 rampRollers.setWantedState(RampRollers.WantedState.SCORING);
                 // We are allowed to use the setWantedState() method although it's in another class because we imported the class "EndEffectorRollers.Java" here which allows us to use function(method) meant for the EndEffector here
                 // click the setWantedState() function or any function to see where it originates from
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING);
+                break;
+            case ENDEFFECTOR_INTAKING_ALGAE:
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.ALGAE_INTAKING);
+              break;
             case ENDEFFECTOR_HOLDING_CORAL:
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLD_CORAL);
+                break;
             case ENDEFFECTOR_SCORING_CORAL:
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING);
+                break;
             default:
                 break;
 
