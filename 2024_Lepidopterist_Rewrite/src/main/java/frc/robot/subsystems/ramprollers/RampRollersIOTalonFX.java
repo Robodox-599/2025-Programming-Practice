@@ -5,6 +5,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import dev.doglog.DogLog;
@@ -40,6 +41,7 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampRollersConfig.Slot0.kP = RampRollersConstants.kD;
         rampRollersConfig.Slot0.kP = RampRollersConstants.kS;
         rampRollersConfig.Slot0.kP = RampRollersConstants.kV;
+        rampRollersConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
         rampRollersConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         rampRollersConfig.CurrentLimits.SupplyCurrentLimit = RampRollersConstants.supplyCurrentLimit;

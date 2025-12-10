@@ -16,6 +16,8 @@ public class EndeffectorRollers extends SubsystemBase {
     INTAKING_CORAL,
     HOLD_CORAL,
     SCORING_CORAL,
+    HOLD_ALGAE,
+    SCORING_ALGAE,
     STOPPED,
   }
 
@@ -23,6 +25,8 @@ public class EndeffectorRollers extends SubsystemBase {
     INTAKING_CORAL,
     HOLD_CORAL,
     SCORING_CORAL,
+    HOLD_ALGAE,
+    SCORING_ALGAE,
     STOPPED,
   }
 
@@ -54,6 +58,12 @@ public class EndeffectorRollers extends SubsystemBase {
       case SCORING_CORAL:
         currentState = CurrentState.SCORING_CORAL;
         break;
+      case HOLD_ALGAE:
+        currentState = CurrentState.HOLD_ALGAE;
+        break;
+      case SCORING_ALGAE:
+        currentState = CurrentState.SCORING_ALGAE;
+        break;
       default:
         currentState = CurrentState.STOPPED;
         break;
@@ -66,13 +76,19 @@ public class EndeffectorRollers extends SubsystemBase {
         stop();
         break;
       case INTAKING_CORAL:
-        setVelocity(-0.3);
+        setVelocity(0.3);
         break;
       case SCORING_CORAL:
-        setVelocity(-0.5);
+        setVelocity(0.5);
         break;
       case HOLD_CORAL:
         setPosition(io.heldCurrentPosition);
+        break;
+      case SCORING_ALGAE:
+        setVelocity(0.8);
+        break;
+      case HOLD_ALGAE:
+        holdAlgae(0.2);
         break;
       default:
         setVelocity(0);
@@ -88,12 +104,20 @@ public class EndeffectorRollers extends SubsystemBase {
     io.stop();
   }
 
+  public void holdAlgae(double dutyCycle){
+    io.holdAlgae(dutyCycle);
+  }
+
   public void setWantedState(WantedState wantedState){
     this.wantedState = wantedState;
   }
 
   public boolean isCoralDetected(){
     return io.isCoralDetected;
+  }
+
+  public boolean isAlgaeDetected(){
+    return io.isAlgaeDetected;
   }
 
   public void setPosition(double position){

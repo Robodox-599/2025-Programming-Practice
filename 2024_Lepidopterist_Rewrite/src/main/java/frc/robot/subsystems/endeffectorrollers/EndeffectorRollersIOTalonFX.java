@@ -7,8 +7,10 @@ package frc.robot.subsystems.endeffectorrollers;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import dev.doglog.DogLog;
@@ -18,11 +20,13 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 
 public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
   private final TalonFX endeffectorRollersMotor;
     TalonFXConfiguration endeffectorRollersConfig;
     private DigitalInput endeffectorRollersBeamBreak;
+    private Timer algaeDetectorTimer = new Timer();
 
     private final StatusSignal<AngularVelocity> endeffectorRollersVelocityRad;
     private final StatusSignal<Temperature> endeffectorRollersTemperature;
@@ -43,6 +47,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         endeffectorRollersConfig.Slot0.kP = EndeffectorRollersConstants.kD;
         endeffectorRollersConfig.Slot0.kP = EndeffectorRollersConstants.kS;
         endeffectorRollersConfig.Slot0.kP = EndeffectorRollersConstants.kV;
+        endeffectorRollersConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
         endeffectorRollersConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         endeffectorRollersConfig.CurrentLimits.SupplyCurrentLimit = EndeffectorRollersConstants.supplyCurrentLimit;
@@ -78,6 +83,21 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
 
         super.isCoralDetected = !endeffectorRollersBeamBreak.get();
 
+        if (statorCurrent > 20) {
+            // Start timer
+            if (algaeDetectorTimer.get() == 0) {
+                algaeDetectorTimer.start();
+            }
+        
+            if (algaeDetectorTimer.get() >= 0.2) {
+                super.isAlgaeDetected = true;
+            }
+        } else {
+            algaeDetectorTimer.stop();
+            algaeDetectorTimer.reset();
+            super.isAlgaeDetected = false;
+        }
+
         DogLog.log("EndeffectorRollers/Velocity", super.velocity);
         DogLog.log("EndeffectorRollers/Position", super.position);
         DogLog.log("EndeffectorRollers/SupplyCurrent", super.supplyCurrent);
@@ -97,6 +117,11 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
     public void setPosition(double position) {
         endeffectorRollersMotor.setControl(new PositionDutyCycle(position));
     }
+
+        @Override
+        public void holdAlgae(double dutyCycle){
+            endeffectorRollersMotor.setControl(new DutyCycleOut(dutyCycle));
+        }
 
     @Override
     public double heldCurrentPosition(){
