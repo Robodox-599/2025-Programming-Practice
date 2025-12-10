@@ -106,18 +106,15 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         endeffectorRollersMotor.setControl(new PositionDutyCycle(position));
     }
 
-        @Override
-        public void holdAlgae(double dutyCycle){
-            endeffectorRollersMotor.setControl(new DutyCycleOut(dutyCycle));
-        }
+    @Override
+    public void holdAlgae(double dutyCycle){
+        endeffectorRollersMotor.setControl(new DutyCycleOut(dutyCycle));
+    }
 
     @Override
     public double heldCurrentPosition(){
-        if(super.isCoralDetected){
-            if(!hasHeldPositionBeenSet){
-                super.heldCurrentPosition = super.position;
-                hasHeldPositionBeenSet = true;
-            }
+        if(super.isCoralDetected ){
+            super.heldCurrentPosition = super.position;
             
             return super.heldCurrentPosition;
         }

@@ -30,7 +30,6 @@ public class Robot extends TimedRobot {
     endeffectorRollers = new EndeffectorRollers(new EndeffectorRollersIOTalonFX());
     rollers = new Rollers(endeffectorRollers, rampRollers);
 
-
     configureBindings();
   }
 

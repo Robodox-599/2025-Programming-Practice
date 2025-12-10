@@ -124,8 +124,8 @@ public class Rollers extends SubsystemBase {
   public void applyStates(){
     switch(currentState){
       case ROLLERS_INTAKE_CORAL: // lowk my brain is fried rn and this makes the most sense to me
-        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_CORAL);
-        rampRollers.setWantedState(RampRollers.WantedState.SCORING_CORAL);
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.INTAKING_CORAL);
+        rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
         break;
       case ENDEFFECTOR_INTAKE_ALGAE:
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.INTAKING_ALGAE);
@@ -147,6 +147,7 @@ public class Rollers extends SubsystemBase {
         break;
       default:
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
+        break;
     }
   }
 

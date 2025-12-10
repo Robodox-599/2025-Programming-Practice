@@ -87,7 +87,7 @@ public class EndeffectorRollers extends SubsystemBase {
         setVelocity(0.5);
         break;
       case HOLD_CORAL:
-        setPosition(io.heldCurrentPosition);
+        stop();
         break;
       case SCORING_ALGAE:
         setVelocity(0.8);

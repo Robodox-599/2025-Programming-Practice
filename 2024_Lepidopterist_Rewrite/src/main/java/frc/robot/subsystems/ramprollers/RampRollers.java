@@ -15,14 +15,14 @@ public class RampRollers extends SubsystemBase {
   public enum WantedState{
     INTAKING,
     HOLD_CORAL,
-    SCORING_CORAL,
+    TRANSFER_CORAL,
     STOPPED,
   }
 
   public enum CurrentState{
     INTAKING,
     HOLD_CORAL,
-    SCORING_CORAL,
+    TRANSFER_CORAL,
     STOPPED,
   }
 
@@ -47,13 +47,28 @@ public class RampRollers extends SubsystemBase {
         currentState = CurrentState.STOPPED;
         break;
       case INTAKING:
-        currentState = CurrentState.INTAKING;
+        if(isCoralDetected()){
+          wantedState = WantedState.HOLD_CORAL;
+          currentState = CurrentState.HOLD_CORAL;
+        }else{
+          currentState = CurrentState.INTAKING;
+        }
         break;
       case HOLD_CORAL:
-        currentState = CurrentState.HOLD_CORAL;
+        if(!isCoralDetected()){
+          wantedState = WantedState.INTAKING;
+          currentState = CurrentState.INTAKING;
+        }else{
+          currentState = CurrentState.HOLD_CORAL;
+        }
         break;
-      case SCORING_CORAL:
-        currentState = CurrentState.SCORING_CORAL;
+      case TRANSFER_CORAL:
+        if(!isCoralDetected()){
+          wantedState = WantedState.INTAKING;
+          currentState = CurrentState.INTAKING;
+        } else{
+          currentState = CurrentState.TRANSFER_CORAL;
+        }
         break;
       default:
         currentState = CurrentState.STOPPED;
@@ -69,7 +84,7 @@ public class RampRollers extends SubsystemBase {
       case INTAKING:
         setVelocity(0.3);
         break;
-      case SCORING_CORAL:
+      case TRANSFER_CORAL:
         setVelocity(0.5);
         break;
       case HOLD_CORAL:
