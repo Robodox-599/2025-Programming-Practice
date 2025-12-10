@@ -83,7 +83,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
 
         super.isCoralDetected = !endeffectorRollersBeamBreak.get();
 
-        if (statorCurrent > 20) {
+        if (super.statorCurrent > 20) {
             // Start timer
             if (algaeDetectorTimer.get() == 0) {
                 algaeDetectorTimer.start();
