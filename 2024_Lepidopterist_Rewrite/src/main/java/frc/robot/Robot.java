@@ -93,11 +93,11 @@ public class Robot extends TimedRobot {
   private void configureBindings() {
     controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.RAMP_INTAKING)));
 
-    controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ROLLERS_INTAKE)));
+    controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ROLLERS_INTAKE_CORAL)));
 
     controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.STOPPED)));
 
-    controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE)));
+    controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE_CORAL)));
   }
 
 
