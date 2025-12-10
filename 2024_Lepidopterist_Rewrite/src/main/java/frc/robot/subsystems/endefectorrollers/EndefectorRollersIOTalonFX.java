@@ -3,6 +3,7 @@ package frc.robot.subsystems.endefectorrollers;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -65,9 +66,12 @@ public class EndefectorRollersIOTalonFX extends EndefectorRollersIO {
         super.position = endefectorRollersPosition.getValueAsDouble();
         super.velocity = endefectorRollersVelocityRad.getValueAsDouble();
         super.isCoralInEndefector = !endefectorBeamBreak.get();
+        super.isAlgaeInEndefector = endefectorDebouncer.calculate(endefectorRollersStatorCurrent.getValueAsDouble() >= 20);
+
         DogLog.log("EndefectorRollers/Position", super.position);
         DogLog.log("EndefectorRollers/Velocity", super.velocity);
         DogLog.log("EndefectorRollers/isCoralDetected", super.isCoralInEndefector);
+        DogLog.log("EndefectorRollers/isAlgaeDetected", super.isAlgaeInEndefector);
         DogLog.log("EndefectorRollers/HoldPosition", super.holdPosition);
     }
 
@@ -84,6 +88,11 @@ public class EndefectorRollersIOTalonFX extends EndefectorRollersIO {
     @Override
     public void setPosition(double position) {
         endefectorRollersMotor.setControl(new PositionDutyCycle(position));
+    }
+
+    @Override
+    public void holdAlgae(){
+        endefectorRollersMotor.setControl(new DutyCycleOut(0.2));
     }
 
     @Override

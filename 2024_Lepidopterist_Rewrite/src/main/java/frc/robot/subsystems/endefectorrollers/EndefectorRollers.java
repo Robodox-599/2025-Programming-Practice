@@ -9,16 +9,22 @@ public class EndefectorRollers {
 
  public enum WantedState {
   STOPPED,
-  INTAKING,
+  INTAKING_CORAL,
+  INTAKING_ALGAE,
   HOLD_CORAL,
-  SCORE
+  HOLD_ALGAE,
+  SCORE_CORAL,
+  SCORE_ALGAE,
  }
 
  public enum CurrentState {
-    STOPPED,
-    INTAKING,
-    HOLD_CORAL,
-    SCORE
+  STOPPED,
+  INTAKING_CORAL,
+  INTAKING_ALGAE,
+  HOLD_CORAL,
+  HOLD_ALGAE,
+  SCORE_CORAL,
+  SCORE_ALGAE,
  }
 
   public EndefectorRollers(EndefectorRollersIO io) {
@@ -30,14 +36,23 @@ public class EndefectorRollers {
     case STOPPED:
     currentState = CurrentState.STOPPED;
     break;
-    case INTAKING:
-        currentState = CurrentState.INTAKING;
+    case INTAKING_CORAL:
+        currentState = CurrentState.INTAKING_CORAL;
     break;
     case HOLD_CORAL:
       currentState = CurrentState.HOLD_CORAL;
     break;
-    case SCORE:
-      currentState = CurrentState.SCORE;
+    case SCORE_CORAL:
+      currentState = CurrentState.SCORE_CORAL;
+    break;
+    case INTAKING_ALGAE:
+    currentState = CurrentState.INTAKING_ALGAE;
+    break;
+    case HOLD_ALGAE:
+    currentState = CurrentState.HOLD_ALGAE;
+    break;
+    case SCORE_ALGAE:
+    currentState = CurrentState.SCORE_ALGAE;
     break;
     default:
     currentState = CurrentState.STOPPED;
@@ -49,15 +64,23 @@ public class EndefectorRollers {
       case STOPPED:
         stop();
         break;
-      case INTAKING:
+      case INTAKING_CORAL:
         setVelocity(0.3); 
         break;
       case HOLD_CORAL:
         setPosition(io.holdPosition);
         break;
-        case SCORE:
+        case SCORE_CORAL:
         setVelocity(0.5);
-
+        break;
+      case INTAKING_ALGAE:
+        setVelocity(0.3); 
+        break;
+      case HOLD_ALGAE:
+        holdAlgae();
+        break;
+      case SCORE_ALGAE:
+        setVelocity(0.1);
         break;
       default:
         stop();
@@ -76,6 +99,10 @@ public class EndefectorRollers {
         io.setVelocity(velocity);
       }
 
+      public void holdAlgae(){
+        io.holdAlgae();
+      }
+
       public void stop() {
         io.stop();
       }
@@ -91,4 +118,8 @@ public class EndefectorRollers {
       public boolean isCoralInEndefector(){
         return io.isCoralInEndefector;
       }
+
+      public boolean isAlgaeInEndefector() {
+        return io.isAlgaeInEndefector;
+    }
 }

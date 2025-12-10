@@ -94,15 +94,18 @@ public class Robot extends TimedRobot {
   public void testExit() {}
 
   private void configureBindings() {
-    //Sets the state to intaking for both ramp & endefector rollers
+    //Both ramp & endefector rollers intake coral
     controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ROLLERS_INTAKING)));
+    //Only ramp rollers intake coral
     controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.RAMP_INTAKING)));
-
+    //Endefector intakes algae
+    controller.y().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_INTAKE_ALGAE)));
     //Stops both ramp & endefector rollers
     controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.STOPPED)));
-
-    //Sets the state to score for both ramp & endefector rollers
-    controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_SCORE)));
+    //Scores coral for endefector
+    controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_SCORE_CORAL)));
+    //Scores algae for endefector
+    controller.leftTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_SCORE_ALGAE)));
   }
   
     public Command getAutonomousCommand() {

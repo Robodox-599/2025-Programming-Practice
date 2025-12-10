@@ -16,7 +16,10 @@ public class Rollers {
         RAMP_HOLD_CORAL,
         ROLLERS_INTAKING,
         ENDEFECTOR_HOLD_CORAL,
-        ENDEFECTOR_SCORE
+        ENDEFECTOR_SCORE_CORAL,
+        ENDEFECTOR_INTAKE_ALGAE,
+        ENDEFECTOR_HOLD_ALGAE,
+        ENDEFECTOR_SCORE_ALGAE
     }
 
     public enum currentSuperState{
@@ -25,7 +28,10 @@ public class Rollers {
         RAMP_HOLD_CORAL,
         ROLLERS_INTAKING,
         ENDEFECTOR_HOLD_CORAL,
-        ENDEFECTOR_SCORE
+        ENDEFECTOR_SCORE_CORAL,
+        ENDEFECTOR_INTAKE_ALGAE,
+        ENDEFECTOR_HOLD_ALGAE,
+        ENDEFECTOR_SCORE_ALGAE
     }
 
     public Rollers (EndefectorRollers endefectorRollers, RampRollers rampRollers) {
@@ -70,12 +76,36 @@ public class Rollers {
             currentState = currentSuperState.ENDEFECTOR_HOLD_CORAL;
            }
         break;
-        case ENDEFECTOR_SCORE:
+        case ENDEFECTOR_SCORE_CORAL:
         if (!endefectorRollers.isCoralInEndefector()) {
             wantedState = wantedSuperState.RAMP_INTAKING;
             currentState = currentSuperState.RAMP_INTAKING;
            } else {
-            currentState = currentSuperState.ENDEFECTOR_SCORE;
+            currentState = currentSuperState.ENDEFECTOR_SCORE_CORAL;
+           }
+        break;
+        case ENDEFECTOR_INTAKE_ALGAE:
+        if(endefectorRollers.isAlgaeInEndefector()){
+            wantedState = wantedSuperState.ENDEFECTOR_HOLD_ALGAE;
+            currentState = currentSuperState.ENDEFECTOR_HOLD_ALGAE;
+        } else {
+            currentState = currentSuperState.ENDEFECTOR_INTAKE_ALGAE;
+        }
+        break;
+        case ENDEFECTOR_HOLD_ALGAE:
+        if (!endefectorRollers.isAlgaeInEndefector()) {
+            wantedState = wantedSuperState.ENDEFECTOR_INTAKE_ALGAE;
+            currentState = currentSuperState.ENDEFECTOR_INTAKE_ALGAE;
+           } else {
+            currentState = currentSuperState.ENDEFECTOR_HOLD_ALGAE;
+           }
+        break;
+        case ENDEFECTOR_SCORE_ALGAE:
+        if (!endefectorRollers.isAlgaeInEndefector()) {
+            wantedState = wantedSuperState.ENDEFECTOR_INTAKE_ALGAE;
+            currentState = currentSuperState.ENDEFECTOR_INTAKE_ALGAE;
+           } else {
+            currentState = currentSuperState.ENDEFECTOR_SCORE_ALGAE;
            }
         break;
         default:
@@ -91,23 +121,28 @@ public class Rollers {
             break;
             case RAMP_INTAKING:
             rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
-            endefectorRollers.setWantedState(EndefectorRollers.WantedState.STOPPED);
             break;
             case RAMP_HOLD_CORAL:
             rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
-            endefectorRollers.setWantedState(EndefectorRollers.WantedState.STOPPED);
             break;
             case ROLLERS_INTAKING:
             rampRollers.setWantedState(RampRollers.WantedState.TRANSFERING);
-            endefectorRollers.setWantedState(EndefectorRollers.WantedState.INTAKING);
+            endefectorRollers.setWantedState(EndefectorRollers.WantedState.INTAKING_CORAL);
             break;
             case ENDEFECTOR_HOLD_CORAL:
-            rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
             endefectorRollers.setWantedState(EndefectorRollers.WantedState.HOLD_CORAL);
             break;
-            case ENDEFECTOR_SCORE:
-            rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
-            endefectorRollers.setWantedState(EndefectorRollers.WantedState.SCORE);
+            case ENDEFECTOR_SCORE_CORAL:
+            endefectorRollers.setWantedState(EndefectorRollers.WantedState.SCORE_CORAL);
+            break;
+            case ENDEFECTOR_INTAKE_ALGAE:
+            endefectorRollers.setWantedState(EndefectorRollers.WantedState.INTAKING_ALGAE);
+            break;
+            case ENDEFECTOR_HOLD_ALGAE:
+            endefectorRollers.setWantedState(EndefectorRollers.WantedState.HOLD_ALGAE);
+            break;
+            case ENDEFECTOR_SCORE_ALGAE:
+            endefectorRollers.setWantedState(EndefectorRollers.WantedState.SCORE_ALGAE);
             break;
             default:
             rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
