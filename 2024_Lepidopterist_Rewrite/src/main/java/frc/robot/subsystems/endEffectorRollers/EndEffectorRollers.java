@@ -57,6 +57,7 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
           break;
         case ALGAE_INTAKING:
           currentState = CurrentState.ALGAE_INTAKING;
+          break;
         case ALGAE_HOLDING:
           if(isAlgaeDetected()){
             currentState = CurrentState.ALGAE_HOLDING;
@@ -84,6 +85,7 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
             break;
           case HOLD_CORAL:
             setPosition(io.wantedCoralPosition);
+            break;
           default:
             stop();
             break;
@@ -95,6 +97,7 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
             break;
           case ALGAE_SCORING:
             setVelocity(-0.5);
+            break;
           case STOPPED:
             stop();
             break;

@@ -77,22 +77,22 @@ public class Rollers {
               }
               break;
             case ENDEFFECTOR_HOLDING_CORAL:
-            if (!endEffectorRollers.isCoralDetected()){
+              if (!endEffectorRollers.isCoralDetected()){
                 wantedSuperState = WantedSuperState.ROLLERS_INTAKING;
                 currentSuperState = CurrentSuperState.ROLLERS_INTAKING;
               }  else{
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
               }
-            break;
-              case ENDEFFECTOR_SCORING_CORAL:
-            if (!endEffectorRollers.isCoralDetected()){
+              break;
+            case ENDEFFECTOR_SCORING_CORAL:
+              if (!endEffectorRollers.isCoralDetected()){
                 wantedSuperState = WantedSuperState.ROLLERS_INTAKING;
                 currentSuperState = CurrentSuperState.ROLLERS_INTAKING;
               } else {
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_SCORING_CORAL;
               }
-            break;
-              case ENDEFFECTOR_HOLDING_ALGAE:
+              break;
+            case ENDEFFECTOR_HOLDING_ALGAE:
               if(endEffectorRollers.isAlgaeDetected()){
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_ALGAE;
               } else{

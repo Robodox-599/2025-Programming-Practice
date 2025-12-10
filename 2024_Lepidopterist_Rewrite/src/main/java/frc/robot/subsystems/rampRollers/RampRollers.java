@@ -53,7 +53,7 @@ public class RampRollers {
     switch (wantedState){
       case STOPPED:
         currentState = CurrentState.STOPPED;
-      break;
+        break;
       case INTAKING:
         // Using the dot operator to access the object's function.
         if (isCoralDetected()){
@@ -73,7 +73,7 @@ public class RampRollers {
         break;
       case SCORING:
         currentState = CurrentState.SCORING;
-      break;
+        break;
     }
   }
 
