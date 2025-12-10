@@ -5,11 +5,14 @@
 package frc.robot.subsystems.rampRollers;
 
 import dev.doglog.DogLog;
+import frc.robot.subsystems.Rollers.CurrentSuperState;
+import frc.robot.subsystems.Rollers.WantedSuperState;
 
 public class RampRollers {
   private final RampRollersIO io;
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
+  private boolean previousIsCoralDetected = false;
   private boolean currentIsCoralDetected = false;
   public double wantedCoralPosition;
 
@@ -40,6 +43,7 @@ public class RampRollers {
     io.updateInputs();
     handleStateTransitions();
     applyStates();
+    previousIsCoralDetected = currentIsCoralDetected;
     currentIsCoralDetected = isCoralDetected();
     DogLog.log("RampRollers/wantedState", wantedState);
     DogLog.log("RampRollers/currentState", currentState);
@@ -51,13 +55,25 @@ public class RampRollers {
         currentState = CurrentState.STOPPED;
       break;
       case INTAKING:
-        currentState = CurrentState.INTAKING;
-      break;
+        // Using the dot operator to access the object's function.
+        if (isCoralDetected()){
+          wantedState = WantedState.HOLD_CORAL;
+          currentState = CurrentState.HOLD_CORAL;
+        }else {
+          currentState = CurrentState.INTAKING;
+        }
+        break;
+      case HOLD_CORAL:
+        if (!isCoralDetected()){
+          wantedState = WantedState.INTAKING;
+          currentState = CurrentState.INTAKING;
+        }else {
+          currentState = CurrentState.HOLD_CORAL;
+        }
+        break;
       case SCORING:
         currentState = CurrentState.SCORING;
       break;
-      case HOLD_CORAL:
-        currentState = CurrentState.HOLD_CORAL;
     }
   }
 
@@ -70,11 +86,11 @@ public class RampRollers {
       case INTAKING:
         setVelocity(-0.15);
         break;
-      case SCORING:
-        setVelocity(-0.15);
-        break;
       case HOLD_CORAL:
         setPosition(io.wantedCoralPosition);
+        break;
+      case SCORING:
+        setVelocity(-0.15);
         break;
       default:
         stop();

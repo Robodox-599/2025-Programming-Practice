@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     rampRollers.updateInputs();
+    endEffectorRollers.updateInputs();
     CommandScheduler.getInstance().run();
   }
 

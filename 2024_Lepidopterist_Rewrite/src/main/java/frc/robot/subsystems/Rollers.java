@@ -68,23 +68,6 @@ public class Rollers {
     //decides what state the machine (Rollers in General) should be in
     private void handleStateTransitions(){
         switch(wantedSuperState){
-            case RAMP_INTAKING:
-            // Using the dot operator to access the object's function.
-            if (rampRollers.isCoralDetected()){
-                wantedSuperState = WantedSuperState.RAMP_HOLDING_CORAL;
-                currentSuperState = CurrentSuperState.RAMP_HOLDING_CORAL;
-              } else {
-                currentSuperState = CurrentSuperState.RAMP_INTAKING;
-              }
-              break;
-            case RAMP_HOLDING_CORAL:
-            if (!rampRollers.isCoralDetected()){
-                wantedSuperState = WantedSuperState.RAMP_INTAKING;
-                currentSuperState = CurrentSuperState.RAMP_INTAKING;
-              }  else{
-                currentSuperState = CurrentSuperState.RAMP_HOLDING_CORAL;D
-              }
-              break;
             case ROLLERS_INTAKING:
             if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){
                 wantedSuperState = WantedSuperState.ENDEFFECTOR_HOLDING_CORAL;
@@ -131,9 +114,6 @@ public class Rollers {
                 // Using the dot operator to access the object's function.
                 rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
-                break;
-            case RAMP_INTAKING:
-                rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
                 break;
             case ROLLERS_INTAKING:
                 rampRollers.setWantedState(RampRollers.WantedState.SCORING);
