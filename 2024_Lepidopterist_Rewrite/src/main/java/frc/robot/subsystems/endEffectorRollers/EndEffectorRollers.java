@@ -59,11 +59,7 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
           currentState = CurrentState.ALGAE_INTAKING;
           break;
         case ALGAE_HOLDING:
-          if(isAlgaeDetected()){
             currentState = CurrentState.ALGAE_HOLDING;
-          } else{
-            currentState = CurrentState.ALGAE_INTAKING;
-          }
           break;
         case ALGAE_SCORING:
           currentState = CurrentState.ALGAE_SCORING;

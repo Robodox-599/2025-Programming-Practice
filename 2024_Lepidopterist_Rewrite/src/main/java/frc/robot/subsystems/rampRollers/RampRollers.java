@@ -20,14 +20,14 @@ public class RampRollers {
     STOPPED,
     INTAKING,
     HOLD_CORAL,
-    SCORING,
+    TRANSFERING,
   }
 
   public enum CurrentState{
     STOPPED,
     INTAKING,
     HOLD_CORAL,
-    SCORING,
+    TRANSFERING,
   }
 
   /** Makes it so that you can acess RampRolelrs io */
@@ -71,8 +71,8 @@ public class RampRollers {
           currentState = CurrentState.HOLD_CORAL;
         }
         break;
-      case SCORING:
-        currentState = CurrentState.SCORING;
+      case TRANSFERING:
+        currentState = CurrentState.TRANSFERING;
         break;
     }
   }
@@ -89,7 +89,7 @@ public class RampRollers {
       case HOLD_CORAL:
         setPosition(io.wantedCoralPosition);
         break;
-      case SCORING:
+      case TRANSFERING:
         setVelocity(-0.15);
         break;
       default:
