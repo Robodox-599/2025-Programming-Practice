@@ -18,23 +18,21 @@ public class Rollers extends SubsystemBase {
   private CurrentState currentState = CurrentState.STOPPED;
 
   public enum WantedState{
-    RAMP_INTAKING,
-    RAMP_HOLD_CORAL,
     ROLLERS_INTAKE_CORAL,
     ENDEFFECTOR_HOLD_CORAL,
     ENDEFFECTOR_HOLD_ALGAE,
     ENDEFFECTOR_SCORE_ALGAE,
+    ENDEFFECTOR_INTAKE_ALGAE,
     ENDEFFECTOR_SCORE_CORAL,
     STOPPED,
   }
 
   public enum CurrentState{
-    RAMP_INTAKING,
-    RAMP_HOLD_CORAL,
     ROLLERS_INTAKE_CORAL,
     ENDEFFECTOR_HOLD_CORAL,
     ENDEFFECTOR_HOLD_ALGAE,
     ENDEFFECTOR_SCORE_ALGAE,
+    ENDEFFECTOR_INTAKE_ALGAE,
     ENDEFFECTOR_SCORE_CORAL,
     STOPPED,
   }
@@ -59,24 +57,6 @@ public class Rollers extends SubsystemBase {
       case STOPPED:
         currentState = CurrentState.STOPPED;
         break;
-      case RAMP_INTAKING:
-        if(rampRollers.isCoralDetected()){
-          wantedState = WantedState.RAMP_HOLD_CORAL;
-          currentState = CurrentState.RAMP_HOLD_CORAL;
-        }
-        else{
-          currentState = CurrentState.RAMP_INTAKING;
-        }
-        break;
-      case RAMP_HOLD_CORAL:
-        if(!endeffectorRollers.isCoralDetected()){
-          wantedState = WantedState.RAMP_INTAKING;
-          currentState = CurrentState.RAMP_INTAKING;
-        }
-        else{
-          currentState = CurrentState.RAMP_HOLD_CORAL;
-        }
-          break;
       case ROLLERS_INTAKE_CORAL: {      
         if (!rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
           // Nothing in the system yet
@@ -94,7 +74,7 @@ public class Rollers extends SubsystemBase {
         break;
       }          
       case ENDEFFECTOR_HOLD_CORAL:
-        if(endeffectorRollers.isCoralDetected()){
+        if(!endeffectorRollers.isCoralDetected()){
           wantedState = WantedState.ROLLERS_INTAKE_CORAL;
           currentState = CurrentState.ROLLERS_INTAKE_CORAL;
         }
@@ -113,18 +93,26 @@ public class Rollers extends SubsystemBase {
         break;
       case ENDEFFECTOR_HOLD_ALGAE:
         if(!endeffectorRollers.isAlgaeDetected()){
-          wantedState = WantedState.STOPPED;
-          currentState = CurrentState.STOPPED;
+          wantedState = WantedState.ENDEFFECTOR_INTAKE_ALGAE;
+          currentState = CurrentState.ENDEFFECTOR_INTAKE_ALGAE;
         } else{
           currentState = CurrentState.ENDEFFECTOR_HOLD_ALGAE;
         }
         break;
       case ENDEFFECTOR_SCORE_ALGAE:
         if(!endeffectorRollers.isAlgaeDetected()){
-          wantedState = WantedState.STOPPED;
-          currentState = CurrentState.STOPPED;
+          wantedState = WantedState.ENDEFFECTOR_INTAKE_ALGAE;
+          currentState = CurrentState.ENDEFFECTOR_INTAKE_ALGAE;
         } else{
           currentState = CurrentState.ENDEFFECTOR_SCORE_ALGAE;
+        }
+        break;
+      case ENDEFFECTOR_INTAKE_ALGAE:
+        if(endeffectorRollers.isAlgaeDetected()){
+          wantedState = WantedState.ENDEFFECTOR_HOLD_ALGAE;
+          currentState = CurrentState.ENDEFFECTOR_HOLD_ALGAE;
+        } else{
+          currentState = CurrentState.ENDEFFECTOR_INTAKE_ALGAE;
         }
         break;
       default:
@@ -137,13 +125,6 @@ public class Rollers extends SubsystemBase {
     switch(currentState){
       case STOPPED:
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
-        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
-        break;
-      case RAMP_INTAKING:
-        rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
-        break;
-      case RAMP_HOLD_CORAL:
-        rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
         break;
       case ROLLERS_INTAKE_CORAL: // lowk my brain is fried rn and this makes the most sense to me
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_CORAL);
@@ -151,11 +132,9 @@ public class Rollers extends SubsystemBase {
         break;
       case ENDEFFECTOR_HOLD_CORAL:
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.HOLD_CORAL);
-        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
         break;
       case ENDEFFECTOR_SCORE_CORAL:
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_CORAL);
-        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
         break;
       case ENDEFFECTOR_HOLD_ALGAE:
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.HOLD_ALGAE);
@@ -163,10 +142,11 @@ public class Rollers extends SubsystemBase {
       case ENDEFFECTOR_SCORE_ALGAE:
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.SCORING_ALGAE);
         break;        
+      case ENDEFFECTOR_INTAKE_ALGAE:
+        endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.INTAKING_ALGAE);
+        break;
       default:
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.STOPPED);
-        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
-
     }
   }
 
