@@ -56,6 +56,7 @@ public class Rollers extends SubsystemBase {
     switch(wantedState){
       case ROLLERS_INTAKE_CORAL: 
         if (endeffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){
+          endeffectorRollers.endeffectorHoldCoral();
           wantedState = WantedState.ENDEFFECTOR_HOLD_CORAL;
           currentState = CurrentState.ENDEFFECTOR_HOLD_CORAL;
         } else {

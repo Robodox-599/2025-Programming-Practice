@@ -81,7 +81,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         super.tempCelsius = endeffectorRollersTemperature.getValueAsDouble();
 
         super.isCoralDetected = !endeffectorRollersBeamBreak.get();
-        super.isAlgaeDetected = algaeDebounce.calculate(super.statorCurrent > 20);
+        super.isAlgaeDetected = algaeDebounce.calculate(super.statorCurrent > 50);
 
         DogLog.log("EndeffectorRollers/Velocity", super.velocity);
         DogLog.log("EndeffectorRollers/Position", super.position);
@@ -107,18 +107,6 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
     @Override
     public void holdAlgae(double dutyCycle){
         endeffectorRollersMotor.setControl(new DutyCycleOut(dutyCycle));
-    }
-
-    @Override
-    public double heldCurrentPosition(){
-        if(super.isCoralDetected){
-            super.heldCurrentPosition = super.position;
-            
-            return super.heldCurrentPosition;
-        }
-        else{
-            return super.heldCurrentPosition;
-        }
     }
 
     @Override
