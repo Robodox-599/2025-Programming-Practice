@@ -132,7 +132,7 @@ public class EndeffectorRollers extends SubsystemBase {
     io.setPosition(position);
   }
 
-  public void endeffectorHoldCoral(){
-      io.heldCurrentPosition = io.position;
+  public void getEndeffectorCoralPosition(){
+    io.heldCurrentPosition = io.position;
   }
 }
