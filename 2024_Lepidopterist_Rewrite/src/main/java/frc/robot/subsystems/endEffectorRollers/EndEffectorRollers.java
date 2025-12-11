@@ -126,4 +126,6 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
     public void setWantedState(WantedState wantedState){
       this.wantedState = wantedState;
     }
+
+    // function that sets wantedCoralPosition to the current position of the ee rollers
 }

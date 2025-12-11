@@ -64,6 +64,7 @@ public class Rollers {
         switch(wantedSuperState){
             case ROLLERS_INTAKING:
             if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){
+                // function to set wantedCoralPosition of coral in ee
                 wantedSuperState = WantedSuperState.ENDEFFECTOR_HOLDING_CORAL;
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
               } else {
