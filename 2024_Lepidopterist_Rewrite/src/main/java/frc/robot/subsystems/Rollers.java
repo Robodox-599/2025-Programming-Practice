@@ -147,7 +147,7 @@ public class Rollers {
               endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLDING_ALGAE);
               break;
             case ENDEFFECTOR_SCORING_ALGAE:
-              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING_ALGAE);
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING_ALGAE);
               break;
             default:
               endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);

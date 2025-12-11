@@ -25,6 +25,6 @@ public class EndEffectorRollersConstants {
     public static final double kV = 0.001 * endEffectorRollersGearRatio;
 
     // Current Limits
-    public static final double supplyCurrentLimit = 40;
-    public static final double statorCurrentLimit = 40;
+    public static final double supplyCurrentLimit = 50;
+    public static final double statorCurrentLimit = 50;
 }
