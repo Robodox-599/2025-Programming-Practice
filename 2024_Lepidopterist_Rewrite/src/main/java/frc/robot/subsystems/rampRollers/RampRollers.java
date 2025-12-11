@@ -65,14 +65,17 @@ public class RampRollers {
         break;
       case HOLD_CORAL:
         if (!isCoralDetected()){
-          wantedState = WantedState.INTAKING;
-          currentState = CurrentState.INTAKING;
+          wantedState = WantedState.STOPPED;
+          currentState = CurrentState.STOPPED;
         }else {
           currentState = CurrentState.HOLD_CORAL;
         }
         break;
       case TRANSFERING:
         currentState = CurrentState.TRANSFERING;
+        break;
+      default:
+        stop();
         break;
     }
   }

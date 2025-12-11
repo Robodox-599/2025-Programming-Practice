@@ -111,9 +111,10 @@ public class Rollers {
               break;
             case STOPPED:
                 currentSuperState = CurrentSuperState.STOPPED;              
-            break;
+              break;
             default:
-                break;
+              currentSuperState = CurrentSuperState.STOPPED;
+              break;
         }
     }
 
@@ -121,8 +122,7 @@ public class Rollers {
     private void applyStates(){
         switch(currentSuperState){
             case STOPPED:
-                // Using the dot operator to access the object's function.
-                rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
+                // Using the dot operator to access the object's function
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
                 break;
             case ROLLERS_INTAKING:
@@ -147,6 +147,7 @@ public class Rollers {
               endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.ALGAE_INTAKING);
               break;
             default:
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
                 break;
 
             
@@ -156,4 +157,5 @@ public class Rollers {
     public void setWantedState(WantedSuperState wantedSuperState){
       this.wantedSuperState = wantedSuperState;
     }
+
 }

@@ -67,6 +67,9 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
         case STOPPED:
           currentState = CurrentState.STOPPED;
           break;
+        default:
+        currentState = CurrentState.STOPPED;
+          break;
         
       }
     }
