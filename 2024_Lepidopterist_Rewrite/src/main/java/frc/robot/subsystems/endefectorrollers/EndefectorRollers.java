@@ -66,12 +66,14 @@ public class EndefectorRollers {
         break;
       case INTAKING_CORAL:
         setVelocity(0.3); 
+        io.holdPosition = 0;
         break;
       case HOLD_CORAL:
         setPosition(io.holdPosition);
         break;
         case SCORE_CORAL:
         setVelocity(0.5);
+        io.holdPosition = 0;
         break;
       case INTAKING_ALGAE:
         setVelocity(0.3); 

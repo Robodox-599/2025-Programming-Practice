@@ -97,9 +97,8 @@ public class EndefectorRollersIOTalonFX extends EndefectorRollersIO {
 
     @Override
     public double holdPosition() {
-        if(isCoralInEndefector) {
+        if(isCoralInEndefector && super.holdPosition > 0) {
             super.holdPosition = super.position;
-           
             return super.holdPosition;
         } else {
             return super.holdPosition;
