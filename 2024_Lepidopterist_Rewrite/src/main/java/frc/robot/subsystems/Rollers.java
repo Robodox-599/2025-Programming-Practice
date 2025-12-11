@@ -63,8 +63,8 @@ public class Rollers {
     private void handleStateTransitions(){
         switch(wantedSuperState){
             case ROLLERS_INTAKING:
-            if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){
-                // function to set wantedCoralPosition of coral in ee
+            if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){ // detect coral in ee but not in ramp, which means we should HOLD THE CORAL
+                // function to set wantedCoralPosition to the current position of the MOTOR
                 wantedSuperState = WantedSuperState.ENDEFFECTOR_HOLDING_CORAL;
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
               } else {

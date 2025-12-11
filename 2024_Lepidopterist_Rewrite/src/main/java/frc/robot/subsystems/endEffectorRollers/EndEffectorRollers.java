@@ -83,7 +83,7 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
             setVelocity(0.5);
             break;
           case HOLD_CORAL:
-            stop();
+            // change to set position
             break;
           case ALGAE_INTAKING:
             setVelocity(-0.5);
