@@ -86,7 +86,7 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
         DogLog.log("endEffectorRollers/Position", super.position);
         DogLog.log("endEffectorRollers/Velocity", super.velocity);
         DogLog.log("endEffectorRollers/isCoralDetected", super.isCoralDetected);
-        DogLog.log("endEffectorRollers/isAlgaeDetected", super.isCoralDetected);
+        DogLog.log("endEffectorRollers/isAlgaeDetected", super.isAlgaeDetected);
         DogLog.log("endEffectorRollers/statorCurrent", super.statorCurrent);
         DogLog.log("endEffectorRollers/supplyCurrent", super.supplyCurrent);
 
