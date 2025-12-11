@@ -85,7 +85,7 @@ public class RampRollers extends SubsystemBase {
         setVelocity(0.3);
         break;
       case TRANSFER_CORAL:
-        setVelocity(0.5);
+        setVelocity(0.3);
         break;
       case HOLD_CORAL:
         setPosition(io.heldCurrentPosition);

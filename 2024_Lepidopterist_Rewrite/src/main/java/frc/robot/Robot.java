@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
   public void testExit() {}
 
   private void configureBindings() {
-    controller.b().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
+    controller.y().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
 
     controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ROLLERS_INTAKE_CORAL)));
 
@@ -101,7 +101,6 @@ public class Robot extends TimedRobot {
     controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE_ALGAE)));
 
     controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.STOPPED)));
-
   }
 
 
