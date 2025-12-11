@@ -111,7 +111,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
 
     @Override
     public double heldCurrentPosition(){
-        if(super.isCoralDetected ){
+        if(super.isCoralDetected){
             super.heldCurrentPosition = super.position;
             
             return super.heldCurrentPosition;
