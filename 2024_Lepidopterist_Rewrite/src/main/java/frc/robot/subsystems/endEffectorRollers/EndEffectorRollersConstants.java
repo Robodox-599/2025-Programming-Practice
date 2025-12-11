@@ -3,7 +3,7 @@ package frc.robot.subsystems.endEffectorRollers;
 public class EndEffectorRollersConstants {
 
     // Hardware
-    public static final int EndEffectorRollersMotorID = 0;
+    public static final int EndEffectorRollersMotorID = 16;
     public static final String EndEffectorRollersCANBus = "rio";
 
     // Sensor
