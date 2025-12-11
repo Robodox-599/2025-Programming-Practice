@@ -1,6 +1,7 @@
 package frc.robot.subsystems.endEffectorRollers;
 
 import dev.doglog.DogLog;
+import frc.robot.subsystems.Rollers;
 
 public class EndEffectorRollers extends EndEffectorRollersIO{
     private final EndEffectorRollersIO io;
@@ -125,6 +126,10 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
 
     public void setWantedState(WantedState wantedState){
       this.wantedState = wantedState;
+    }
+
+    public void setEndeffectorWantedCoralPosition(){
+      setPosition(holdCoralPosition);
     }
 
     // function that sets wantedCoralPosition to the current position of the ee rollers

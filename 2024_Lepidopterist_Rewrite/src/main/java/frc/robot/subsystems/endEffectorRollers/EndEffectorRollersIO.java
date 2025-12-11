@@ -3,7 +3,7 @@ package frc.robot.subsystems.endEffectorRollers;
 public abstract class EndEffectorRollersIO {
     protected double position = 0.0;
     protected double velocity = 0.0;
-    protected double wantedCoralPosition = 0.0;
+    public static double holdCoralPosition = 0.0;
     public double statorCurrent = 0.0;
     public double supplyCurrent = 0.0;
 

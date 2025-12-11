@@ -4,6 +4,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollers;
+import frc.robot.subsystems.endEffectorRollers.EndEffectorRollersIO;
 import frc.robot.subsystems.rampRollers.RampRollers;
 
 /** Add your docs here. */
@@ -32,7 +33,7 @@ public class Rollers {
 
     public enum WantedSuperState {
       //isolate rollers_Holding for holding 2 game pieces
-        ROLLERS_INTAKING,
+        ROLLERS_INTAKING_CORAL,
         ENDEFFECTOR_HOLDING_CORAL,
         ENDEFFECTOR_SCORING_CORAL,
         ENDEFFECTOR_INTAKING_ALGAE,
@@ -43,7 +44,7 @@ public class Rollers {
 
 
     public enum CurrentSuperState {
-        ROLLERS_INTAKING,
+        ROLLERS_INTAKING_CORAL,
         ENDEFFECTOR_HOLDING_CORAL,
         ENDEFFECTOR_SCORING_CORAL,
         ENDEFFECTOR_INTAKING_ALGAE,
@@ -59,21 +60,23 @@ public class Rollers {
         applyStates();
     }
 
-    //decides what state the machine (Rollers in General) should be in
+    //based on the wanted state it determines what the current/wanted state the SUBSYSTEM is in
     private void handleStateTransitions(){
         switch(wantedSuperState){
-            case ROLLERS_INTAKING:
+            case ROLLERS_INTAKING_CORAL:
             if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){
                 // function to set wantedCoralPosition of coral in ee
+                
                 wantedSuperState = WantedSuperState.ENDEFFECTOR_HOLDING_CORAL;
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
               } else {
-                currentSuperState = CurrentSuperState.ROLLERS_INTAKING;
+                currentSuperState = CurrentSuperState.ROLLERS_INTAKING_CORAL;
               }
               break;
             case ENDEFFECTOR_HOLDING_CORAL:
+            // ...
               if (!endEffectorRollers.isCoralDetected()){
-                wantedSuperState = WantedSuperState.STOPPED;
+                wantedSuperState = WantedSuperState.STOPPED;                
                 currentSuperState = CurrentSuperState.STOPPED;
               }  else{
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
@@ -119,14 +122,14 @@ public class Rollers {
         }
     }
 
-    //runs motor (Rollers in general) based on current state
+    //based on the current state the SUBSYSTEM is in, it does sometype of action
     private void applyStates(){
         switch(currentSuperState){
             case STOPPED:
                 // Using the dot operator to access the object's function
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
                 break;
-            case ROLLERS_INTAKING:
+            case ROLLERS_INTAKING_CORAL:
               rampRollers.setWantedState(RampRollers.WantedState.TRANSFERING);                
               // We are allowed to use the setWantedState() method although it's in another class because we imported the class "EndEffectorRollers.Java" here which allows us to use function(method) meant for the EndEffector here
               // click the setWantedState() function or any function to see where it originates from

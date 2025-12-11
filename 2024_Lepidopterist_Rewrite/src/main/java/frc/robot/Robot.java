@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
       // left bumper is to intake algae
       // left trigger is to score algae
       // stopp should be X
-      controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedSuperState.ROLLERS_INTAKING)));
+      controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedSuperState.ROLLERS_INTAKING_CORAL)));
       controller.rightTrigger().onTrue(Commands.runOnce(() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING)));
       controller.leftBumper().onTrue(Commands.runOnce(() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING)));
       controller.leftTrigger().onTrue(Commands.runOnce (() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING)));
