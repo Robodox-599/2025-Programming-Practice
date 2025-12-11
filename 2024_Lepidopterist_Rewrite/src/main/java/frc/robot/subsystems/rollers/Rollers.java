@@ -62,8 +62,8 @@ public class Rollers extends SubsystemBase {
           // Coral is at the ramp only so we run BOTH to move it toward the end effector
           currentState = CurrentState.ROLLERS_INTAKE_CORAL;
         } else if (rampRollers.isCoralDetected() && endeffectorRollers.isCoralDetected()) {
-          // Coral is somewhere between the sensors 
-          currentState = CurrentState.ROLLERS_INTAKE_CORAL;
+          // Coral is somewhere between the sensors
+          currentState = CurrentState.ENDEFFECTOR_INTAKE_ALGAE;
         } else {
           // Coral is only at the end effector now so we’re done transferring
           currentState = CurrentState.ENDEFFECTOR_HOLD_CORAL;
@@ -124,7 +124,7 @@ public class Rollers extends SubsystemBase {
   public void applyStates(){
     switch(currentState){
       case ROLLERS_INTAKE_CORAL: // lowk my brain is fried rn and this makes the most sense to me
-      rampRollers.setWantedState(RampRollers.WantedState.TRANSFER_CORAL);
+        rampRollers.setWantedState(RampRollers.WantedState.TRANSFER_CORAL);
         endeffectorRollers.setWantedState(EndeffectorRollers.WantedState.INTAKING_CORAL);
         break;
       case ENDEFFECTOR_INTAKE_ALGAE:

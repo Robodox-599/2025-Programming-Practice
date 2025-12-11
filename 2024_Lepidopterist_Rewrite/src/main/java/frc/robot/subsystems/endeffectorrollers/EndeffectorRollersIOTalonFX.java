@@ -35,8 +35,6 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
     private final StatusSignal<Current> endeffectorRollersStatorCurrent;
     private final StatusSignal<Current> endeffectorRollersSupplyCurrent;
 
-    private boolean hasHeldPositionBeenSet = false;
-
     public EndeffectorRollersIOTalonFX() {
         endeffectorRollersMotor = new TalonFX(EndeffectorRollersConstants.endeffectorRollersMotorID, EndeffectorRollersConstants.endeffectorRollersCANBus);
         endeffectorRollersConfig = new TalonFXConfiguration();
@@ -119,7 +117,6 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
             return super.heldCurrentPosition;
         }
         else{
-            hasHeldPositionBeenSet = false;
             return super.heldCurrentPosition;
         }
     }

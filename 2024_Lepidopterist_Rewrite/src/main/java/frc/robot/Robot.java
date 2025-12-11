@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
 
     controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE_ALGAE)));
 
-    controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.STOPPED)));
+    controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)).alongWith(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.STOPPED))));
   }
 
 
