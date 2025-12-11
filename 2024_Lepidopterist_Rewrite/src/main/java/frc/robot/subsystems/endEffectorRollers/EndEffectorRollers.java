@@ -77,22 +77,22 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
     private void applyStates() {
         switch (currentState) {
           case INTAKING:
-            setVelocity(-0.5);
+            setVelocity(0.3);
             break;
           case SCORING:
-            setVelocity(-0.5);
+            setVelocity(0.5);
             break;
           case HOLD_CORAL:
             stop();
             break;
           case ALGAE_INTAKING:
-            setVelocity(0.5);
+            setVelocity(-0.5);
             break;
           case ALGAE_HOLDING:
             holdAlgae();
             break;
           case ALGAE_SCORING:
-            setVelocity(-0.5);
+            setVelocity(0.5);
             break;
           case STOPPED:
             stop();

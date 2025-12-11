@@ -7,7 +7,7 @@ public class EndEffectorRollersConstants {
     public static final String EndEffectorRollersCANBus = "rio";
 
     // Sensor
-    public static final int beamBreakPort = 0;
+    public static final int beamBreakPort = 2;
     public static final double endEffectorRollersDebounceTimeSeconds = 0.2;
 
     // Gear Ratio
