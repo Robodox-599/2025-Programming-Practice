@@ -57,7 +57,7 @@ public class RampRollers {
         setPosition(io.holdPosition);
         break;
         case TRANSFERING:
-        setVelocity(-0.5);
+        setVelocity(-0.2);
         break;
       default:
         stop();
