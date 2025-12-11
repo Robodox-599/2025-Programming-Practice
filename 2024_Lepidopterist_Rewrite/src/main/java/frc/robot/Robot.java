@@ -99,16 +99,16 @@ public class Robot extends TimedRobot {
       // b intakeing coral from ramp only
       // right bumper intake coral from both
       //right trigger is to score coral/
+
       // left bumper is to intake algae
       // left trigger is to score algae
       // stopp should be X
       controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedSuperState.ROLLERS_INTAKING)));
-      controller.rightTrigger().onTrue(Commands.runOnce(() -> en.setWantedState(RampRollers.WantedState.SCORING)));
-
-      controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)));
-
+      controller.rightTrigger().onTrue(Commands.runOnce(() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING)));
       controller.leftBumper().onTrue(Commands.runOnce(() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING)));
       controller.leftTrigger().onTrue(Commands.runOnce (() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING)));
+      controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)));
+
     }
   
     public Command getAutonomousCommand() {

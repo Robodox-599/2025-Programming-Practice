@@ -151,8 +151,9 @@ public class Rollers {
 
             
         }
-
-
     }
 
+    public void setWantedState(WantedSuperState wantedSuperState){
+      this.wantedSuperState = wantedSuperState;
+    }
 }
