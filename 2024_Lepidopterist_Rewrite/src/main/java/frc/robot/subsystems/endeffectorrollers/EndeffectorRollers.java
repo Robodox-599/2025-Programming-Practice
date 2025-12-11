@@ -81,22 +81,22 @@ public class EndeffectorRollers extends SubsystemBase {
         stop();
         break;
       case INTAKING_CORAL:
-        setVelocity(0.3);
+        setVelocity(-0.3);
         break;
       case SCORING_CORAL:
-        setVelocity(0.5);
+        setVelocity(-0.5);
         break;
       case HOLD_CORAL:
         stop();
         break;
       case SCORING_ALGAE:
-        setVelocity(0.8);
+        setVelocity(-0.8);
         break;
       case HOLD_ALGAE:
-        holdAlgae(0.2);
+        holdAlgae(-0.2);
         break;
       case INTAKING_ALGAE:
-        setVelocity(0.3);
+        setVelocity(-0.3);
         break;
       default:
         setVelocity(0);
