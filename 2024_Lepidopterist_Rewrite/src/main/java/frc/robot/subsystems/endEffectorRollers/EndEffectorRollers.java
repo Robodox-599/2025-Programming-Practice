@@ -9,22 +9,22 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
     private CurrentState currentState = CurrentState.STOPPED;
 
     public enum WantedState{
-        INTAKING,
-        HOLD_CORAL,
-        SCORING,
-        ALGAE_INTAKING,
-        ALGAE_HOLDING,
-        ALGAE_SCORING,
+        INTAKING_CORAL,
+        HOLDING_CORAL,
+        SCORING_CORAL,
+        INTAKING_ALGAE,
+        HOLDING_ALGAE,
+        SCORING_ALGAE,
         STOPPED
       }
     
       public enum CurrentState{
-        INTAKING,
-        HOLD_CORAL,
-        SCORING,
-        ALGAE_INTAKING,
-        ALGAE_HOLDING,
-        ALGAE_SCORING,
+        INTAKING_CORAL,
+        HOLDING_CORAL,
+        SCORING_CORAL,
+        INTAKING_ALGAE,
+        HOLDING_ALGAE,
+        SCORING_ALGAE,
         STOPPED
       }
 
@@ -39,31 +39,31 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
         io.updateInputs();
         handleStateTransitions();
         applyStates();
-        DogLog.log("EndEffectorRollers/wantedState", wantedState);
-        DogLog.log("EndEffectorRollers/currentState", currentState);
+        DogLog.log("endEffectorRollers/wantedState", wantedState);
+        DogLog.log("endEffectorRollers/currentState", currentState);
     }
 
     // decides what state the mahcine should be in
     // suggested by starting with handleStateTransitions state machines first before applyStates stateMachine
     private void handleStateTransitions(){
       switch(wantedState){
-        case INTAKING:
-          currentState = CurrentState.INTAKING;
+        case INTAKING_CORAL:
+          currentState = CurrentState.INTAKING_CORAL;
           break;
-        case SCORING:
-          currentState = CurrentState.SCORING;
+        case SCORING_CORAL:
+          currentState = CurrentState.SCORING_CORAL;
           break;
-        case HOLD_CORAL:
-          currentState = CurrentState.HOLD_CORAL;
+        case HOLDING_CORAL:
+          currentState = CurrentState.HOLDING_CORAL;
           break;
-        case ALGAE_INTAKING:
-          currentState = CurrentState.ALGAE_INTAKING;
+        case INTAKING_ALGAE:
+          currentState = CurrentState.INTAKING_ALGAE;
           break;
-        case ALGAE_HOLDING:
-            currentState = CurrentState.ALGAE_HOLDING;
+        case HOLDING_ALGAE:
+            currentState = CurrentState.HOLDING_ALGAE;
           break;
-        case ALGAE_SCORING:
-          currentState = CurrentState.ALGAE_SCORING;
+        case SCORING_ALGAE:
+          currentState = CurrentState.SCORING_ALGAE;
           break;
         case STOPPED:
           currentState = CurrentState.STOPPED;
@@ -77,23 +77,23 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
 
     private void applyStates() {
         switch (currentState) {
-          case INTAKING:
-            setVelocity(0.3);
-            break;
-          case SCORING:
-            setVelocity(0.5);
-            break;
-          case HOLD_CORAL:
-            // change to set position
-            break;
-          case ALGAE_INTAKING:
+          case INTAKING_CORAL:
             setVelocity(-0.5);
             break;
-          case ALGAE_HOLDING:
+          case SCORING_CORAL:
+            setVelocity(-0.5);
+            break;
+          case HOLDING_CORAL:
+            setPosition(io.holdCoralPosition);
+            break;
+          case INTAKING_ALGAE:
+            setVelocity(0.5);
+            break;
+          case HOLDING_ALGAE:
             holdAlgae();
             break;
-          case ALGAE_SCORING:
-            setVelocity(0.5);
+          case SCORING_ALGAE:
+            setVelocity(-0.5);
             break;
           case STOPPED:
             stop();
@@ -120,6 +120,7 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
         io.setVelocity(velocity);
     }
 
+    //of motor
     public void setPosition(double position){
         io.setPosition(position);
     }
@@ -128,8 +129,8 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
       this.wantedState = wantedState;
     }
 
-    public void setEndeffectorWantedCoralPosition(){
-      setPosition(holdCoralPosition);
+    public void setEndeffectorHoldCoralPosition(){
+      io.holdCoralPosition = io.getPosition();
     }
 
     // function that sets wantedCoralPosition to the current position of the ee rollers

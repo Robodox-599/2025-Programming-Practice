@@ -104,9 +104,9 @@ public class Robot extends TimedRobot {
       // left trigger is to score algae
       // stopp should be X
       controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedSuperState.ROLLERS_INTAKING_CORAL)));
-      controller.rightTrigger().onTrue(Commands.runOnce(() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING)));
-      controller.leftBumper().onTrue(Commands.runOnce(() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING)));
-      controller.leftTrigger().onTrue(Commands.runOnce (() -> endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING)));
+      controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedSuperState.ENDEFFECTOR_SCORING_CORAL)));
+      controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedSuperState.ENDEFFECTOR_INTAKING_ALGAE)));
+      controller.leftTrigger().onTrue(Commands.runOnce (() -> rollers.setWantedState(Rollers.WantedSuperState.ENDEFFECTOR_SCORING_ALGAE)));
       controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedSuperState.STOPPED)).alongWith(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED))));
       controller.b().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
     }

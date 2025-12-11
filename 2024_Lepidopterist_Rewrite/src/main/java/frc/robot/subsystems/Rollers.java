@@ -66,6 +66,7 @@ public class Rollers {
             case ROLLERS_INTAKING_CORAL:
             if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){ // detect coral in ee but not in ramp, which means we should HOLD THE CORAL
                 // function to set wantedCoralPosition to the current position of the MOTOR
+                endEffectorRollers.setEndeffectorHoldCoralPosition();
                 wantedSuperState = WantedSuperState.ENDEFFECTOR_HOLDING_CORAL;
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
               } else {
@@ -73,7 +74,6 @@ public class Rollers {
               }
               break;
             case ENDEFFECTOR_HOLDING_CORAL:
-            // ...
               if (!endEffectorRollers.isCoralDetected()){
                 wantedSuperState = WantedSuperState.STOPPED;                
                 currentSuperState = CurrentSuperState.STOPPED;
@@ -132,22 +132,22 @@ public class Rollers {
               rampRollers.setWantedState(RampRollers.WantedState.TRANSFERING);                
               // We are allowed to use the setWantedState() method although it's in another class because we imported the class "EndEffectorRollers.Java" here which allows us to use function(method) meant for the EndEffector here
               // click the setWantedState() function or any function to see where it originates from
-              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING);
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING_CORAL);
                 break;
             case ENDEFFECTOR_HOLDING_CORAL:
-              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLD_CORAL);
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLDING_CORAL);
               break;
             case ENDEFFECTOR_SCORING_CORAL:
-              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING);
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING_CORAL);
               break;
             case ENDEFFECTOR_INTAKING_ALGAE:
-              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.ALGAE_INTAKING);
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING_ALGAE);
               break;
             case ENDEFFECTOR_HOLDING_ALGAE:
-              endEffectorRollers.holdAlgae();
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLDING_ALGAE);
               break;
             case ENDEFFECTOR_SCORING_ALGAE:
-              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.ALGAE_INTAKING);
+              endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING_ALGAE);
               break;
             default:
               endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
