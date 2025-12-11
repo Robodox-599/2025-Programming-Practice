@@ -54,22 +54,14 @@ public class Rollers extends SubsystemBase {
 
   public void handleStateTransitions(){
     switch(wantedState){
-      case ROLLERS_INTAKE_CORAL: {      
-        if (!rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
-          // Nothing in the system yet
-          currentState = CurrentState.ROLLERS_INTAKE_CORAL;
-        } else if (rampRollers.isCoralDetected() && !endeffectorRollers.isCoralDetected()) {
-          // Coral is at the ramp only so we run BOTH to move it toward the end effector
-          currentState = CurrentState.ROLLERS_INTAKE_CORAL;
-        } else if (rampRollers.isCoralDetected() && endeffectorRollers.isCoralDetected()) {
-          // Coral is somewhere between the sensors
-          currentState = CurrentState.ENDEFFECTOR_INTAKE_ALGAE;
-        } else {
-          // Coral is only at the end effector now so we’re done transferring
+      case ROLLERS_INTAKE_CORAL: 
+        if (endeffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){
+          wantedState = WantedState.ENDEFFECTOR_HOLD_CORAL;
           currentState = CurrentState.ENDEFFECTOR_HOLD_CORAL;
+        } else {
+          currentState = CurrentState.ROLLERS_INTAKE_CORAL;
         }
-      }          
-      break;
+        break;
       case ENDEFFECTOR_INTAKE_ALGAE:
         if(endeffectorRollers.isAlgaeDetected()){
           wantedState = WantedState.ENDEFFECTOR_HOLD_ALGAE;
@@ -80,8 +72,8 @@ public class Rollers extends SubsystemBase {
         break;
       case ENDEFFECTOR_HOLD_CORAL:
         if(!endeffectorRollers.isCoralDetected()){
-          wantedState = WantedState.ROLLERS_INTAKE_CORAL;
-          currentState = CurrentState.ROLLERS_INTAKE_CORAL;
+          wantedState = WantedState.STOPPED;
+          currentState = CurrentState.STOPPED;
         }
         else{
           currentState = CurrentState.ENDEFFECTOR_HOLD_CORAL;
@@ -89,16 +81,16 @@ public class Rollers extends SubsystemBase {
         break;
       case ENDEFFECTOR_HOLD_ALGAE:
         if(!endeffectorRollers.isAlgaeDetected()){
-          wantedState = WantedState.ENDEFFECTOR_INTAKE_ALGAE;
-          currentState = CurrentState.ENDEFFECTOR_INTAKE_ALGAE;
+          wantedState = WantedState.STOPPED;
+          currentState = CurrentState.STOPPED;
         } else{
           currentState = CurrentState.ENDEFFECTOR_HOLD_ALGAE;
         }
         break;
       case ENDEFFECTOR_SCORE_CORAL:
         if(!endeffectorRollers.isCoralDetected()){
-          wantedState = WantedState.ROLLERS_INTAKE_CORAL;
-          currentState = CurrentState.ROLLERS_INTAKE_CORAL;
+          wantedState = WantedState.STOPPED;
+          currentState = CurrentState.STOPPED;
         }
         else{
           currentState = CurrentState.ENDEFFECTOR_SCORE_CORAL;

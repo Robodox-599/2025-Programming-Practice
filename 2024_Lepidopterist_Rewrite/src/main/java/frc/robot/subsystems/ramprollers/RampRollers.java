@@ -56,8 +56,8 @@ public class RampRollers extends SubsystemBase {
         break;
       case HOLD_CORAL:
         if(!isCoralDetected()){
-          wantedState = WantedState.INTAKING;
-          currentState = CurrentState.INTAKING;
+          wantedState = WantedState.STOPPED;
+          currentState = CurrentState.STOPPED;
         }else{
           currentState = CurrentState.HOLD_CORAL;
         }
