@@ -36,7 +36,8 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     private final StatusSignal<Current> endEffectorRollersSupplyCurrent;
 
     // delays only false to true transiitons
-    final Debouncer algaeDebounce;
+    final Debouncer algaeIntakingDebounce;
+    final Debouncer algaeScoringDebounce;
     
 
 
@@ -56,7 +57,8 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
         endEffectorRollersMotor.getConfigurator().apply(endEffectorRollersConfig);
         endEffectorRollersMotor.setNeutralMode(NeutralModeValue.Brake);
 
-        algaeDebounce = new Debouncer(0.2, Debouncer.DebounceType.kRising);
+        algaeIntakingDebounce = new Debouncer(0.2, Debouncer.DebounceType.kRising);
+        algaeScoringDebounce = new Debouncer(0.2, Debouncer.DebounceType.kFalling);
 
         endEffectorRollersVelocityRad = endEffectorRollersMotor.getVelocity();
         endEffectorRollersTemperature = endEffectorRollersMotor.getDeviceTemp();
@@ -81,12 +83,13 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
         super.isCoralDetected = !endEffectorBeamBreak.get();
         super.statorCurrent = endEffectorRollersStatorCurrent.getValueAsDouble();
         super.supplyCurrent = endEffectorRollersSupplyCurrent.getValueAsDouble();
-        super.isAlgaeDetected = algaeDebounce.calculate(super.statorCurrent >= 20);
+        super.isAlgaeIntaked = algaeIntakingDebounce.calculate(super.statorCurrent >= 50);
+        super.isAlgaeScored = algaeScoringDebounce.calculate(!(super.statorCurrent >= 50));
 
         DogLog.log("endEffectorRollers/Position", super.position);
         DogLog.log("endEffectorRollers/Velocity", super.velocity);
         DogLog.log("endEffectorRollers/isCoralDetected", super.isCoralDetected);
-        DogLog.log("endEffectorRollers/isAlgaeDetected", super.isAlgaeDetected);
+        DogLog.log("endEffectorRollers/isAlgaeDetected", super.isAlgaeIntaked);
         DogLog.log("endEffectorRollers/statorCurrent", super.statorCurrent);
         DogLog.log("endEffectorRollers/supplyCurrent", super.supplyCurrent);
 
@@ -113,6 +116,6 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     }
     @Override
     public void holdAlgae(){
-        endEffectorRollersMotor.setControl(new DutyCycleOut(-.1));
+        endEffectorRollersMotor.setControl(new DutyCycleOut(0.2));
     }
 }

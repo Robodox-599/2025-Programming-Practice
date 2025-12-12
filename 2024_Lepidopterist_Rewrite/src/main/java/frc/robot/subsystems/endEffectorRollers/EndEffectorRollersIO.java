@@ -8,7 +8,8 @@ public abstract class EndEffectorRollersIO {
     public double supplyCurrent = 0.0;
 
     protected boolean isCoralDetected = false;
-    protected boolean isAlgaeDetected = false;
+    protected boolean isAlgaeIntaked = false;
+    protected boolean isAlgaeScored = false;
 
 
     public void updateInputs(){}

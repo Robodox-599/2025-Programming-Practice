@@ -108,8 +108,8 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
         return io.isCoralDetected;
       }
 
-    public boolean isAlgaeDetected(){
-      return io.isAlgaeDetected;
+    public boolean isAlgaeIntaked(){
+      return io.isAlgaeIntaked;
     }
 
     public void stop(){

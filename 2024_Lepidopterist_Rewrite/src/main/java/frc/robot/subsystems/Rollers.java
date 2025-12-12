@@ -90,14 +90,14 @@ public class Rollers {
               }
               break;
             case ENDEFFECTOR_INTAKING_ALGAE:
-              if(endEffectorRollers.isAlgaeDetected()){
+              if(endEffectorRollers.isAlgaeIntaked()){
                 wantedSuperState = WantedSuperState.ENDEFFECTOR_HOLDING_ALGAE;
                 currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
               }
               currentSuperState = CurrentSuperState.ENDEFFECTOR_INTAKING_ALGAE;
               break;  
             case ENDEFFECTOR_HOLDING_ALGAE:
-              if(!endEffectorRollers.isAlgaeDetected()){
+              if(!endEffectorRollers.isAlgaeIntaked()){
                 wantedSuperState= WantedSuperState.STOPPED;
                 currentSuperState = CurrentSuperState.STOPPED;
               } else{
@@ -105,7 +105,7 @@ public class Rollers {
               }
               break;
             case ENDEFFECTOR_SCORING_ALGAE:
-              if(!endEffectorRollers.isAlgaeDetected()){
+              if(!endEffectorRollers.isAlgaeIntaked()){
                 wantedSuperState = WantedSuperState.STOPPED;
                 currentSuperState = CurrentSuperState.STOPPED;
               } else{
