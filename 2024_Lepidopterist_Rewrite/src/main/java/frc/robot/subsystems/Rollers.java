@@ -105,7 +105,7 @@ public class Rollers {
               }
               break;
             case ENDEFFECTOR_SCORING_ALGAE:
-              if(!endEffectorRollers.isAlgaeIntaked()){
+              if(!endEffectorRollers.isAlgaeScored()){
                 wantedSuperState = WantedSuperState.STOPPED;
                 currentSuperState = CurrentSuperState.STOPPED;
               } else{
