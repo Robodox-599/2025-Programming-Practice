@@ -93,10 +93,10 @@ public class EndeffectorRollers extends SubsystemBase {
         setVelocity(-0.8);
         break;
       case HOLD_ALGAE:
-        holdAlgae(-0.2);
+        holdAlgae();
         break;
       case INTAKING_ALGAE:
-        setVelocity(-0.3);
+        setVelocity(0.3);
         break;
       default:
         setVelocity(0);
@@ -112,8 +112,8 @@ public class EndeffectorRollers extends SubsystemBase {
     io.stop();
   }
 
-  public void holdAlgae(double dutyCycle){
-    io.holdAlgae(dutyCycle);
+  public void holdAlgae(){
+    io.holdAlgae();
   }
 
   public void setWantedState(WantedState wantedState){
@@ -124,8 +124,12 @@ public class EndeffectorRollers extends SubsystemBase {
     return io.isCoralDetected;
   }
 
-  public boolean isAlgaeDetected(){
-    return io.isAlgaeDetected;
+  public boolean isAlgaeIntaked(){
+    return io.isAlgaeIntaked;
+  }
+
+  public boolean isAlgaeScored(){
+    return io.isAlgaeScored;
   }
 
   public void setPosition(double position){

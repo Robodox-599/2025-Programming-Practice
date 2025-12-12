@@ -14,7 +14,8 @@ public abstract class EndeffectorRollersIO {
   protected double tempCelsius = 0.0;
 
   protected boolean isCoralDetected = false;
-  protected boolean isAlgaeDetected = false;
+  protected boolean isAlgaeIntaked = false;
+  protected boolean isAlgaeScored = false;
   protected double heldCurrentPosition = 0.0;
 
   public void updateInputs() {}
@@ -27,7 +28,7 @@ public abstract class EndeffectorRollersIO {
     return heldCurrentPosition;
   }
 
-  public void holdAlgae(double dutyCycle){}
+  public void holdAlgae(){}
 
   public void stop() {}
 }

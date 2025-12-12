@@ -64,7 +64,7 @@ public class Rollers extends SubsystemBase {
         }
         break;
       case ENDEFFECTOR_INTAKE_ALGAE:
-        if(endeffectorRollers.isAlgaeDetected()){
+        if(endeffectorRollers.isAlgaeIntaked()){
           wantedState = WantedState.ENDEFFECTOR_HOLD_ALGAE;
           currentState = CurrentState.ENDEFFECTOR_HOLD_ALGAE;
         } else{
@@ -81,7 +81,7 @@ public class Rollers extends SubsystemBase {
         }
         break;
       case ENDEFFECTOR_HOLD_ALGAE:
-        if(!endeffectorRollers.isAlgaeDetected()){
+        if(!endeffectorRollers.isAlgaeIntaked()){
           wantedState = WantedState.STOPPED;
           currentState = CurrentState.STOPPED;
         } else{
@@ -98,7 +98,7 @@ public class Rollers extends SubsystemBase {
         }
         break;
       case ENDEFFECTOR_SCORE_ALGAE:
-        if(!endeffectorRollers.isAlgaeDetected()){
+        if(!endeffectorRollers.isAlgaeIntaked()){
           wantedState = WantedState.STOPPED;
           currentState = CurrentState.STOPPED;
         } else{

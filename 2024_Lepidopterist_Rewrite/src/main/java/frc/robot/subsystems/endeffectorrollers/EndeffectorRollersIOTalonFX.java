@@ -26,7 +26,8 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
   private final TalonFX endeffectorRollersMotor;
     TalonFXConfiguration endeffectorRollersConfig;
     private DigitalInput endeffectorRollersBeamBreak;
-    private final Debouncer algaeDebounce;
+    private final Debouncer algaeDebounceRising;
+    private final Debouncer algaeDebounceFalling;
 
     private final StatusSignal<AngularVelocity> endeffectorRollersVelocityRad;
     private final StatusSignal<Temperature> endeffectorRollersTemperature;
@@ -46,7 +47,9 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         endeffectorRollersConfig.Slot0.kP = EndeffectorRollersConstants.kS;
         endeffectorRollersConfig.Slot0.kP = EndeffectorRollersConstants.kV;
         endeffectorRollersConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-        algaeDebounce = new Debouncer(0.2, Debouncer.DebounceType.kRising);
+
+        algaeDebounceRising = new Debouncer(0.2, Debouncer.DebounceType.kRising);
+        algaeDebounceFalling = new Debouncer(0.2, Debouncer.DebounceType.kFalling);
 
         endeffectorRollersConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         endeffectorRollersConfig.CurrentLimits.SupplyCurrentLimit = EndeffectorRollersConstants.supplyCurrentLimit;
@@ -81,7 +84,9 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         super.tempCelsius = endeffectorRollersTemperature.getValueAsDouble();
 
         super.isCoralDetected = !endeffectorRollersBeamBreak.get();
-        super.isAlgaeDetected = algaeDebounce.calculate(super.statorCurrent > 50);
+        
+        super.isAlgaeIntaked = algaeDebounceRising.calculate(super.statorCurrent > 50);
+        super.isAlgaeScored = algaeDebounceFalling.calculate(!(super.statorCurrent > 50));
 
         DogLog.log("EndeffectorRollers/Velocity", super.velocity);
         DogLog.log("EndeffectorRollers/Position", super.position);
@@ -91,7 +96,8 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         DogLog.log("EndeffectorRollers/AppliedVolts", super.appliedVolts);
         DogLog.log("EndeffectorRollers/Temperature", super.tempCelsius);
         DogLog.log("EndeffectorRollers/isCoralDetected", super.isCoralDetected);
-        DogLog.log("EndeffectorRollers/isAlgaeDetected", super.isAlgaeDetected);
+        DogLog.log("EndeffectorRollers/isAlgaeIntaked", super.isAlgaeIntaked);
+        DogLog.log("EndeffectorRollers/isAlgaeScored", super.isAlgaeScored);
     }
 
     @Override
@@ -105,8 +111,8 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
     }
 
     @Override
-    public void holdAlgae(double dutyCycle){
-        endeffectorRollersMotor.setControl(new DutyCycleOut(dutyCycle));
+    public void holdAlgae(){
+        endeffectorRollersMotor.setControl(new DutyCycleOut(-0.1));
     }
 
     @Override
