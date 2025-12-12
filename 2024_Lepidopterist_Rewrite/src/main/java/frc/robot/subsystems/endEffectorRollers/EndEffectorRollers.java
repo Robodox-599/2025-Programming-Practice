@@ -93,7 +93,7 @@ public class EndEffectorRollers extends EndEffectorRollersIO{
             holdAlgae();
             break;
           case SCORING_ALGAE:
-            setVelocity(0.15);
+            setVelocity(0.5);
             break;
           case STOPPED:
             stop();

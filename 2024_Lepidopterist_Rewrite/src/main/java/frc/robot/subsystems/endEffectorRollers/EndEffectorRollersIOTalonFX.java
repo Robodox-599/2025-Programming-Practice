@@ -113,6 +113,6 @@ public class EndEffectorRollersIOTalonFX extends EndEffectorRollersIO {
     }
     @Override
     public void holdAlgae(){
-        endEffectorRollersMotor.setControl(new DutyCycleOut(0.2));
+        endEffectorRollersMotor.setControl(new DutyCycleOut(-.1));
     }
 }
