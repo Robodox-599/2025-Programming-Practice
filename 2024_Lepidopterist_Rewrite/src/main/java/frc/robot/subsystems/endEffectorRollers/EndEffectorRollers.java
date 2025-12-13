@@ -1,7 +1,6 @@
 package frc.robot.subsystems.endEffectorRollers;
 
 import dev.doglog.DogLog;
-import frc.robot.subsystems.Rollers;
 
 public class EndEffectorRollers extends EndEffectorRollersIO{
     private final EndEffectorRollersIO io;

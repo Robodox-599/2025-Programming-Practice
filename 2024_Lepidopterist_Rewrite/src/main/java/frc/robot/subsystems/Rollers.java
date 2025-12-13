@@ -4,7 +4,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollers;
-import frc.robot.subsystems.endEffectorRollers.EndEffectorRollersIO;
 import frc.robot.subsystems.rampRollers.RampRollers;
 
 /** Add your docs here. */
