@@ -36,10 +36,10 @@ public class EndefectorRollersIOTalonFX extends EndefectorRollersIO {
         endefectorBeamBreak = new DigitalInput(EndefectorRollersConstants.endefectorBeamBreakPort);
         
         endefectorRollersConfig.Slot0.kP = EndefectorRollersConstants.kP;
-        endefectorRollersConfig.Slot0.kP = EndefectorRollersConstants.kI;
-        endefectorRollersConfig.Slot0.kP = EndefectorRollersConstants.kD;
-        endefectorRollersConfig.Slot0.kP = EndefectorRollersConstants.kS;
-        endefectorRollersConfig.Slot0.kP = EndefectorRollersConstants.kV;
+        endefectorRollersConfig.Slot0.kI = EndefectorRollersConstants.kI;
+        endefectorRollersConfig.Slot0.kD = EndefectorRollersConstants.kD;
+        endefectorRollersConfig.Slot0.kS = EndefectorRollersConstants.kS;
+        endefectorRollersConfig.Slot0.kV = EndefectorRollersConstants.kV;
 
         endefectorRollersConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         endefectorRollersConfig.CurrentLimits.SupplyCurrentLimit = EndefectorRollersConstants.supplyCurrentLimit;
@@ -96,7 +96,7 @@ public class EndefectorRollersIOTalonFX extends EndefectorRollersIO {
     }
 
     @Override
-    public double holdPosition() {
+    public double setHoldPosition() {
         if(isCoralInEndefector && super.holdPosition > 0) {
             super.holdPosition = super.position;
             return super.holdPosition;

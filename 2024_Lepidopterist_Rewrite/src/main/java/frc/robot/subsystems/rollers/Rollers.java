@@ -7,8 +7,7 @@ public class Rollers {
  private final EndefectorRollers endefectorRollers;
  private final RampRollers rampRollers;
  private wantedSuperState wantedState = wantedSuperState.STOPPED;
- private currentSuperState currentState = currentSuperState.STOPPED;
- 
+ private currentSuperState currentState = currentSuperState.STOPPED; 
 
     public enum wantedSuperState {
         STOPPED,
@@ -62,6 +61,7 @@ public class Rollers {
         break;
         case ROLLERS_INTAKING:
         if(!rampRollers.isCoralDetected() && endefectorRollers.isCoralInEndefector()){
+
             wantedState = wantedSuperState.ENDEFECTOR_HOLD_CORAL;
             currentState = currentSuperState.ENDEFECTOR_HOLD_CORAL;
            } else {
@@ -131,7 +131,6 @@ public class Rollers {
             break;
             case ENDEFECTOR_HOLD_CORAL:
             endefectorRollers.setWantedState(EndefectorRollers.WantedState.HOLD_CORAL);
-            rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
             break;
             case ENDEFECTOR_SCORE_CORAL:
             endefectorRollers.setWantedState(EndefectorRollers.WantedState.SCORE_CORAL);
