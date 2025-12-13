@@ -5,4 +5,15 @@
 package frc.robot.subsystems.wristRollers;
 
 //interface
-public class WristRollersIO {}
+public class WristRollersIO {
+    protected double positionRad = 0.0;
+    protected double velocityRadPerSec = 0.0;
+
+    public void updateInputs(){}
+
+    public void setPosition(double Position){}
+    public void setVelocity(double velocity){}
+
+    public void stop(){}
+
+}
