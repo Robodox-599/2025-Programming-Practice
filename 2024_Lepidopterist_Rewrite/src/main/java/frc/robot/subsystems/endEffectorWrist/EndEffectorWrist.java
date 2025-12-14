@@ -2,7 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.wristRollers;
+package frc.robot.subsystems.endEffectorWrist;
 
-/** Add your docs here. */
-public class WristRollersIOSim {}
+//the state machine
+public class EndEffectorWrist {
+}
