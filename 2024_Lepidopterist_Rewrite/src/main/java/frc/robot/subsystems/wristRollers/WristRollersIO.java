@@ -11,9 +11,9 @@ public class WristRollersIO {
 
     public void updateInputs(){}
 
-    public void setPosition(double Position){}
-    public void setVelocity(double velocity){}
-
     public void stop(){}
+
+    public void setPosition(double position){}
+    public void setVelocity(double velocity){}
 
 }

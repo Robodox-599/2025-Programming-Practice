@@ -8,14 +8,14 @@ package frc.robot.subsystems.wristRollers;
 public class WristRollersConstants {
     public static final int wristRollersMotorID = 0;
     public static final int wristRollersCancoderID = 0;
-    public static final String wristRollersCANbus = "rio";
+    public static final String wristRollersCANBus = "rio";
 
     //PID & feedforward
-    public static final double kS = 0; //output needed to overcome static friction
-    public static final double kG = 0; //output needed to overcome gravity
     public static final double kP = 0; //output per unit error in position
     public static final double kI = 0; //outpout per unit of integrated error in position
     public static final double kD = 0; //output per unit of error in vleocity
+    public static final double kS = 0; //output needed to overcome static friction
+    public static final double kG = 0; //output needed to overcome gravity
 
     //magic motion
     public static final double wristRollersMaxVelocity = 0;
