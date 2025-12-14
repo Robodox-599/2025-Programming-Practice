@@ -84,7 +84,7 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         super.tempCelsius = endeffectorRollersTemperature.getValueAsDouble();
 
         super.isCoralDetected = !endeffectorRollersBeamBreak.get();
-        
+
         super.isAlgaeIntaked = algaeDebounceRising.calculate(super.statorCurrent > 50);
         super.isAlgaeScored = algaeDebounceFalling.calculate(!(super.statorCurrent > 50));
 

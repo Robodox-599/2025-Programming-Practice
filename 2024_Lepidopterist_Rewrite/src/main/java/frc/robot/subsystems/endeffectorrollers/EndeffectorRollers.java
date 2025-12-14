@@ -95,7 +95,7 @@ public class EndeffectorRollers extends SubsystemBase {
       case HOLD_ALGAE:
         holdAlgae();
         break;
-      case INTAKING_ALGAE:
+      case INTAKING_ALGAE: // work on ts lil bro
         setVelocity(0.1);
         break;
       default:

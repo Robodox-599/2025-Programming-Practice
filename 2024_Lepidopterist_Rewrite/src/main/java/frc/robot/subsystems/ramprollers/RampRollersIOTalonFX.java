@@ -37,10 +37,10 @@ public class RampRollersIOTalonFX extends RampRollersIO {
         rampBeamBreak = new DigitalInput(RampRollersConstants.beamBreakPort);
         
         rampRollersConfig.Slot0.kP = RampRollersConstants.kP;
-        rampRollersConfig.Slot0.kP = RampRollersConstants.kI;
-        rampRollersConfig.Slot0.kP = RampRollersConstants.kD;
-        rampRollersConfig.Slot0.kP = RampRollersConstants.kS;
-        rampRollersConfig.Slot0.kP = RampRollersConstants.kV;
+        rampRollersConfig.Slot0.kI = RampRollersConstants.kI;
+        rampRollersConfig.Slot0.kD = RampRollersConstants.kD;
+        rampRollersConfig.Slot0.kS = RampRollersConstants.kS;
+        rampRollersConfig.Slot0.kV = RampRollersConstants.kV;
         rampRollersConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
         rampRollersConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
