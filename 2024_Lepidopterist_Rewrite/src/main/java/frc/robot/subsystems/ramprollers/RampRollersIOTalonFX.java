@@ -90,14 +90,14 @@ public class RampRollersIOTalonFX extends RampRollersIO {
 
         super.isCoralDetected = !rampBeamBreak.get();
 
-        DogLog.log("RampRollers/Velocity", super.velocity);
-        DogLog.log("RampRollers/Position", super.position);
-        DogLog.log("RampRollers/SupplyCurrent", super.supplyCurrent);
-        DogLog.log("RampRollers/StatorCurrent", super.statorCurrent);
+        DogLog.log("Ramp/Rollers/Velocity", super.velocity);
+        DogLog.log("Ramp/Rollers/Position", super.position);
+        DogLog.log("Ramp/Rollers/SupplyCurrent", super.supplyCurrent);
+        DogLog.log("Ramp/Rollers/StatorCurrent", super.statorCurrent);
 
-        DogLog.log("RampRollers/AppliedVolts", super.appliedVolts);
-        DogLog.log("RampRollers/Temperature", super.tempCelsius);
-        DogLog.log("RampRollers/isCoralDetected", super.isCoralDetected);
+        DogLog.log("Ramp/Rollers/AppliedVolts", super.appliedVolts);
+        DogLog.log("Ramp/Rollers/Temperature", super.tempCelsius);
+        DogLog.log("Ramp/Rollers/isCoralDetected", super.isCoralDetected);
     }
 
     @Override

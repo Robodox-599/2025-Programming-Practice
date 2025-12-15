@@ -43,20 +43,20 @@ public class EndeffectorWristIOTalonFX extends EndeffectorWristIO {
   private final StatusSignal<Angle> endeffectorWristAbsolutePosition;
 
   private final MotionMagicVoltage m_request;
-  private final CANcoder cancoder;
+  private final CANcoder CANcoder;
 
   public EndeffectorWristIOTalonFX() {
     endeffectorWristMotor = new TalonFX(endefectorWristMotorID, endefectorWristCANBus);
     endEffectorWristConfig = new TalonFXConfiguration();
 
-    cancoder = new CANcoder(cancoderID, endefectorWristCANBus);
+    CANcoder = new CANcoder(cancoderID, endefectorWristCANBus);
     m_request = new MotionMagicVoltage(null);
 
-    CANcoderConfiguration cancoderConfig = new CANcoderConfiguration();
-    cancoderConfig.MagnetSensor.MagnetOffset = cancoderMagnetOffset;
-    cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-    cancoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = discontinuityPoint;
-    cancoder.getConfigurator().apply(cancoderConfig);
+    CANcoderConfiguration CANcoderConfig = new CANcoderConfiguration();
+    CANcoderConfig.MagnetSensor.MagnetOffset = cancoderMagnetOffset;
+    CANcoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+    CANcoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = discontinuityPoint;
+    CANcoder.getConfigurator().apply(CANcoderConfig);
 
     endEffectorWristConfig.Slot0.kP = kP;
     endEffectorWristConfig.Slot0.kI = kI;
@@ -80,10 +80,10 @@ public class EndeffectorWristIOTalonFX extends EndeffectorWristIO {
     endeffectorWristTemperature = endeffectorWristMotor.getDeviceTemp();
     endeffectorWristStatorCurrent = endeffectorWristMotor.getStatorCurrent();
     endeffectorSupplyCurrent = endeffectorWristMotor.getStatorCurrent();
-    endeffectorWristAbsolutePosition = cancoder.getAbsolutePosition();
+    endeffectorWristAbsolutePosition = CANcoder.getAbsolutePosition();
 
     endeffectorWristMotor.optimizeBusUtilization();
-    cancoder.optimizeBusUtilization();
+    CANcoder.optimizeBusUtilization();
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, endeffectorWristAppliedVolts, endeffectorWristVelocity, endeffectorWristTemperature, 
           endeffectorWristPosition, endeffectorWristStatorCurrent, endeffectorSupplyCurrent, endeffectorWristAbsolutePosition);

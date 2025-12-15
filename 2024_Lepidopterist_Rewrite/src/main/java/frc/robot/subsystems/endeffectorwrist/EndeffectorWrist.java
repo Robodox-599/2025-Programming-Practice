@@ -38,12 +38,34 @@ public class EndeffectorWrist extends SubsystemBase {
     handleStateTransitions();
     applyStates();
 
-    DogLog.log("EndeffectorWrist/CurrentState", currentState);
-    DogLog.log("EndeffectorWrist/WantedState", wantedState);
+    DogLog.log("Endeffector/Wrist/CurrentState", currentState);
+    DogLog.log("Endeffector/Wrist/WantedState", wantedState);
   }
 
   private void handleStateTransitions() {
-
+    switch (wantedState) {
+        case INTAKING_ALGAE_REEF:
+            currentState = CurrentState.INTAKING_ALGAE_REEF;
+            break;
+        case INTAKING_ALGAE_GROUND:
+            currentState = CurrentState.INTAKING_ALGAE_GROUND;
+            break;
+        case SCORING_CORAL:
+            currentState = CurrentState.SCORING_CORAL;
+            break;
+        case SCORING_ALGAE_BARGE:
+            currentState = CurrentState.SCORING_ALGAE_BARGE;
+            break;
+        case SCORING_ALGAE_PROCESSOR:
+            currentState = CurrentState.SCORING_ALGAE_PROCESSOR;
+            break;
+        case STOW:
+            currentState = CurrentState.STOW;
+            break;
+        default:
+            currentState = CurrentState.STOW;
+            break;
+    }
   }
 
   private void applyStates() { // I'll figure out the exact angles later
@@ -61,6 +83,9 @@ public class EndeffectorWrist extends SubsystemBase {
             setPosition(0);
             break;
         case SCORING_ALGAE_PROCESSOR:
+            setPosition(0);
+            break;
+        case STOW:
             setPosition(0);
             break;
         default:

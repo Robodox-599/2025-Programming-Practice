@@ -88,16 +88,16 @@ public class EndeffectorRollersIOTalonFX extends EndeffectorRollersIO {
         super.isAlgaeIntaked = algaeDebounceRising.calculate(super.statorCurrent > 50);
         super.isAlgaeScored = algaeDebounceFalling.calculate(!(super.statorCurrent > 50));
 
-        DogLog.log("EndeffectorRollers/Velocity", super.velocity);
-        DogLog.log("EndeffectorRollers/Position", super.position);
-        DogLog.log("EndeffectorRollers/SupplyCurrent", super.supplyCurrent);
-        DogLog.log("EndeffectorRollers/StatorCurrent", super.statorCurrent);
+        DogLog.log("Endeffector/Rollers/Velocity", super.velocity);
+        DogLog.log("Endeffector/Rollers/Position", super.position);
+        DogLog.log("Endeffector/Rollers/SupplyCurrent", super.supplyCurrent);
+        DogLog.log("Endeffector/Rollers/StatorCurrent", super.statorCurrent);
 
-        DogLog.log("EndeffectorRollers/AppliedVolts", super.appliedVolts);
-        DogLog.log("EndeffectorRollers/Temperature", super.tempCelsius);
-        DogLog.log("EndeffectorRollers/isCoralDetected", super.isCoralDetected);
-        DogLog.log("EndeffectorRollers/isAlgaeIntaked", super.isAlgaeIntaked);
-        DogLog.log("EndeffectorRollers/isAlgaeScored", super.isAlgaeScored);
+        DogLog.log("Endeffector/Rollers/AppliedVolts", super.appliedVolts);
+        DogLog.log("Endeffector/Rollers/Temperature", super.tempCelsius);
+        DogLog.log("Endeffector/Rollers/isCoralDetected", super.isCoralDetected);
+        DogLog.log("Endeffector/Rollers/isAlgaeIntaked", super.isAlgaeIntaked);
+        DogLog.log("Endeffector/Rollers/isAlgaeScored", super.isAlgaeScored);
     }
 
     @Override

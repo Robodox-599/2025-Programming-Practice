@@ -48,8 +48,8 @@ public class Rollers extends SubsystemBase {
     handleStateTransitions();
     applyStates();
 
-    DogLog.log("Rollers/wantedState", wantedState);
-    DogLog.log("Rollers/currentState", currentState);
+    DogLog.log("RollersStatemachine/wantedState", wantedState);
+    DogLog.log("RollersStatemachine/currentState", currentState);
   }
 
   public void handleStateTransitions(){
