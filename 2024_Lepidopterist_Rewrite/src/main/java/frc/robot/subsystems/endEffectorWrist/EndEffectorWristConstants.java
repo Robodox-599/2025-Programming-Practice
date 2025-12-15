@@ -28,8 +28,8 @@ public class EndEffectorWristConstants {
     public static final double kV = 0.124 * endEffectorWristGearRatio;
 
     //magic motion
-    public static final double endEffectorWristMaxVelocity = 2.5;
-    public static final double endEffectorWristMaxAcceleration = 5;
+    public static final double endEffectorWristMaxVelocity = ((12 - kG - kS) / kV);
+    public static final double endEffectorWristMaxAcceleration = endEffectorWristMaxVelocity / 0.5;
 
 
 }
