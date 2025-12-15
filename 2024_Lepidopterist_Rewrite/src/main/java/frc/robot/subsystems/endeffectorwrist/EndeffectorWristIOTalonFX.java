@@ -89,7 +89,6 @@ public class EndeffectorWristIOTalonFX extends EndeffectorWristIO {
           endeffectorWristPosition, endeffectorWristStatorCurrent, endeffectorSupplyCurrent, endeffectorWristAbsolutePosition);
   } 
 
-
   public void updateInputs() {
     BaseStatusSignal.refreshAll(
         endeffectorWristAppliedVolts, endeffectorWristVelocity, endeffectorWristTemperature, 

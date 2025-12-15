@@ -20,22 +20,18 @@ public class EndeffectorWrist extends SubsystemBase {
     STOW,
     INTAKING_ALGAE_REEF,
     INTAKING_ALGAE_GROUND,
-    SCORING_CORAL_L1,
-    SCORING_CORAL_L2,
-    SCORING_CORAL_L3,
-    SCORING_CORAL_L4,
-    SCORING_ALGAE,
+    SCORING_CORAL,
+    SCORING_ALGAE_BARGE,
+    SCORING_ALGAE_PROCESSOR,
   }
 
   public enum CurrentState {
     STOW,
     INTAKING_ALGAE_REEF,
     INTAKING_ALGAE_GROUND,
-    SCORING_CORAL_L1,
-    SCORING_CORAL_L2,
-    SCORING_CORAL_L3,
-    SCORING_CORAL_L4,
-    SCORING_ALGAE,
+    SCORING_CORAL,
+    SCORING_ALGAE_BARGE,
+    SCORING_ALGAE_PROCESSOR,
   }
 
   public void updateInputs() {
@@ -58,19 +54,13 @@ public class EndeffectorWrist extends SubsystemBase {
         case INTAKING_ALGAE_GROUND:
             setPosition(0);
             break;
-        case SCORING_CORAL_L1:
+        case SCORING_CORAL:
             setPosition(0);
             break;
-        case SCORING_CORAL_L2:
+        case SCORING_ALGAE_BARGE:
             setPosition(0);
             break;
-        case SCORING_CORAL_L3:
-            setPosition(0);
-            break;
-        case SCORING_CORAL_L4:
-            setPosition(0);
-            break;
-        case SCORING_ALGAE:
+        case SCORING_ALGAE_PROCESSOR:
             setPosition(0);
             break;
         default:
