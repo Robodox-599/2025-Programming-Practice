@@ -50,7 +50,7 @@ public class EndeffectorWristIOTalonFX extends EndeffectorWristIO {
     endEffectorWristConfig = new TalonFXConfiguration();
 
     CANcoder = new CANcoder(cancoderID, endefectorWristCANBus);
-    m_request = new MotionMagicVoltage(null);
+    m_request = new MotionMagicVoltage(0);
 
     CANcoderConfiguration CANcoderConfig = new CANcoderConfiguration();
     CANcoderConfig.MagnetSensor.MagnetOffset = cancoderMagnetOffset;
