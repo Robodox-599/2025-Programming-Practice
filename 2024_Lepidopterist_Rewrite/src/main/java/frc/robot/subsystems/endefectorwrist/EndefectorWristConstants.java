@@ -18,6 +18,6 @@ public class EndefectorWristConstants {
     public static final double discontinuityPoint = 0.4;
     public static final double wristTolerance = 0.02;
 
-    public static final double maxVelocity = 2.5;
-    public static final double maxAcceleration = 5;
+    public static final double maxVelocity = (12-kG-kS)/kV;
+    public static final double maxAcceleration = maxVelocity/0.5;
 }
