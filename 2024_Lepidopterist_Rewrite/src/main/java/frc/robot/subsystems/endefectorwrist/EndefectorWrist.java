@@ -11,6 +11,7 @@ public class EndefectorWrist {
  public enum WantedState {
   STOPPED,
   INTAKING_CORAL,
+  PREPARE_CORAL,
   INTAKING_ALGAE,
   SCORE_CORAL,
   SCORE_ALGAE,
@@ -19,6 +20,7 @@ public class EndefectorWrist {
  public enum CurrentState {
   STOPPED,
   INTAKING_CORAL,
+  PREPARE_CORAL,
   INTAKING_ALGAE,
   SCORE_CORAL,
   SCORE_ALGAE,
@@ -35,6 +37,9 @@ public class EndefectorWrist {
     break;
     case INTAKING_CORAL:
         currentState = CurrentState.INTAKING_CORAL;
+    break;
+    case PREPARE_CORAL:
+    currentState = CurrentState.INTAKING_CORAL;
     break;
     case SCORE_CORAL:
       currentState = CurrentState.SCORE_CORAL;
@@ -58,9 +63,12 @@ public class EndefectorWrist {
       case INTAKING_CORAL:
         setPosition(-0.3);
         break;
-        case SCORE_CORAL:
+      case PREPARE_CORAL:
+        setPosition(-0.21);
+        break;
+      case SCORE_CORAL:
         setPosition(-0.14);
-        break;//prepare = -.21
+        break;
       case INTAKING_ALGAE:
         setPosition(-0.1);
         break;
