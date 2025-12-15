@@ -11,12 +11,15 @@ import frc.robot.subsystems.endefectorrollers.EndefectorRollers;
 import frc.robot.subsystems.endefectorrollers.EndefectorRollersIOTalonFX;
 import frc.robot.subsystems.ramprollers.RampRollers;
 import frc.robot.subsystems.ramprollers.RampRollersIOTalonFX;
+import frc.robot.subsystems.endefectorwrist.EndefectorWrist;
+import frc.robot.subsystems.endefectorwrist.EndefectorWristIOTalonFX;
 import frc.robot.subsystems.rollers.Rollers;
 
 
 public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
   private final EndefectorRollers endefectorRollers;
+  private final EndefectorWrist endefectorWrist;
   private final Rollers rollers;
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -33,6 +36,7 @@ public class Robot extends TimedRobot {
 
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
     endefectorRollers = new EndefectorRollers(new EndefectorRollersIOTalonFX());
+    endefectorWrist = new EndefectorWrist(new EndefectorWristIOTalonFX());
     rollers = new Rollers(endefectorRollers, rampRollers);
     configureBindings();
   }
@@ -40,6 +44,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     rampRollers.updateInputs();
     endefectorRollers.updateInputs();
+    endefectorWrist.updateInputs();
     rollers.updateInputs();
     CommandScheduler.getInstance().run();
     // endefectorRollers.updateInputs();
@@ -100,12 +105,17 @@ public class Robot extends TimedRobot {
     controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.RAMP_INTAKING)));
     //Endefector intakes algae
     controller.y().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_INTAKE_ALGAE)));
+    controller.y().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.STOPPED)));
     //Stops both ramp & endefector rollers
     controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.STOPPED)));
     //Scores coral for endefector
     controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_SCORE_CORAL)));
     //Scores algae for endefector
     controller.leftTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_SCORE_ALGAE)));
+    //moves wrist to intaking coral
+    controller.a().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.INTAKING_CORAL)));
+    //moves wrist to score coral
+    controller.b().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.SCORE_CORAL)));
   }
   
     public Command getAutonomousCommand() {
