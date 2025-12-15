@@ -54,7 +54,7 @@ public class EndefectorWristIOTalonFX extends EndefectorWristIO {
 
         endefectorWristConfig.Feedback.FeedbackRemoteSensorID = cancoder.getDeviceID();
         endefectorWristConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
-        endefectorWristConfig.Feedback.RotorToSensorRatio = 0;
+        endefectorWristConfig.Feedback.RotorToSensorRatio = EndefectorWristConstants.gearRatio;
         endefectorWristConfig.ClosedLoopGeneral.ContinuousWrap = false;
 
         cancoderConfig.MagnetSensor.MagnetOffset = EndefectorWristConstants.cancoderMagnetOffset;
@@ -72,9 +72,11 @@ public class EndefectorWristIOTalonFX extends EndefectorWristIO {
         endefectorWristStatorCurrent = endefectorWristMotor.getStatorCurrent();
         endefectorWristSupplyCurrent = endefectorWristMotor.getSupplyCurrent();
 
-        BaseStatusSignal.setUpdateFrequencyForAll(50,
-        endefectorWristVelocityRad, endefectorWristTemperature, endefectorWristAppliedVolts, endefectorWristPosition,
+        BaseStatusSignal.setUpdateFrequencyForAll(50, endefectorWristVelocityRad, endefectorWristTemperature, endefectorWristAppliedVolts, endefectorWristPosition,
         endefectorWristStatorCurrent, endefectorWristSupplyCurrent);
+        
+        endefectorWristMotor.optimizeBusUtilization();
+        cancoder.optimizeBusUtilization();
     }
     
     @Override
