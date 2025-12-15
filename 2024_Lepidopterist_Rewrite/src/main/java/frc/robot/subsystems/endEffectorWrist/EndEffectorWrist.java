@@ -5,5 +5,25 @@
 package frc.robot.subsystems.endEffectorWrist;
 
 //the state machine
-public class EndEffectorWrist {
+public class EndEffectorWrist extends EndEffectorWristIO {
+    
+    public enum WantedState{
+        PREPARED,
+        HANDING_CORAL,
+        SCORING_CORAL,
+        INTAKING_GROUND_ALGAE,
+        INTAKING_REEF_ALGAE,
+        SCORING_NET_ALGAE,
+        SCORING_PROCESSOR_ALGAE
+    }
+
+    public enum CurrentState{
+        PREPARED,
+        HANDING_CORAL,
+        SCORING_CORAL,
+        INTAKING_GROUND_ALGAE,
+        INTAKING_REEF_ALGAE,
+        SCORING_NET_ALGAE,
+        SCORING_PROCESSOR_ALGAE
+    }
 }
