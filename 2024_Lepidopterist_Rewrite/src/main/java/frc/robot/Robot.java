@@ -12,12 +12,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.rollers.Rollers;
 import frc.robot.subsystems.endeffectorrollers.EndeffectorRollers;
 import frc.robot.subsystems.endeffectorrollers.EndeffectorRollersIOTalonFX;
+import frc.robot.subsystems.endeffectorwrist.EndeffectorWrist;
+import frc.robot.subsystems.endeffectorwrist.EndeffectorWristIOTalonFX;
 import frc.robot.subsystems.ramprollers.RampRollers;
 import frc.robot.subsystems.ramprollers.RampRollersIOTalonFX;
 
 public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
   private final EndeffectorRollers endeffectorRollers;
+  private final EndeffectorWrist endeffectorWrist;
 
   private final Rollers rollers;
 
@@ -28,6 +31,7 @@ public class Robot extends TimedRobot {
   public Robot() {
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
     endeffectorRollers = new EndeffectorRollers(new EndeffectorRollersIOTalonFX());
+    endeffectorWrist = new EndeffectorWrist(new EndeffectorWristIOTalonFX());
     rollers = new Rollers(endeffectorRollers, rampRollers);
 
     configureBindings();
@@ -90,15 +94,21 @@ public class Robot extends TimedRobot {
   public void testExit() {}
 
   private void configureBindings() {
-    controller.y().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
+    // controller.y().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
 
-    controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ROLLERS_INTAKE_CORAL)));
+    // controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ROLLERS_INTAKE_CORAL)));
 
-    controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_INTAKE_ALGAE)));
+    // controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_INTAKE_ALGAE)));
 
-    controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE_CORAL)));
+    // controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE_CORAL)));
 
-    controller.leftTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE_ALGAE)));
+    // controller.leftTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE_ALGAE)));
+
+    controller.b().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.PREPARED)));
+
+    controller.y().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.INTAKING_ALGAE_REEF)));
+
+    controller.a().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.SCORING_CORAL)));
 
     controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)).alongWith(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.STOPPED))));
   }

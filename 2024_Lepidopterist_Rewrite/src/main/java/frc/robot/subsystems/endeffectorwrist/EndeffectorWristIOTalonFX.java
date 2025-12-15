@@ -62,6 +62,7 @@ public class EndeffectorWristIOTalonFX extends EndeffectorWristIO {
     endEffectorWristConfig.Slot0.kI = kI;
     endEffectorWristConfig.Slot0.kD = kD;
     endEffectorWristConfig.Slot0.kS = kS;
+    endEffectorWristConfig.Slot0.kV = kV;
     endEffectorWristConfig.Slot0.kG = kG;
 
     endEffectorWristConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;

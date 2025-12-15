@@ -9,28 +9,32 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class EndeffectorWrist extends SubsystemBase {
    private final EndeffectorWristIO io;
-  private WantedState wantedState = WantedState.STOW;
-  private CurrentState currentState = CurrentState.STOW;
+  private WantedState wantedState = WantedState.STOPPED;
+  private CurrentState currentState = CurrentState.STOPPED;
 
   public EndeffectorWrist(EndeffectorWristIO io) {
     this.io = io;
   }
 
   public enum WantedState {
-    STOW,
+    STOPPED,
+    PREPARED,
     INTAKING_ALGAE_REEF,
     INTAKING_ALGAE_GROUND,
     SCORING_CORAL,
     SCORING_ALGAE_BARGE,
+    INTAKING_CORAL,
     SCORING_ALGAE_PROCESSOR,
   }
 
   public enum CurrentState {
-    STOW,
+    STOPPED,
+    PREPARED,
     INTAKING_ALGAE_REEF,
     INTAKING_ALGAE_GROUND,
     SCORING_CORAL,
     SCORING_ALGAE_BARGE,
+    INTAKING_CORAL,
     SCORING_ALGAE_PROCESSOR,
   }
 
@@ -59,11 +63,14 @@ public class EndeffectorWrist extends SubsystemBase {
         case SCORING_ALGAE_PROCESSOR:
             currentState = CurrentState.SCORING_ALGAE_PROCESSOR;
             break;
-        case STOW:
-            currentState = CurrentState.STOW;
+        case PREPARED:
+            currentState = CurrentState.PREPARED;
+            break;
+        case STOPPED:
+            currentState = CurrentState.STOPPED;
             break;
         default:
-            currentState = CurrentState.STOW;
+            currentState = CurrentState.PREPARED;
             break;
     }
   }
@@ -71,22 +78,28 @@ public class EndeffectorWrist extends SubsystemBase {
   private void applyStates() { // I'll figure out the exact angles later
     switch (currentState) {
         case INTAKING_ALGAE_REEF:
-            setPosition(0);
+            setPosition(-0.1);
             break;
         case INTAKING_ALGAE_GROUND:
-            setPosition(0);
+            setPosition(-0.1);
             break;
         case SCORING_CORAL:
-            setPosition(0);
+            setPosition(-0.14);
+            break;
+        case INTAKING_CORAL:
+            setPosition(-0.3);
             break;
         case SCORING_ALGAE_BARGE:
-            setPosition(0);
+            setPosition(-0.21);
             break;
         case SCORING_ALGAE_PROCESSOR:
-            setPosition(0);
+            setPosition(-0.21);
             break;
-        case STOW:
-            setPosition(0);
+        case PREPARED:
+            setPosition(-0.21);
+            break;
+        case STOPPED:
+            stop();
             break;
         default:
             stop();
