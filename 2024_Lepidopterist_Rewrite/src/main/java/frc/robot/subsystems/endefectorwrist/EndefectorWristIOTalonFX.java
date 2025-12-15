@@ -44,6 +44,7 @@ public class EndefectorWristIOTalonFX extends EndefectorWristIO {
         endefectorWristConfig.Slot0.kI = EndefectorWristConstants.kI;
         endefectorWristConfig.Slot0.kD = EndefectorWristConstants.kD;
         endefectorWristConfig.Slot0.kS = EndefectorWristConstants.kS;
+        endefectorWristConfig.Slot0.kV = EndefectorWristConstants.kV;
         endefectorWristConfig.Slot0.kG = EndefectorWristConstants.kG;
         
         endefectorWristConfig.Slot0.GravityType = GravityTypeValue.Arm_Cosine;

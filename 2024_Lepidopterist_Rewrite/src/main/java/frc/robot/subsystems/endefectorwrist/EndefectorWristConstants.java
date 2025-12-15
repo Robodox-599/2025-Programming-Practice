@@ -9,6 +9,7 @@ public class EndefectorWristConstants {
     public static final double kP = 45;
     public static final double kI = 0;
     public static final double kD = 6;
+    public static final double kV = 0.124 * gearRatio;
     public static final double kS = 0.085;
     public static final double kG = 0.415;
 
