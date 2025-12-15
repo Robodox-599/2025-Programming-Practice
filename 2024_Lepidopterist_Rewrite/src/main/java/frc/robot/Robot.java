@@ -101,8 +101,8 @@ public class Robot extends TimedRobot {
   private void configureBindings() {
     //Both ramp & endefector rollers intake coral
     controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ROLLERS_INTAKING)));
-    //Only ramp rollers intake coral
-    controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.RAMP_INTAKING)));
+    // //Only ramp rollers intake coral
+    // controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.RAMP_INTAKING)));
     //Endefector intakes algae
     controller.y().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_INTAKE_ALGAE)));
     controller.y().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.STOPPED)));
@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
     //moves wrist to intaking coral
     controller.a().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.INTAKING_CORAL)));
     //moves wrist to score coral
-    controller.b().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.SCORE_CORAL)));
+    controller.b().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.PREPARE_CORAL)));
   }
   
     public Command getAutonomousCommand() {
