@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.rollers.Rollers;
+import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.endeffectorrollers.EndeffectorRollers;
 import frc.robot.subsystems.endeffectorrollers.EndeffectorRollersIOTalonFX;
 import frc.robot.subsystems.endeffectorwrist.EndeffectorWrist;
@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
   private final EndeffectorRollers endeffectorRollers;
   private final EndeffectorWrist endeffectorWrist;
 
-  private final Rollers rollers;
+  private final SuperStructure superStructure;
 
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
     endeffectorRollers = new EndeffectorRollers(new EndeffectorRollersIOTalonFX());
     endeffectorWrist = new EndeffectorWrist(new EndeffectorWristIOTalonFX());
-    rollers = new Rollers(endeffectorRollers, rampRollers);
+    superStructure = new SuperStructure(endeffectorRollers, rampRollers);
 
     configureBindings();
   }
@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     rampRollers.updateInputs();
     endeffectorRollers.updateInputs();
-    rollers.updateInputs();
+    superStructure.updateInputs();
     CommandScheduler.getInstance().run();
   }
 
@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
 
     controller.a().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.SCORING_CORAL)));
 
-    controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)).alongWith(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.STOPPED))));
+    controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)).alongWith(Commands.runOnce(() -> superStructure.setWantedState(SuperStructure.WantedState.STOPPED))));
   }
 
 

@@ -85,6 +85,7 @@ public class EndeffectorWristIOTalonFX extends EndeffectorWristIO {
 
     endeffectorWristMotor.optimizeBusUtilization();
     CANcoder.optimizeBusUtilization();
+    
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, endeffectorWristAppliedVolts, endeffectorWristVelocity, endeffectorWristTemperature, 
           endeffectorWristPosition, endeffectorWristStatorCurrent, endeffectorSupplyCurrent, endeffectorWristAbsolutePosition);

@@ -2,14 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.rollers;
+package frc.robot.subsystems;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.endeffectorrollers.EndeffectorRollers;
 import frc.robot.subsystems.ramprollers.RampRollers;
 
-public class Rollers extends SubsystemBase {
+public class SuperStructure extends SubsystemBase {
   
   private final RampRollers rampRollers;
   private final EndeffectorRollers endeffectorRollers;
@@ -37,7 +37,7 @@ public class Rollers extends SubsystemBase {
     STOPPED,
   }
 
-  public Rollers(EndeffectorRollers endefRollers, RampRollers rampRollers) {
+  public SuperStructure(EndeffectorRollers endefRollers, RampRollers rampRollers) {
     this.rampRollers = rampRollers;
     this.endeffectorRollers = endefRollers;
   }
