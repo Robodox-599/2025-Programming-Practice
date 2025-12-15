@@ -42,12 +42,11 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void robotPeriodic() {
+    endefectorWrist.updateInputs();
     rampRollers.updateInputs();
     endefectorRollers.updateInputs();
-    endefectorWrist.updateInputs();
     rollers.updateInputs();
     CommandScheduler.getInstance().run();
-    // endefectorRollers.updateInputs();
   }
 
   @Override
@@ -116,6 +115,9 @@ public class Robot extends TimedRobot {
     controller.a().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.INTAKING_CORAL)));
     //moves wrist to score coral
     controller.b().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.PREPARE_CORAL)));
+    //score coral wrist
+    controller.leftBumper().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.SCORE_CORAL)));
+
   }
   
     public Command getAutonomousCommand() {

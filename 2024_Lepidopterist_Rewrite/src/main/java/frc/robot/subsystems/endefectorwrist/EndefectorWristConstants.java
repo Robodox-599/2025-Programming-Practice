@@ -17,4 +17,7 @@ public class EndefectorWristConstants {
     public static final double cancoderMagnetOffset = -0.13720703125;
     public static final double discontinuityPoint = 0.4;
     public static final double wristTolerance = 0.02;
+
+    public static final double maxVelocity = 2.5;
+    public static final double maxAcceleration = 5;
 }

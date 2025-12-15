@@ -11,7 +11,6 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
-
 import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -57,6 +56,9 @@ public class EndefectorWristIOTalonFX extends EndefectorWristIO {
         endefectorWristConfig.Feedback.RotorToSensorRatio = EndefectorWristConstants.gearRatio;
         endefectorWristConfig.ClosedLoopGeneral.ContinuousWrap = false;
 
+        endefectorWristConfig.MotionMagic.MotionMagicCruiseVelocity = EndefectorWristConstants.maxVelocity;
+        endefectorWristConfig.MotionMagic.MotionMagicAcceleration = EndefectorWristConstants.maxAcceleration;
+
         cancoderConfig.MagnetSensor.MagnetOffset = EndefectorWristConstants.cancoderMagnetOffset;
         cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
         cancoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = EndefectorWristConstants.discontinuityPoint; 
@@ -72,9 +74,10 @@ public class EndefectorWristIOTalonFX extends EndefectorWristIO {
         endefectorWristStatorCurrent = endefectorWristMotor.getStatorCurrent();
         endefectorWristSupplyCurrent = endefectorWristMotor.getSupplyCurrent();
 
-        BaseStatusSignal.setUpdateFrequencyForAll(50, endefectorWristVelocityRad, endefectorWristTemperature, endefectorWristAppliedVolts, endefectorWristPosition,
+        BaseStatusSignal.setUpdateFrequencyForAll(50,
+        endefectorWristVelocityRad, endefectorWristTemperature, endefectorWristAppliedVolts, endefectorWristPosition,
         endefectorWristStatorCurrent, endefectorWristSupplyCurrent);
-        
+
         endefectorWristMotor.optimizeBusUtilization();
         cancoder.optimizeBusUtilization();
     }
