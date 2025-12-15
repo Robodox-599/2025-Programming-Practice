@@ -8,7 +8,7 @@ import frc.robot.subsystems.rampRollers.RampRollers;
 import frc.robot.subsystems.endEffectorWrist.EndEffectorWrist;
 
 /** Add your docs here. */
-public class Rollers {
+public class SuperStructure {
   private WantedSuperState wantedSuperState = WantedSuperState.STOPPED;
   private CurrentSuperState currentSuperState = CurrentSuperState.STOPPED;
   private final EndEffectorRollers endEffectorRollers;
@@ -17,7 +17,7 @@ public class Rollers {
 
 
     //used to acces rampRollers & Endeffector rollers to call later
-  public Rollers(RampRollers rampRollers, EndEffectorRollers endEffectorRollers, EndEffectorWrist endEffectorWrist){
+  public SuperStructure(RampRollers rampRollers, EndEffectorRollers endEffectorRollers, EndEffectorWrist endEffectorWrist){
     // 'rampRollers' (not 'this') is the RampRollers object passed into this constructor (the special setup function that runs when you create an object, in this case public Rollers(){}"").
     // "RampRollers & EndEffectorRollers" is the object type. Just like double. However, the object type is the name of the method/Blueprint which is "RampRollers.java"
     // To add one, a constructur is a special type of method, that is only used to build objects
@@ -85,12 +85,7 @@ public class Rollers {
         break;
       case ENDEFFECTOR_WRIST_HANDING_CORAL:
         //to prevent wrist from retracting while the coral is still in the ramp roller
-        if (endEffectorWrist.isTransferComplete()){
-          wantedSuperState = WantedSuperState.ENDEFFECTOR_WRIST_PREPARED;
-          currentSuperState = CurrentSuperState.ENDEFFECTOR_WRIST_PREPARED;
-      } else{
-          currentSuperState = CurrentSuperState.ENDEFFECTOR_WRIST_HANDING_CORAL;
-      }
+        currentSuperState = CurrentSuperState.ENDEFFECTOR_WRIST_HANDING_CORAL;
         break;
       case ROLLERS_INTAKING_CORAL:
         if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){ // detect coral in ee but not in ramp, which means we should HOLD THE CORAL

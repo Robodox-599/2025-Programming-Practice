@@ -80,22 +80,22 @@ public class EndEffectorWrist extends EndEffectorWristIO {
     public void applyStates(){
         switch(currentState){
             case PREPARED:
-                setPosition(0);
+                setPosition(-0.21);
                 break;
             case HANDING_CORAL:
-                setPosition(0);
+                setPosition(-0.3);
                 break;
             case SCORING_CORAL:
-                setPosition(0);
+                setPosition(-0.14);
                 break;
             case INTAKING_GROUND_ALGAE:
-                setPosition(0);
+                setPosition(-0.1);
                 break;
             case INTAKING_REEF_ALGAE:
-                setPosition(0);
+                setPosition(-0.1);
                 break;
             case SCORING_ALGAE:
-                setPosition(0);
+                setPosition(-0.21);
                 break;
             case STOPPED:
                 stop();
@@ -122,8 +122,8 @@ public class EndEffectorWrist extends EndEffectorWristIO {
         io.setPosition(position);
     }
 
-    public void setWantedState(WantedState stopped) {
+    public void setWantedState(WantedState wantedState) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setWantedState'");
+        this.wantedState = wantedState;
     }
 }
