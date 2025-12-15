@@ -33,6 +33,7 @@ public class Rollers {
 
   public enum WantedSuperState {
     //isolate rollers_Holding for holding 2 game pieces
+    STOPPED,
     ENDEFFECTOR_WRIST_PREPARED,
     ENDEFFECTOR_WRIST_HANDING_CORAL,
     ROLLERS_INTAKING_CORAL,
@@ -43,13 +44,13 @@ public class Rollers {
     ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE,
     ENDEFFECTOR_INTAKING_ALGAE,
     ENDEFFECTOR_HOLDING_ALGAE,
-    ENDEFFECTOR_WRIST_SCORING,
-    ENDEFFECTOR_SCORING_ALGAE,
-    STOPPED
+    ENDEFFECTOR_WRIST_SCORING_ALGAE,
+    ENDEFFECTOR_SCORING_ALGAE
   }
 
 
   public enum CurrentSuperState {
+    STOPPED,
     ENDEFFECTOR_WRIST_PREPARED,
     ENDEFFECTOR_WRIST_HANDING_CORAL,
     ROLLERS_INTAKING_CORAL,
@@ -60,9 +61,8 @@ public class Rollers {
     ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE,
     ENDEFFECTOR_INTAKING_ALGAE,
     ENDEFFECTOR_HOLDING_ALGAE,
-    ENDEFFECTOR_WRIST_SCORING,
-    ENDEFFECTOR_SCORING_ALGAE,
-    STOPPED
+    ENDEFFECTOR_WRIST_SCORING_ALGAE,
+    ENDEFFECTOR_SCORING_ALGAE
   }
 
 
@@ -75,6 +75,15 @@ public class Rollers {
   //based on the wanted state it determines what the current/wanted state the SUBSYSTEM is in
   private void handleStateTransitions(){
     switch(wantedSuperState){
+      case STOPPED:
+          currentSuperState = CurrentSuperState.STOPPED;              
+        break;
+      case ENDEFFECTOR_WRIST_PREPARED:
+
+        break;
+      case ENDEFFECTOR_WRIST_HANDING_CORAL:
+
+        break;
       case ROLLERS_INTAKING_CORAL:
         if (endEffectorRollers.isCoralDetected() && !rampRollers.isCoralDetected()){ // detect coral in ee but not in ramp, which means we should HOLD THE CORAL
           // function to set wantedCoralPosition to the current position of the MOTOR
@@ -93,6 +102,9 @@ public class Rollers {
           currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_CORAL;
         }
         break;
+      case ENDEFFECTOR_WRIST_SCORING_CORAL:
+        
+        break;
       case ENDEFFECTOR_SCORING_CORAL:
         if (!endEffectorRollers.isCoralDetected()){
           wantedSuperState = WantedSuperState.STOPPED;
@@ -100,6 +112,12 @@ public class Rollers {
         } else {
           currentSuperState = CurrentSuperState.ENDEFFECTOR_SCORING_CORAL;
         }
+        break;
+      case ENDEFFECTOR_WRIST_INTAKING_GROUND_ALGAE:
+      
+        break;
+      case ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE:
+        
         break;
       case ENDEFFECTOR_INTAKING_ALGAE:
         if(endEffectorRollers.isAlgaeIntaked()){
@@ -116,6 +134,9 @@ public class Rollers {
           currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_ALGAE;
         }
         break;
+      case ENDEFFECTOR_WRIST_SCORING_ALGAE:
+
+        break;
       case ENDEFFECTOR_SCORING_ALGAE:
         if(!endEffectorRollers.isAlgaeScored()){
           wantedSuperState = WantedSuperState.STOPPED;
@@ -123,9 +144,6 @@ public class Rollers {
         } else{
           currentSuperState = CurrentSuperState.ENDEFFECTOR_SCORING_ALGAE;
         }
-        break;
-      case STOPPED:
-          currentSuperState = CurrentSuperState.STOPPED;              
         break;
       default:
         currentSuperState = CurrentSuperState.STOPPED;
@@ -137,9 +155,15 @@ public class Rollers {
   private void applyStates(){
     switch(currentSuperState){
       case STOPPED:
-          // Using the dot operator to access the object's function
-          endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
-          break;
+        // Using the dot operator to access the object's function
+        endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
+        break;
+      case ENDEFFECTOR_WRIST_PREPARED:
+
+        break;
+      case ENDEFFECTOR_WRIST_HANDING_CORAL:
+
+        break;
       case ROLLERS_INTAKING_CORAL:
         rampRollers.setWantedState(RampRollers.WantedState.TRANSFERING);                
         // We are allowed to use the setWantedState() method although it's in another class because we imported the class "EndEffectorRollers.Java" here which allows us to use function(method) meant for the EndEffector here
@@ -149,14 +173,27 @@ public class Rollers {
       case ENDEFFECTOR_HOLDING_CORAL:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLDING_CORAL);
         break;
+      case ENDEFFECTOR_WRIST_SCORING_CORAL:
+
+        break;
       case ENDEFFECTOR_SCORING_CORAL:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING_CORAL);
         break;
+      case ENDEFFECTOR_WRIST_INTAKING_GROUND_ALGAE:
+
+        break;
+      case ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE:
+
+        break;
+      
       case ENDEFFECTOR_INTAKING_ALGAE:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING_ALGAE);
         break;
       case ENDEFFECTOR_HOLDING_ALGAE:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLDING_ALGAE);
+        break;
+      case ENDEFFECTOR_WRIST_SCORING_ALGAE:
+
         break;
       case ENDEFFECTOR_SCORING_ALGAE:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING_ALGAE);
