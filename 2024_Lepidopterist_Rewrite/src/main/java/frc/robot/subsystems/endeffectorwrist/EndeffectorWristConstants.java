@@ -10,8 +10,8 @@ public class EndeffectorWristConstants {
     public static final double kI = 0;
     public static final double kD = 6;
     public static final double kS = 0;
-    public static final double kV = 0.14 * gearRatio;
-    public static final double kG = 0;
+    public static final double kV = 0.085;
+    public static final double kG = 0.415;
 
     public static final double supplyCurrentLimit = 40;
     public static final double cancoderMagnetOffset = -0.13720703125;
