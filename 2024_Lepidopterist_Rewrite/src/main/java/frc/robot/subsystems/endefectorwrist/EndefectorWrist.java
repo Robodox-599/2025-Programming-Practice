@@ -56,16 +56,16 @@ public class EndefectorWrist {
         stop();
         break;
       case INTAKING_CORAL:
-        setPosition(0);
+        setPosition(-0.3);
         break;
         case SCORE_CORAL:
-        setPosition(0);
-        break;
+        setPosition(-0.14);
+        break;//prepare = -.21
       case INTAKING_ALGAE:
-        setPosition(0);
+        setPosition(-0.1);
         break;
       case SCORE_ALGAE:
-         setPosition(0);
+         setPosition(-0.21);
          break;
       default:
         stop();

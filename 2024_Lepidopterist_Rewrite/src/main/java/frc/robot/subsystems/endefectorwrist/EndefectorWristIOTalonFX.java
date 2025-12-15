@@ -36,7 +36,7 @@ public class EndefectorWristIOTalonFX extends EndefectorWristIO {
     public EndefectorWristIOTalonFX() {
         endefectorWristMotor = new TalonFX(EndefectorWristConstants.endefectorWristMotorID, EndefectorWristConstants.endefectorWristCANBus);
         endefectorWristConfig = new TalonFXConfiguration();
-        m_request = new MotionMagicVoltage(null);
+        m_request = new MotionMagicVoltage(0);
         cancoder = new CANcoder(EndefectorWristConstants.cancoderID);
         cancoderConfig = new CANcoderConfiguration();
         
@@ -104,6 +104,6 @@ public class EndefectorWristIOTalonFX extends EndefectorWristIO {
         endefectorWristMotor.setControl(m_request.withPosition(position));
         position = wantedPosition;
     }
-
+//0.5 0.33
 
 }
