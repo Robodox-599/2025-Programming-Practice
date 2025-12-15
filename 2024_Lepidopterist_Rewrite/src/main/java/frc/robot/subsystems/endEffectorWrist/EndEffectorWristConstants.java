@@ -8,6 +8,8 @@ package frc.robot.subsystems.endEffectorWrist;
 public class EndEffectorWristConstants {
     public static final int endEffectorWristMotorID = 0;
     public static final int endEffectorWristCANCoderID = 0;
+    public static final int rampBeamBreakPort = 1;
+    public static final int endEffectorBeamBreakPort = 0;
     public static final String endEffectorWristCANBus = "rio";
 
     //PID & feedforward

@@ -9,6 +9,10 @@ public class EndEffectorWristIO {
     protected double positionRad = 0.0;
     protected double velocityRadPerSec = 0.0;
 
+    protected boolean isCoralDetectedInRamps = false;
+    protected boolean isCoralDetectedInEndEffector = false;
+    protected boolean isCoralFullyInEndEffector = false;
+
     public void updateInputs(){}
 
     public void stop(){}

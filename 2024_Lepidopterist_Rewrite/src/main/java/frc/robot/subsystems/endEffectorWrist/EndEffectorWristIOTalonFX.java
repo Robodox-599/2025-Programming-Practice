@@ -20,13 +20,15 @@ import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Temperature;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 //only file that knows TalonFX (the motor) or CANcoder is
 public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
     private final TalonFX endEffectorWristMotor;
     private final CANcoder endEffectorWristCANCoder;
     private final CANcoderConfiguration CANcoderConfig;
-    
+    private final DigitalInput rampBeamBreak;
+    private final DigitalInput endEffectorBeamBreak;
 
     private final TalonFXConfiguration endEffectorWristConfig;
 
@@ -43,6 +45,8 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
         endEffectorWristConfig = new TalonFXConfiguration();
         endEffectorWristCANCoder = new CANcoder(EndEffectorWristConstants.endEffectorWristCANCoderID, EndEffectorWristConstants.endEffectorWristCANBus);
         CANcoderConfig = new CANcoderConfiguration();
+        rampBeamBreak = new DigitalInput(EndEffectorWristConstants.rampBeamBreakPort);
+        endEffectorBeamBreak = new DigitalInput(EndEffectorWristConstants.endEffectorBeamBreakPort);
 
         CANcoderConfig.MagnetSensor.MagnetOffset = EndEffectorWristConstants.endEffectorWristMagnetOffset;
         CANcoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
@@ -93,6 +97,9 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
         BaseStatusSignal.refreshAll(endEffectorWristVelocityRad, endEffectorWristPositionRad, endEffectorWristTemperature);
         super.positionRad = endEffectorWristPositionRad.getValueAsDouble();
         super.velocityRadPerSec = endEffectorWristVelocityRad.getValueAsDouble();
+        super.isCoralDetectedInRamps = !rampBeamBreak.get();
+        super.isCoralDetectedInEndEffector = !endEffectorBeamBreak.get();
+
 
         DogLog.log("endEffectorWrist/PositionRad", super.positionRad);
         DogLog.log("endEffectorWrist/VelocityRadPerSec", super.velocityRadPerSec);

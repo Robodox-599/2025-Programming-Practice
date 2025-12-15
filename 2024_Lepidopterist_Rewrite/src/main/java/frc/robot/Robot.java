@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollersIOTalonFX;
+import frc.robot.subsystems.endEffectorWrist.EndEffectorWrist;
+import frc.robot.subsystems.endEffectorWrist.EndEffectorWristIOTalonFX;
 import frc.robot.subsystems.Rollers;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollers;
 import frc.robot.subsystems.rampRollers.RampRollers;
@@ -22,6 +24,7 @@ public class Robot extends TimedRobot {
   private final EndEffectorRollers endEffectorRollers;
   private final CommandXboxController controller = new CommandXboxController(0);
   private final Rollers rollers;
+  private final EndEffectorWrist endEffectorWrist;
 
 
   private Command m_autonomousCommand;
@@ -32,6 +35,7 @@ public class Robot extends TimedRobot {
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
     endEffectorRollers = new EndEffectorRollers(new EndEffectorRollersIOTalonFX());
     rollers = new Rollers(rampRollers, endEffectorRollers);
+    endEffectorWrist = new EndEffectorWrist(new EndEffectorWristIOTalonFX());
 
     configureBindings();
   }
@@ -41,6 +45,7 @@ public class Robot extends TimedRobot {
     rampRollers.updateInputs();
     endEffectorRollers.updateInputs();
     rollers.updateInputs();
+
     CommandScheduler.getInstance().run();
   }
 
