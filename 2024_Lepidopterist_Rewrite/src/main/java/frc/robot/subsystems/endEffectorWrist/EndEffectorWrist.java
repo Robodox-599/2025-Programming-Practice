@@ -54,12 +54,7 @@ public class EndEffectorWrist extends EndEffectorWristIO {
                 break;
             case HANDING_CORAL:
                 //to prevent wrist from retracting while the coral is still in the ramp roller
-                if (isTransferComplete()){
-                    wantedState = WantedState.PREPARED;
-                    currentState = CurrentState.PREPARED;
-                } else{
-                    currentState = CurrentState.HANDING_CORAL;
-                }
+                currentState = CurrentState.HANDING_CORAL;
                 break;
             case SCORING_CORAL:
                 currentState = CurrentState.SCORING_CORAL;
@@ -125,5 +120,10 @@ public class EndEffectorWrist extends EndEffectorWristIO {
 
     public void setPosition(double position){
         io.setPosition(position);
+    }
+
+    public void setWantedState(WantedState stopped) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setWantedState'");
     }
 }

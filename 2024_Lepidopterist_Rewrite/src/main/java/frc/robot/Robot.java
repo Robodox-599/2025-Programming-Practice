@@ -34,8 +34,9 @@ public class Robot extends TimedRobot {
     // if in real mode
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
     endEffectorRollers = new EndEffectorRollers(new EndEffectorRollersIOTalonFX());
-    rollers = new Rollers(rampRollers, endEffectorRollers);
     endEffectorWrist = new EndEffectorWrist(new EndEffectorWristIOTalonFX());
+    
+    rollers = new Rollers(rampRollers, endEffectorRollers, endEffectorWrist);
 
     configureBindings();
   }
