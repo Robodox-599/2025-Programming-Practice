@@ -15,4 +15,5 @@ public class EndefectorWristConstants {
     public static final double supplyCurrentLimit = 40;
     public static final double cancoderMagnetOffset = 0;
     public static final double discontinuityPoint = 0;
+    public static final double wristTolerance = 0;
 }
