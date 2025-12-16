@@ -106,11 +106,12 @@ public class EndeffectorWristIOTalonFX extends EndeffectorWristIO {
     super.isWristInPosition = MathUtil.isNear(targetPosition, currentPosition, isWristInPositionTolerence);
    
     DogLog.log("Endeffector/Wrist/Velocity", super.velocity);
+    DogLog.log("Endeffector/Wrist/Temperature", super.tempCelsius);
+    DogLog.log("Endeffector/Wrist/AppliedVoltage", super.appliedVolts);
     DogLog.log("Endeffector/Wrist/StatorCurrent", super.statorCurrent);
     DogLog.log("Endeffector/Wrist/SupplyCurrent", super.supplyCurrent);
-    DogLog.log("Endeffector/Wrist/Temperature", super.tempCelsius);
+    
     DogLog.log("Endeffector/Wrist/TargetPosition", targetPosition);
-    DogLog.log("Endeffector/Wrist/AppliedVoltage", super.appliedVolts);
     DogLog.log("Endeffector/Wrist/CurrentPosition", super.currentPosition);
     DogLog.log("Endeffector/Wrist/isWristInPosition", super.isWristInPosition);
     DogLog.log("Endeffector/Wrist/AbsolutePosition", endeffectorWristAbsolutePosition.getValueAsDouble());
