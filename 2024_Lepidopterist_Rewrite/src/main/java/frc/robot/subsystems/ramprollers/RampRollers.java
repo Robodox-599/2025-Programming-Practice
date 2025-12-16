@@ -91,7 +91,7 @@ public class RampRollers extends SubsystemBase {
         setPosition(io.heldCurrentPosition);
         break;
       default:
-        setVelocity(0);
+        stop();
         break;
     }
   }

@@ -99,7 +99,7 @@ public class EndeffectorRollers extends SubsystemBase {
         setVelocity(0.1);
         break;
       default:
-        setVelocity(0);
+        stop();
         break;
     }
   }

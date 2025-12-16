@@ -70,7 +70,7 @@ public class EndeffectorWrist extends SubsystemBase {
             currentState = CurrentState.STOPPED;
             break;
         default:
-            currentState = CurrentState.PREPARED;
+            currentState = CurrentState.STOPPED;
             break;
     }
   }
