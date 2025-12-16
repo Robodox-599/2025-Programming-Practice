@@ -15,8 +15,8 @@ public class EndeffectorWristConstants {
 
     public static final double supplyCurrentLimit = 40;
     public static final double cancoderMagnetOffset = -0.13720703125;
-    public static final double discontinuityPoint = 0.0;
-    public static final double isWristInPositionTolerence = 0.2;
+    public static final double discontinuityPoint = 0.4;
+    public static final double isWristInPositionTolerence = 0.02;
 
     public static final double MaxVelocity = (12-kG-kS)/kV;
     public static final double MaxAcceleration = (MaxVelocity/0.5);
