@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     rampRollers.updateInputs();
     endeffectorRollers.updateInputs();
+    endeffectorWrist.updateInputs();
     superStructure.updateInputs();
     CommandScheduler.getInstance().run();
   }
