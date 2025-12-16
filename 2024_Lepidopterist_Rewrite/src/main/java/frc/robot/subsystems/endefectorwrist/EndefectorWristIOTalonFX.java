@@ -1,5 +1,6 @@
 package frc.robot.subsystems.endefectorwrist;
 
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
@@ -70,7 +71,7 @@ public class EndefectorWristIOTalonFX extends EndefectorWristIO {
         endefectorWristVelocityRad = endefectorWristMotor.getVelocity();
         endefectorWristTemperature = endefectorWristMotor.getDeviceTemp();
         endefectorWristAppliedVolts = endefectorWristMotor.getMotorVoltage();
-        endefectorWristPosition = cancoder.getPosition();
+        endefectorWristPosition = endefectorWristMotor.getPosition();
         endefectorWristStatorCurrent = endefectorWristMotor.getStatorCurrent();
         endefectorWristSupplyCurrent = endefectorWristMotor.getSupplyCurrent();
 

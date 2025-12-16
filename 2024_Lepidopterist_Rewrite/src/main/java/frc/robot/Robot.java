@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
     // //Only ramp rollers intake coral
     // controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.RAMP_INTAKING)));
     //Endefector intakes algae
-    controller.y().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_INTAKE_ALGAE)));
+    // controller.y().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.ENDEFECTOR_INTAKE_ALGAE)));
     controller.y().onTrue(Commands.runOnce(() -> endefectorWrist.setWantedState(EndefectorWrist.WantedState.STOPPED)));
     //Stops both ramp & endefector rollers
     controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.wantedSuperState.STOPPED)));
