@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
     rampRollers.updateInputs();
     endEffectorRollers.updateInputs();
     rollers.updateInputs();
+    endEffectorWrist.updateInputs();
 
     CommandScheduler.getInstance().run();
   }

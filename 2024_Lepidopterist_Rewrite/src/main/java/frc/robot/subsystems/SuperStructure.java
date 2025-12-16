@@ -208,7 +208,11 @@ public class SuperStructure {
         
       }
   }
+  
+  public void superStructureUpdateInputs(){
 
+  }
+  
   public void setWantedState(WantedSuperState wantedSuperState){
     this.wantedSuperState = wantedSuperState;
   }

@@ -87,6 +87,7 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
 
         //must be applied last
         endEffectorWristMotor.optimizeBusUtilization();
+        endEffectorWristCANCoder.optimizeBusUtilization();
     }
 
     @Override
