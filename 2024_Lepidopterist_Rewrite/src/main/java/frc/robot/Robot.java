@@ -116,9 +116,9 @@ public class Robot extends TimedRobot {
       controller.leftTrigger().onTrue(Commands.runOnce (() -> rollers.setWantedState(SuperStructure.WantedSuperState.ENDEFFECTOR_SCORING_ALGAE)));
       controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(SuperStructure.WantedSuperState.STOPPED)).alongWith(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED))));
       //controller.b().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
-      controller.y().onTrue(Commands.runOnce(() -> rollers.setWantedState(SuperStructure.WantedSuperState.ENDEFFECTOR_WRIST_HANDING_CORAL)));
-      controller.b().onTrue(Commands.runOnce(() -> rollers.setWantedState(SuperStructure.WantedSuperState.ENDEFFECTOR_WRIST_PREPARED)));
-      controller.a().onTrue(Commands.runOnce(() -> rollers.setWantedState(SuperStructure.WantedSuperState.ENDEFFECTOR_WRIST_SCORING_CORAL)));
+      controller.y().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.HANDING_CORAL)));
+      controller.b().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.PREPARED)));
+      controller.a().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.SCORING_CORAL)));
 
     }
   
