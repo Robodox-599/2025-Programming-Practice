@@ -7,12 +7,14 @@ package frc.robot.subsystems;
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.endeffectorrollers.EndeffectorRollers;
+import frc.robot.subsystems.endeffectorwrist.EndeffectorWrist;
 import frc.robot.subsystems.ramprollers.RampRollers;
 
 public class SuperStructure extends SubsystemBase {
   
   private final RampRollers rampRollers;
   private final EndeffectorRollers endeffectorRollers;
+  private final EndeffectorWrist endeffectorWrist;
 
   private WantedState wantedState = WantedState.STOPPED;
   private CurrentState currentState = CurrentState.STOPPED;
@@ -37,14 +39,16 @@ public class SuperStructure extends SubsystemBase {
     STOPPED,
   }
 
-  public SuperStructure(EndeffectorRollers endefRollers, RampRollers rampRollers) {
+  public SuperStructure(EndeffectorRollers endefRollers, RampRollers rampRollers, EndeffectorWrist endeffectorWrist) {
     this.rampRollers = rampRollers;
     this.endeffectorRollers = endefRollers;
+    this.endeffectorWrist = endeffectorWrist;
   }
 
   public void updateInputs() {
     rampRollers.updateInputs();
     endeffectorRollers.updateInputs();
+    endeffectorWrist.updateInputs();
     handleStateTransitions();
     applyStates();
 

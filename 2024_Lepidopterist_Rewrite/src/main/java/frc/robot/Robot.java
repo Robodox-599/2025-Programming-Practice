@@ -32,16 +32,13 @@ public class Robot extends TimedRobot {
     rampRollers = new RampRollers(new RampRollersIOTalonFX());
     endeffectorRollers = new EndeffectorRollers(new EndeffectorRollersIOTalonFX());
     endeffectorWrist = new EndeffectorWrist(new EndeffectorWristIOTalonFX());
-    superStructure = new SuperStructure(endeffectorRollers, rampRollers);
+    superStructure = new SuperStructure(endeffectorRollers, rampRollers, endeffectorWrist);
 
     configureBindings();
   }
 
   @Override
   public void robotPeriodic() {
-    rampRollers.updateInputs();
-    endeffectorRollers.updateInputs();
-    endeffectorWrist.updateInputs();
     superStructure.updateInputs();
     CommandScheduler.getInstance().run();
   }
