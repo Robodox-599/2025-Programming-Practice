@@ -39,6 +39,8 @@ public class EndeffectorWrist extends SubsystemBase {
   }
 
   public void updateInputs() {
+    io.updateInputs();
+
     handleStateTransitions();
     applyStates();
 

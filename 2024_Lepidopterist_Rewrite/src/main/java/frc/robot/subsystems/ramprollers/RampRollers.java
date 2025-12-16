@@ -32,13 +32,14 @@ public class RampRollers extends SubsystemBase {
   }
 
   public void updateInputs() {
+    io.updateInputs();
+    
     handleStateTransitions();
     applyStates();
 
     DogLog.log("Ramp/Rollers/wantedStated", wantedState);
     DogLog.log("Ramp/Rollers/currentState", currentState);
 
-    io.updateInputs();
   }
 
   public void handleStateTransitions(){

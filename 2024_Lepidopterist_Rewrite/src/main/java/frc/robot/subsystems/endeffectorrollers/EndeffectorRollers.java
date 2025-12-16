@@ -37,13 +37,14 @@ public class EndeffectorRollers extends SubsystemBase {
   }
 
   public void updateInputs() {
+    io.updateInputs();
+    
     handleStateTransitions();
     applyStates();
 
     DogLog.log("Endeffector/Rollers/wantedState", wantedState);
     DogLog.log("Endeffector/Rollers/currentState", currentState);
 
-    io.updateInputs();
   }
 
   public void handleStateTransitions(){
