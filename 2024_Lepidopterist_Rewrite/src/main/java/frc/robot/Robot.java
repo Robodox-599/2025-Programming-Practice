@@ -104,11 +104,11 @@ public class Robot extends TimedRobot {
 
     // controller.leftTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(Rollers.WantedState.ENDEFFECTOR_SCORE_ALGAE)));
 
-    controller.b().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.PREPARED)));
+    controller.rightBumper().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.PREPARED)));
 
-    controller.y().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.INTAKING_ALGAE_REEF)));
+    controller.leftBumper().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.INTAKING_ALGAE_REEF)));
 
-    controller.a().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.SCORING_CORAL)));
+    controller.rightTrigger().onTrue(Commands.runOnce(() -> endeffectorWrist.setWantedState(EndeffectorWrist.WantedState.SCORING_CORAL)));
 
     controller.x().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED)).alongWith(Commands.runOnce(() -> superStructure.setWantedState(SuperStructure.WantedState.STOPPED))));
   }
