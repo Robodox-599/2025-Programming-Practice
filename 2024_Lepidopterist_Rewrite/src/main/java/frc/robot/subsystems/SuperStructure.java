@@ -183,12 +183,6 @@ public class SuperStructure {
       case ENDEFFECTOR_SCORING_CORAL:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING_CORAL);
         break;
-      case ENDEFFECTOR_WRIST_INTAKING_GROUND_ALGAE:
-        endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.INTAKING_GROUND_ALGAE);
-        break;
-      case ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE:
-        endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.INTAKING_REEF_ALGAE);
-        break;
       case ENDEFFECTOR_INTAKING_ALGAE:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING_ALGAE);
         break;

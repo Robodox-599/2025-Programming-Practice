@@ -13,38 +13,26 @@ public class EndEffectorWrist extends EndEffectorWristIO {
     private CurrentState currentState = CurrentState.STOPPED;
     
     public enum WantedState{
+        STOPPED,
         PREPARED,
         HANDING_CORAL,
         SCORING_CORAL,
-        INTAKING_GROUND_ALGAE,
-        INTAKING_REEF_ALGAE,
-        SCORING_ALGAE,
-        STOPPED
+        INTAKING_ALGAE,
+        SCORING_ALGAE
     }
 
     public enum CurrentState{
+        STOPPED,
         PREPARED,
         HANDING_CORAL,
         SCORING_CORAL,
-        INTAKING_GROUND_ALGAE,
-        INTAKING_REEF_ALGAE,
-        SCORING_NET_ALGAE,
-        SCORING_PROCESSOR_ALGAE,
-        SCORING_ALGAE,
-        STOPPED
+        INTAKING_ALGAE,
+        SCORING_ALGAE
     }
 
     //creates a new EndEffectorWrist
     public EndEffectorWrist(EndEffectorWristIO io){
         this.io = io;
-    }
-
-    public void updateInputs(){
-        io.updateInputs();
-        handleStateTransitions();
-        applyStates();
-        DogLog.log("endEffectorWrist/wantedState", wantedState);
-        DogLog.log("endEffectorWrist/currentState", currentState);
     }
 
     public void handleStateTransitions(){
@@ -58,12 +46,6 @@ public class EndEffectorWrist extends EndEffectorWristIO {
                 break;
             case SCORING_CORAL:
                 currentState = CurrentState.SCORING_CORAL;
-                break;
-            case INTAKING_GROUND_ALGAE:
-                currentState = CurrentState.INTAKING_GROUND_ALGAE;
-                break;
-            case INTAKING_REEF_ALGAE:
-                currentState = CurrentState.INTAKING_REEF_ALGAE;
                 break;
             case SCORING_ALGAE:
                 currentState = CurrentState.SCORING_ALGAE;
@@ -88,12 +70,6 @@ public class EndEffectorWrist extends EndEffectorWristIO {
             case SCORING_CORAL:
                 setPosition(-0.14);
                 break;
-            case INTAKING_GROUND_ALGAE:
-                setPosition(-0.1);
-                break;
-            case INTAKING_REEF_ALGAE:
-                setPosition(-0.1);
-                break;
             case SCORING_ALGAE:
                 setPosition(-0.21);
                 break;
@@ -106,24 +82,22 @@ public class EndEffectorWrist extends EndEffectorWristIO {
         }
     }
 
+    @Override
+    public void updateInputs(){
+        io.updateInputs();
+        handleStateTransitions();
+        applyStates();
+        DogLog.log("EndEffectorWrist/WantedState", wantedState);
+        DogLog.log("EndEffectorWrist/CurrentState", currentState);
+    }
+
+    @Override
     public void stop(){
         io.stop();
     }
 
-    //to prevent wrist from retracting while the coral is still in the ramp roller
-    public boolean isTransferComplete() {
-        boolean wristHasCoral = io.isCoralDetectedInEndEffector;
-        boolean rampHasNotCoral = !io.isCoralDetectedInRamps;
-
-        return wristHasCoral && rampHasNotCoral;
-    }
-
+    @Override
     public void setPosition(double position){
         io.setPosition(position);
-    }
-
-    public void setWantedState(WantedState wantedState) {
-        // TODO Auto-generated method stub
-        this.wantedState = wantedState;
     }
 }

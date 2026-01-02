@@ -19,30 +19,32 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.units.measure.Voltage;
 
 //only file that knows TalonFX (the motor) or CANcoder is
 public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
     private final TalonFX endEffectorWristMotor;
     private final CANcoder endEffectorWristCANCoder;
     private final CANcoderConfiguration CANcoderConfig;
-
     private final TalonFXConfiguration endEffectorWristConfig;
+    MotionMagicVoltage m_request;
 
     //dont forget to initialize, and add it to refresh after (@BaseStatusSignal)
     private final StatusSignal<AngularVelocity> endEffectorWristVelocityRad;
     private final StatusSignal<Temperature> endEffectorWristTemperature;
     private final StatusSignal<Angle> endEffectorWristPositionRad;
-
-    private final MotionMagicVoltage motionMagicControl = new MotionMagicVoltage(0);
-
+    private final StatusSignal<Current> endEffectorWristStatorCurrent;
+    private final StatusSignal<Current> endEffectorWristSupplyCurrent;
+    private final StatusSignal<Voltage> endEffectorWristAppliedVolts;
 
     public EndEffectorWristIOTalonFX(){
         endEffectorWristMotor = new TalonFX(EndEffectorWristConstants.endEffectorWristMotorID, EndEffectorWristConstants.endEffectorWristCANBus);
         endEffectorWristConfig = new TalonFXConfiguration();
-        endEffectorWristCANCoder = new CANcoder(EndEffectorWristConstants.endEffectorWristCANCoderID, EndEffectorWristConstants.endEffectorWristCANBus);
+        endEffectorWristCANCoder = new CANcoder(EndEffectorWristConstants.endEffectorWristCANCoderID);
         CANcoderConfig = new CANcoderConfiguration();
+        m_request = new MotionMagicVoltage(0);
 
         CANcoderConfig.MagnetSensor.MagnetOffset = EndEffectorWristConstants.endEffectorWristMagnetOffset;
         CANcoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
@@ -56,9 +58,13 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
         endEffectorWristConfig.Slot0.kD = EndEffectorWristConstants.kD;
         endEffectorWristConfig.Slot0.kS = EndEffectorWristConstants.kS;
         endEffectorWristConfig.Slot0.kG = EndEffectorWristConstants.kG;
+        endEffectorWristConfig.Slot0.kV = EndEffectorWristConstants.kV;
         //When wrist is fully extended parallel to the ground gravitational force applies most torque. When wrist end is above pivot, pivot supports the weight of the endEffector.
         //Cosine function determines this. Cos(0) = 1, cos(90) = 0
         endEffectorWristConfig.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
+
+        endEffectorWristConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        endEffectorWristConfig.CurrentLimits.SupplyCurrentLimit = EndEffectorWristConstants.supplyCurrentLimit;
 
         //confugres the robot's sensors so it knows its physical location
         //when robot turns on, it's zero'd to where it last was, CANcoder tells the absolute 0.
@@ -82,8 +88,11 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
         endEffectorWristVelocityRad = endEffectorWristMotor.getVelocity();
         endEffectorWristTemperature = endEffectorWristMotor.getDeviceTemp();
         endEffectorWristPositionRad = endEffectorWristMotor.getPosition();
+        endEffectorWristSupplyCurrent = endEffectorWristMotor.getSupplyCurrent();
+        endEffectorWristStatorCurrent = endEffectorWristMotor.getStatorCurrent();
+        endEffectorWristAppliedVolts = endEffectorWristMotor.getMotorVoltage();
 
-        BaseStatusSignal.setUpdateFrequencyForAll(50, endEffectorWristVelocityRad, endEffectorWristPositionRad, endEffectorWristTemperature);
+        BaseStatusSignal.setUpdateFrequencyForAll(50, endEffectorWristVelocityRad, endEffectorWristPositionRad, endEffectorWristTemperature, endEffectorWristSupplyCurrent, endEffectorWristStatorCurrent, endEffectorWristAppliedVolts);
 
         //must be applied last
         endEffectorWristMotor.optimizeBusUtilization();
@@ -92,7 +101,7 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
 
     @Override
     public void updateInputs(){
-        BaseStatusSignal.refreshAll(endEffectorWristVelocityRad, endEffectorWristPositionRad, endEffectorWristTemperature);
+        BaseStatusSignal.refreshAll(endEffectorWristVelocityRad, endEffectorWristPositionRad, endEffectorWristTemperature, endEffectorWristSupplyCurrent, endEffectorWristStatorCurrent, endEffectorWristAppliedVolts);
         super.positionRad = endEffectorWristPositionRad.getValueAsDouble();
         super.velocityRadPerSec = endEffectorWristVelocityRad.getValueAsDouble();
 
@@ -107,6 +116,6 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
 
     @Override
     public void setPosition(double position){
-        endEffectorWristMotor.setControl(motionMagicControl.withPosition(position));
+        endEffectorWristMotor.setControl(m_request.withPosition(position));
     }
 }

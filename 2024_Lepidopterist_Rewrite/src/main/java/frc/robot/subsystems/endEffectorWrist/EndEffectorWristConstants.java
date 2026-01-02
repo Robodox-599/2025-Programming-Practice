@@ -11,6 +11,7 @@ public class EndEffectorWristConstants {
     public static final double endEffectorWristMagnetOffset = -0.13720703125;
     public static final double absoluteDiscontinuityPoint = 0.4;
     public static final double endEffectorWristpositionTollerance = 0.02;
+    public static final double supplyCurrentLimit = 40;
 
     //iDs
     public static final int endEffectorWristMotorID = 15;
