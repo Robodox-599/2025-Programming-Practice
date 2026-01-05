@@ -35,17 +35,19 @@ public class EndEffectorWrist extends EndEffectorWristIO {
         this.io = io;
     }
 
-    public void handleStateTransitions(){
+    private void handleStateTransitions(){
         switch(wantedState){
             case PREPARED:
                 currentState = CurrentState.PREPARED;
                 break;
             case HANDING_CORAL:
-                //to prevent wrist from retracting while the coral is still in the ramp roller
                 currentState = CurrentState.HANDING_CORAL;
                 break;
             case SCORING_CORAL:
                 currentState = CurrentState.SCORING_CORAL;
+                break;
+            case INTAKING_ALGAE:
+                currentState = CurrentState.INTAKING_ALGAE;
                 break;
             case SCORING_ALGAE:
                 currentState = CurrentState.SCORING_ALGAE;
@@ -59,7 +61,7 @@ public class EndEffectorWrist extends EndEffectorWristIO {
         }
     }
 
-    public void applyStates(){
+    private void applyStates(){
         switch(currentState){
             case PREPARED:
                 setPosition(-0.21);
@@ -69,6 +71,9 @@ public class EndEffectorWrist extends EndEffectorWristIO {
                 break;
             case SCORING_CORAL:
                 setPosition(-0.14);
+                break;
+            case INTAKING_ALGAE:
+                setPosition(-0.1);
                 break;
             case SCORING_ALGAE:
                 setPosition(-0.21);
@@ -91,6 +96,10 @@ public class EndEffectorWrist extends EndEffectorWristIO {
         DogLog.log("EndEffectorWrist/CurrentState", currentState);
     }
 
+    public boolean isWristInPosition(){
+        return io.isWristInPosition;
+    }
+
     @Override
     public void stop(){
         io.stop();
@@ -100,4 +109,9 @@ public class EndEffectorWrist extends EndEffectorWristIO {
     public void setPosition(double position){
         io.setPosition(position);
     }
+
+    public void setWantedState(WantedState wantedState) {
+        this.wantedState = wantedState;
+    }
+
 }

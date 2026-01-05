@@ -8,6 +8,8 @@ package frc.robot.subsystems.endEffectorWrist;
 public class EndEffectorWristIO {
     protected double positionRad = 0.0;
     protected double velocityRadPerSec = 0.0;
+    protected double wantedPosition = 0;
+    protected boolean isWristInPosition = false;
 
     protected boolean isCoralDetectedInRamps = false;
     protected boolean isCoralDetectedInEndEffector = false;

@@ -207,8 +207,8 @@ public class SuperStructure {
 
   }
   
-  public void setWantedState(WantedSuperState wantedSuperState){
-    this.wantedSuperState = wantedSuperState;
+  public void setWantedState(WantedSuperState wantedState){
+    this.wantedState = wantedState;
   }
 
 }

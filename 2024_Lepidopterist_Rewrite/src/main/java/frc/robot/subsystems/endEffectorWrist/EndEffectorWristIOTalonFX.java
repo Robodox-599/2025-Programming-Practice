@@ -105,8 +105,10 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
         super.positionRad = endEffectorWristPositionRad.getValueAsDouble();
         super.velocityRadPerSec = endEffectorWristVelocityRad.getValueAsDouble();
 
+        super.isWristInPosition = (super.positionRad - super.wantedPosition) < 0.02;
         DogLog.log("endEffectorWrist/PositionRad", super.positionRad);
         DogLog.log("endEffectorWrist/VelocityRadPerSec", super.velocityRadPerSec);
+        DogLog.log("endEffectorWirst/isWristInPosition", super.isWristInPosition);
     }
 
     @Override
@@ -116,6 +118,7 @@ public class EndEffectorWristIOTalonFX extends EndEffectorWristIO{
 
     @Override
     public void setPosition(double position){
+        super.wantedPosition = position;
         endEffectorWristMotor.setControl(m_request.withPosition(position));
     }
 }
