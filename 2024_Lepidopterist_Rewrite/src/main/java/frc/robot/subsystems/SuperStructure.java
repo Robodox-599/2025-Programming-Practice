@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems;
 
+import dev.doglog.DogLog;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollers;
 import frc.robot.subsystems.rampRollers.RampRollers;
 import frc.robot.subsystems.endEffectorWrist.EndEffectorWrist;
@@ -42,8 +43,7 @@ public class SuperStructure {
     ENDEFFECTOR_HOLDING_CORAL,
     ENDEFFECTOR_WRIST_SCORING_CORAL,
     ENDEFFECTOR_SCORING_CORAL,
-    ENDEFFECTOR_WRIST_INTAKING_GROUND_ALGAE,
-    ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE,
+    ENDEFFECTOR_WRIST_INTAKING_ALGAE,
     ENDEFFECTOR_INTAKING_ALGAE,
     ENDEFFECTOR_HOLDING_ALGAE,
     ENDEFFECTOR_WRIST_SCORING_ALGAE,
@@ -59,8 +59,7 @@ public class SuperStructure {
     ENDEFFECTOR_HOLDING_CORAL,
     ENDEFFECTOR_WRIST_SCORING_CORAL,
     ENDEFFECTOR_SCORING_CORAL,
-    ENDEFFECTOR_WRIST_INTAKING_GROUND_ALGAE,
-    ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE,
+    ENDEFFECTOR_WRIST_INTAKING_ALGAE,
     ENDEFFECTOR_INTAKING_ALGAE,
     ENDEFFECTOR_HOLDING_ALGAE,
     ENDEFFECTOR_WRIST_SCORING_ALGAE,
@@ -72,6 +71,8 @@ public class SuperStructure {
   public void updateInputs(){
     handleStateTransitions();
     applyStates();
+    DogLog.log("SuperStructure/WantedSuperState", wantedSuperState);
+    DogLog.log("superStructure/CurrentSuperState", currentSuperState);
   }
 
   //based on the wanted state it determines what the current/wanted state the SUBSYSTEM is in
@@ -116,18 +117,16 @@ public class SuperStructure {
           currentSuperState = CurrentSuperState.ENDEFFECTOR_SCORING_CORAL;
         }
         break;
-      case ENDEFFECTOR_WRIST_INTAKING_GROUND_ALGAE:
-        currentSuperState = CurrentSuperState.ENDEFFECTOR_WRIST_INTAKING_GROUND_ALGAE;
-        break;
-      case ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE:
-        currentSuperState = CurrentSuperState.ENDEFFECTOR_WRIST_INTAKING_REEF_ALGAE;
+      case ENDEFFECTOR_WRIST_INTAKING_ALGAE:
+        currentSuperState = CurrentSuperState.ENDEFFECTOR_WRIST_INTAKING_ALGAE;
         break;
       case ENDEFFECTOR_INTAKING_ALGAE:
         if(endEffectorRollers.isAlgaeIntaked()){
           wantedSuperState = WantedSuperState.ENDEFFECTOR_HOLDING_ALGAE;
           currentSuperState = CurrentSuperState.ENDEFFECTOR_HOLDING_ALGAE;
-        }
+        } else{
         currentSuperState = CurrentSuperState.ENDEFFECTOR_INTAKING_ALGAE;
+        }
         break;  
       case ENDEFFECTOR_HOLDING_ALGAE:
         if(!endEffectorRollers.isAlgaeIntaked()){
@@ -141,7 +140,7 @@ public class SuperStructure {
         currentSuperState = CurrentSuperState.ENDEFFECTOR_WRIST_SCORING_ALGAE;
         break;
       case ENDEFFECTOR_SCORING_ALGAE:
-        if(!endEffectorRollers.isAlgaeScored()){
+        if(!endEffectorRollers.isAlgaeIntaked()){
           wantedSuperState = WantedSuperState.STOPPED;
           currentSuperState = CurrentSuperState.STOPPED;
         } else{
@@ -161,9 +160,11 @@ public class SuperStructure {
       case STOPPED:
         // Using the dot operator to access the object's function
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
+        rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
+        endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.STOPPED);
         break;
       case ENDEFFECTOR_WRIST_PREPARED:
-        endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.STOPPED);
+        endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.PREPARED);
         break;
       case ENDEFFECTOR_WRIST_HANDING_CORAL:
         endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.HANDING_CORAL);
@@ -182,6 +183,9 @@ public class SuperStructure {
         break;
       case ENDEFFECTOR_SCORING_CORAL:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING_CORAL);
+        break;
+      case ENDEFFECTOR_WRIST_INTAKING_ALGAE:
+        endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.INTAKING_ALGAE);
         break;
       case ENDEFFECTOR_INTAKING_ALGAE:
         endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING_ALGAE);
@@ -208,7 +212,7 @@ public class SuperStructure {
   }
   
   public void setWantedState(WantedSuperState wantedState){
-    this.wantedState = wantedState;
+    this.wantedSuperState = wantedState;
   }
 
 }
