@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollersIOTalonFX;
 import frc.robot.subsystems.endEffectorWrist.EndEffectorWrist;
 import frc.robot.subsystems.endEffectorWrist.EndEffectorWristIOTalonFX;
-import frc.robot.subsystems.NoStructure;
+import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollers;
 import frc.robot.subsystems.rampRollers.RampRollers;
 import frc.robot.subsystems.rampRollers.RampRollersIOTalonFX;
@@ -22,10 +22,9 @@ import frc.robot.subsystems.rampRollers.RampRollersIOTalonFX;
 public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
   private final EndEffectorRollers endEffectorRollers;
-  private final CommandXboxController controller = new CommandXboxController(0);
-  private final NoStructure rollers; //wrong
   private final EndEffectorWrist endEffectorWrist;
-
+  private final CommandXboxController controller = new CommandXboxController(0);
+  private final SuperStructure superStructure;
 
   private Command m_autonomousCommand;
 
@@ -36,7 +35,7 @@ public class Robot extends TimedRobot {
     endEffectorRollers = new EndEffectorRollers(new EndEffectorRollersIOTalonFX());
     endEffectorWrist = new EndEffectorWrist(new EndEffectorWristIOTalonFX());
     
-    rollers = new NoStructure(rampRollers, endEffectorRollers, endEffectorWrist);
+    superStructure = new SuperStructure(rampRollers, endEffectorRollers, endEffectorWrist);
 
     configureBindings();
   }
@@ -45,7 +44,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     rampRollers.updateInputs();
     endEffectorRollers.updateInputs();
-    rollers.updateInputs();
+    superStructure.updateInputs();
     endEffectorWrist.updateInputs();
 
     CommandScheduler.getInstance().run();
@@ -100,25 +99,32 @@ public class Robot extends TimedRobot {
   public void testExit() {}
 
     // meer stinks
-      
   
     private void configureBindings() {
       // b intakeing coral from ramp only
       // right bumper intake coral from both
-      //right trigger is to score coral/
-
+      // right trigger is to score coral/
       // left bumper is to intake algae
       // left trigger is to score algae
-      // stopp should be X
+      // stop should be X
       
-      controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(NoStructure.WantedSuperState.ROLLERS_INTAKING_CORAL)));
-      controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(NoStructure.WantedSuperState.ENDEFFECTOR_SCORING_CORAL)));
-      controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(NoStructure.WantedSuperState.ENDEFFECTOR_INTAKING_ALGAE)));
-      controller.leftTrigger().onTrue(Commands.runOnce (() -> rollers.setWantedState(NoStructure.WantedSuperState.ENDEFFECTOR_SCORING_ALGAE)));
-      controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(NoStructure.WantedSuperState.STOPPED)).alongWith(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED))));
+      //ramp roller intaking coral
+      controller.rightBumper().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
+      //scores coral
+      controller.rightTrigger().onTrue(Commands.runOnce(() -> superStructure.setWantedState(SuperStructure.WantedSuperState.SCORING_CORAL)));
+      //intakes algae
+      controller.leftBumper().onTrue(Commands.runOnce(() -> superStructure.setWantedState(SuperStructure.WantedSuperState.INTAKING_ALGAE)));
+      //scores algae
+      controller.leftTrigger().onTrue(Commands.runOnce (() -> superStructure.setWantedState(SuperStructure.WantedSuperState.SCORING_ALGAE)));
+      //stops robot
+      controller.x().onTrue(Commands.runOnce(() -> superStructure.setWantedState(SuperStructure.WantedSuperState.STOPPED)).alongWith(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED))));
       //controller.b().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
+
+      //wrist goes to position handing_coral
       controller.y().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.HANDING_CORAL)));
+      //wrist goes to position prepared
       controller.b().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.PREPARED)));
+      //wrist goes to position scoring_coral
       controller.a().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.SCORING_CORAL)));
 
     }
