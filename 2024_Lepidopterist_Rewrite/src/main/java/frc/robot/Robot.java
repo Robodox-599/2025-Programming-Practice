@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollersIOTalonFX;
 import frc.robot.subsystems.endEffectorWrist.EndEffectorWrist;
 import frc.robot.subsystems.endEffectorWrist.EndEffectorWristIOTalonFX;
-import frc.robot.subsystems.SuperStructure;
+import frc.robot.subsystems.NoStructure;
 import frc.robot.subsystems.endEffectorRollers.EndEffectorRollers;
 import frc.robot.subsystems.rampRollers.RampRollers;
 import frc.robot.subsystems.rampRollers.RampRollersIOTalonFX;
@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
   private final RampRollers rampRollers;
   private final EndEffectorRollers endEffectorRollers;
   private final CommandXboxController controller = new CommandXboxController(0);
-  private final SuperStructure rollers;
+  private final NoStructure rollers; //wrong
   private final EndEffectorWrist endEffectorWrist;
 
 
@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     endEffectorRollers = new EndEffectorRollers(new EndEffectorRollersIOTalonFX());
     endEffectorWrist = new EndEffectorWrist(new EndEffectorWristIOTalonFX());
     
-    rollers = new SuperStructure(rampRollers, endEffectorRollers, endEffectorWrist);
+    rollers = new NoStructure(rampRollers, endEffectorRollers, endEffectorWrist);
 
     configureBindings();
   }
@@ -110,11 +110,12 @@ public class Robot extends TimedRobot {
       // left bumper is to intake algae
       // left trigger is to score algae
       // stopp should be X
-      controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(SuperStructure.WantedSuperState.ROLLERS_INTAKING_CORAL)));
-      controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(SuperStructure.WantedSuperState.ENDEFFECTOR_SCORING_CORAL)));
-      controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(SuperStructure.WantedSuperState.ENDEFFECTOR_INTAKING_ALGAE)));
-      controller.leftTrigger().onTrue(Commands.runOnce (() -> rollers.setWantedState(SuperStructure.WantedSuperState.ENDEFFECTOR_SCORING_ALGAE)));
-      controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(SuperStructure.WantedSuperState.STOPPED)).alongWith(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED))));
+      
+      controller.rightBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(NoStructure.WantedSuperState.ROLLERS_INTAKING_CORAL)));
+      controller.rightTrigger().onTrue(Commands.runOnce(() -> rollers.setWantedState(NoStructure.WantedSuperState.ENDEFFECTOR_SCORING_CORAL)));
+      controller.leftBumper().onTrue(Commands.runOnce(() -> rollers.setWantedState(NoStructure.WantedSuperState.ENDEFFECTOR_INTAKING_ALGAE)));
+      controller.leftTrigger().onTrue(Commands.runOnce (() -> rollers.setWantedState(NoStructure.WantedSuperState.ENDEFFECTOR_SCORING_ALGAE)));
+      controller.x().onTrue(Commands.runOnce(() -> rollers.setWantedState(NoStructure.WantedSuperState.STOPPED)).alongWith(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED))));
       //controller.b().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
       controller.y().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.HANDING_CORAL)));
       controller.b().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.PREPARED)));
