@@ -118,8 +118,6 @@ public class Robot extends TimedRobot {
       controller.leftTrigger().onTrue(Commands.runOnce (() -> superStructure.setWantedState(SuperStructure.WantedSuperState.SCORING_ALGAE)));
       //stops robot
       controller.x().onTrue(Commands.runOnce(() -> superStructure.setWantedState(SuperStructure.WantedSuperState.STOPPED)).alongWith(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.STOPPED))));
-      //controller.b().onTrue(Commands.runOnce(() -> rampRollers.setWantedState(RampRollers.WantedState.INTAKING)));
-
       //wrist goes to position handing_coral
       controller.y().onTrue(Commands.runOnce(() -> endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.HANDING_CORAL)));
       //wrist goes to position prepared

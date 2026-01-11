@@ -19,8 +19,8 @@ public class SuperStructure {
 
     public enum WantedSuperState{
         STOPPED,
-        IDLE,
-        INTAKING_CORAL_TO_RAMP,
+        PREPARED,
+        INTAKING_CORAL_TO_RAMP, // Coral enters funnel
         TRANSFERING_CORAL,
         INTAKING_ALGAE,
         SCORING_CORAL,
@@ -29,8 +29,9 @@ public class SuperStructure {
 
     public enum CurrentSuperState{
         STOPPED,
-        IDLE,
-        RAMP_INTAKING,
+        PREPARED,
+        INTAKING_CORAL_RAMP,
+        INTAKING_CORAL_TO_RAMP, // corral enters rampRollers
         TRANSFERING_CORAL,
         INTAKING_ALGAE,
         SCORING_CORAL,
@@ -55,8 +56,11 @@ public class SuperStructure {
             case STOPPED:
                 currentSuperState = CurrentSuperState.STOPPED;
                 break;
+            case PREPARED:
+                currentSuperState = CurrentSuperState.PREPARED;
+                break;
             case INTAKING_CORAL_TO_RAMP:
-                currentSuperState = CurrentSuperState.RAMP_INTAKING;
+                currentSuperState = CurrentSuperState.INTAKING_CORAL_RAMP;
                 break;
             case TRANSFERING_CORAL:
                 currentSuperState = CurrentSuperState.TRANSFERING_CORAL;
@@ -69,9 +73,6 @@ public class SuperStructure {
                 break;
             case SCORING_ALGAE:
                 currentSuperState = CurrentSuperState.SCORING_ALGAE;
-                break;
-            case IDLE:
-                currentSuperState = CurrentSuperState.IDLE;
                 break;
             default:
                 currentSuperState = CurrentSuperState.STOPPED;
@@ -87,14 +88,15 @@ public class SuperStructure {
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
                 endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.STOPPED);
                 break;
-            case IDLE:
-                //subsystem manges themselves, ramp will hold if it has coral
-                rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
-                endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLDING_ALGAE);
+            case PREPARED:
                 endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.PREPARED);
+                rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
+                endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLDING_ALGAE); //Also holds coral if there isn't algae
                 break;
-            case RAMP_INTAKING:
+            case INTAKING_CORAL_RAMP:
                 rampRollers.setWantedState(RampRollers.WantedState.INTAKING);
+                endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.PREPARED);
+                endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.HOLDING_ALGAE);
                 break;
             case TRANSFERING_CORAL:
                 endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.HANDING_CORAL);
@@ -104,14 +106,22 @@ public class SuperStructure {
             case INTAKING_ALGAE:
                 endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.INTAKING_ALGAE);
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.INTAKING_ALGAE);
+                rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
                 break;
             case SCORING_CORAL:
                 endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.SCORING_CORAL);
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING_CORAL);
+                rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
                 break;
             case SCORING_ALGAE:
                 endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.SCORING_ALGAE);
                 endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.SCORING_ALGAE);
+                rampRollers.setWantedState(RampRollers.WantedState.HOLD_CORAL);
+                break;
+            default:
+                rampRollers.setWantedState(RampRollers.WantedState.STOPPED);
+                endEffectorRollers.setWantedState(EndEffectorRollers.WantedState.STOPPED);
+                endEffectorWrist.setWantedState(EndEffectorWrist.WantedState.STOPPED);
                 break;
         }
 
